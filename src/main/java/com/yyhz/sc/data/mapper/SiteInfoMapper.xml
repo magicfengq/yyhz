@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.yyhz.sc.data.dao.SiteInfoDao">
+
+	<resultMap id="colomnResult" type="com.yyhz.sc.data.model.SiteInfo">
+		<id property="id" column="id" />
+		<result property="imgUuid" column="imgUuid" />
+		<result property="creater" column="creater" />
+		<result property="createTime" column="createTime" />
+		<result property="content" column="content" />
+		<result property="siteId" column="siteId" />
+		<result property="status" column="status" />
+		<result property="operater" column="operater" />
+		<result property="opt" column="opt" />
+		<result property="createrName" column="createrName" />
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     imgUuid,
+	     creater,
+	     createTime,
+	     content,
+	     siteId,
+	     status,
+	     operater,
+	     opt
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into site_info  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="imgUuid!=null">imgUuid,</if>
+			     <if test="creater!=null">creater,</if>
+			     <if test="createTime!=null">createTime,</if>
+			     <if test="content!=null">content,</if>
+			     <if test="siteId!=null">siteId,</if>
+			     <if test="status!=null">status,</if>
+			     <if test="operater!=null">operater,</if>
+			     <if test="opt!=null">opt,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="imgUuid!=null">#{imgUuid},</if>
+			     <if test="creater!=null">#{creater},</if>
+			     <if test="createTime!=null">#{createTime},</if>
+			     <if test="content!=null">#{content},</if>
+			     <if test="siteId!=null">#{siteId},</if>
+			     <if test="status!=null">#{status},</if>
+			     <if test="operater!=null">#{operater},</if>
+			     <if test="opt!=null">#{opt},</if>
+		</trim>
+	</insert>
+
+	<update id="update">
+	   update site_info 
+	   <set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
+			     <if test="creater!=null">creater=#{creater},</if>
+			     <if test="createTime!=null">createTime=#{createTime},</if>
+			     <if test="content!=null">content=#{content},</if>
+			     <if test="siteId!=null">siteId=#{siteId},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="operater!=null">operater=#{operater},</if>
+			     <if test="opt!=null">opt=#{opt},</if>
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     site_info 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from site_info
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
+				<if test=" creater != null and creater != '' ">
+					and creater=#{creater} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and createTime=#{createTime} 
+				</if>
+				<if test=" content != null and content != '' ">
+					and content=#{content} 
+				</if>
+				<if test=" siteId != null and siteId != '' ">
+					and siteId=#{siteId} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" operater != null and operater != '' ">
+					and operater=#{operater} 
+				</if>
+				<if test=" opt != null and opt != '' ">
+					and opt=#{opt} 
+				</if>
+		</where>
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		select
+		<![CDATA[
+			si.id,
+			si.imgUuid,
+			si.creater,
+			si.createTime,
+			si.content,
+			si.siteId,
+			si.status,
+			si.operater,
+			si.opt,
+			ai.name as createrName
+			
+			from site_info si left join actor_info ai on si.creater = ai.id
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and si.id=#{id} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and si.imgUuid=#{imgUuid} 
+				</if>
+				<if test=" creater != null and creater != '' ">
+					and si.creater=#{creater} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and si.createTime=#{createTime} 
+				</if>
+				<if test=" content != null and content != '' ">
+					and si.content=#{content} 
+				</if>
+				<if test=" siteId != null and siteId != '' ">
+					and si.siteId=#{siteId} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and si.status=#{status} 
+				</if>
+				<if test=" operater != null and operater != '' ">
+					and si.operater=#{operater} 
+				</if>
+				<if test=" opt != null and opt != '' ">
+					and si.opt=#{opt} 
+				</if>
+		</where>
+		<if test="sort != null">
+				order by si.${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+
+		select count(id) from site_info
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
+				<if test=" creater != null and creater != '' ">
+					and creater=#{creater} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and createTime=#{createTime} 
+				</if>
+				<if test=" content != null and content != '' ">
+					and content=#{content} 
+				</if>
+				<if test=" siteId != null and siteId != '' ">
+					and siteId=#{siteId} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" operater != null and operater != '' ">
+					and operater=#{operater} 
+				</if>
+				<if test=" opt != null and opt != '' ">
+					and opt=#{opt} 
+				</if>
+		</where>
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from site_info where 
+			
+			   	 id=#{id} 
+		]]>
+		
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from site_info where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from site_info where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update site_info
+		<set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
+			     <if test="creater!=null">creater=#{creater},</if>
+			     <if test="createTime!=null">createTime=#{createTime},</if>
+			     <if test="content!=null">content=#{content},</if>
+			     <if test="siteId!=null">siteId=#{siteId},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="operater!=null">operater=#{operater},</if>
+			     <if test="opt!=null">opt=#{opt},</if>
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+</mapper> 

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.yyhz.sc.data.dao.SystemMenuActDao">
+
+    <resultMap id="colomnResult"
+               type="com.yyhz.sc.data.model.SystemMenuAct">
+        <id property="id" column="id"/>
+        <result property="menuId" column="menuId"/>
+        <result property="actName" column="actName"/>
+        <result property="actCode" column="actCode"/>
+        <result property="position" column="position"/>
+        <result property="orderList" column="orderList"/>
+    </resultMap>
+    <resultMap id="roleMenuActResult"
+               type="com.yyhz.sc.data.model.SystemMenuAct">
+        <id property="id" column="id"/>
+        <result property="menuId" column="menuId"/>
+        <result property="actName" column="actName"/>
+        <result property="actCode" column="actCode"/>
+        <result property="position" column="position"/>
+        <result property="isCheck" column="isCheck"/>
+        <result property="orderList" column="orderList"/>
+    </resultMap>
+    <!-- 动态sql -->
+    <sql id="colomnResult">
+        <![CDATA[
+	     id,
+	     menuId,
+	     actName,
+	     actCode,
+	     position,
+	     orderList
+	 ]]>
+    </sql>
+    <sql id="commonWhere">
+        <where>
+            <if test=" id != null">
+                and id=#{id}
+            </if>
+            <if test=" menuId != null">
+                and menuId=#{menuId}
+            </if>
+            <if test=" actName != null">
+                and actName=#{actName}
+            </if>
+            <if test=" actCode != null">
+                and actCode=#{actCode}
+            </if>
+            <if test=" position != null">
+                and position=#{position}
+            </if>
+            <if test="menuIds != null">
+                and menuId in
+                <foreach item="item" index="index" collection="menuIds"
+                         open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </sql>
+    <insert id="insert">
+        insert into system_menu_act
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id!=null">id,</if>
+            <if test="menuId!=null">menuId,</if>
+            <if test="actName!=null">actName,</if>
+            <if test="actCode!=null">actCode,</if>
+            <if test="position!=null">position,</if>
+            <if test="orderList!=null">orderList,</if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="id!=null">#{id},</if>
+            <if test="menuId!=null">#{menuId},</if>
+            <if test="actName!=null">#{actName},</if>
+            <if test="actCode!=null">#{actCode},</if>
+            <if test="position!=null">#{position},</if>
+            <if test="orderList!=null">#{orderList},</if>
+        </trim>
+    </insert>
+
+    <update id="update">
+        update system_menu_act
+        <set>
+            <if test="menuId!=null">menuId=#{menuId},</if>
+            <if test="actName!=null">actName=#{actName},</if>
+            <if test="actCode!=null">actCode=#{actCode},</if>
+            <if test="position!=null">position=#{position},</if>
+            <if test="orderList!=null">orderList=#{orderList},</if>
+        </set>
+        where
+        id=#{id}
+    </update>
+
+    <delete id="delete">
+        delete from
+        system_menu_act
+        <include refid="commonWhere"/>
+    </delete>
+
+    <select id="selectEntity" resultMap="colomnResult">
+        select
+        <include refid="colomnResult"/>
+        from system_menu_act
+        <include refid="commonWhere"/>
+    </select>
+
+    <!-- 根据条件信息 -->
+    <select id="selectAll" resultMap="colomnResult">
+        select
+        <include refid="colomnResult"/>
+        <![CDATA[
+			from system_menu_act
+		]]>
+        <include refid="commonWhere"/>
+        <if test="sort != null">
+            order by ${sort} ${order}
+        </if>
+    </select>
+
+    <!-- 根据条件信息 -->
+    <select id="selectAllByRole" resultMap="roleMenuActResult">
+        select
+        id,menuId,actName,actCode,position,
+        case when exists(select id
+        from system_role_authority where roleId=#{roleId} and
+        actId=system_menu_act.id)
+        then 1 else 0 end isCheck
+        <![CDATA[
+			from system_menu_act
+		]]>
+        where menuId=#{id} and actCode!='menu' order by orderList
+    </select>
+    <!-- 根据条件信息 -->
+    <select id="selectAllByRoleLogin" resultMap="colomnResult">
+        select
+        id,menuId,actName,actCode,position
+        <![CDATA[
+			from system_menu_act
+		]]>
+        where menuId=#{id} and id in(select actId from system_role_authority
+        where roleId=#{roleId})
+        order by orderList
+    </select>
+    <select id="selectAllByMenuId" resultMap="colomnResult">
+        select
+        <include refid="colomnResult"/>
+        <![CDATA[
+			from system_menu_act
+		]]>
+        where menuId=#{id} order by orderList
+    </select>
+    <!-- 根据条件查询数量 -->
+    <select id="selectCount" resultType="int">
+
+        select count(id) from system_menu_act
+        <include refid="commonWhere"/>
+    </select>
+    <!-- 根据主键查询信息 -->
+    <select id="selectById" resultMap="colomnResult">
+        select
+        <include refid="colomnResult"/>
+        <![CDATA[
+			from system_menu_act where 
+			
+			   	 id=#{id} 
+		]]>
+
+    </select>
+</mapper> 

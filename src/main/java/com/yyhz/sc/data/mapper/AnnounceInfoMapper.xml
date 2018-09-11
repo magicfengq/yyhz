@@ -1,0 +1,596 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.yyhz.sc.data.dao.AnnounceInfoDao">
+
+	<resultMap id="colomnResult" type="com.yyhz.sc.data.model.AnnounceInfo">
+		<id property="id" column="id" />
+		<result property="type" column="type" />
+		<result property="publicType" column="publicType" />
+		<result property="title" column="title" />
+		<result property="name" column="name" />
+		<result property="showTime" column="showTime" />
+		<result property="entranceTime" column="entranceTime" />
+		<result property="city" column="city" />
+		<result property="address" column="address" />
+		<result property="sex" column="sex" />
+		<result property="price" column="price" />
+		<result property="detail" column="detail" />
+		<result property="readCount" column="readCount" />
+		<result property="status" column="status" />
+		<result property="enrollStatus" column="enrollStatus" />
+		<result property="creater" column="creater" />
+		<result property="createTime" column="createTime" />
+		<result property="enrollNum" column="enrollNum" />
+		<result property="note" column="note" />
+	</resultMap>
+
+	<resultMap id="announceInfo" type="com.yyhz.sc.data.model.AnnounceInfo" extends="colomnResult">
+		<result property="headImgUrl" column="headImgUrl" />
+		<result property="createrName" column="createrName" />
+		<result property="authenticateLevel" column="authenticateLevel" />
+		<result property="publicTypeNames" column="publicTypeNames" />
+		<result property="avgScore" column="avgScore" />		
+	</resultMap>
+
+	<resultMap id="announceInfoDetails" type="com.yyhz.sc.data.model.AnnounceInfo" extends="announceInfo">
+		<collection property="enrollInfos" ofType="com.yyhz.sc.data.model.AnnouceEnroll" resultMap="com.yyhz.sc.data.dao.AnnouceEnrollDao.AnnouceEnrollDetailsResult" columnPrefix="ae_"/>
+	</resultMap>
+
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     type,
+	     publicType,
+	     title,
+	     name,
+	     showTime,
+	     entranceTime,
+	     city,
+	     address,
+	     sex,
+	     price,
+	     detail,
+	     readCount,
+	     status,
+	     enrollStatus,
+	     creater,
+	     note,
+	     createTime,
+	     enrollNum
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into announce_info  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="type!=null">type,</if>
+			     <if test="publicType!=null">publicType,</if>
+			     <if test="title!=null">title,</if>
+			     <if test="name!=null">name,</if>
+			     <if test="showTime!=null">showTime,</if>
+			     <if test="entranceTime!=null">entranceTime,</if>
+			     <if test="city!=null">city,</if>
+			     <if test="address!=null">address,</if>
+			     <if test="sex!=null">sex,</if>
+			     <if test="price!=null">price,</if>
+			     <if test="detail!=null">detail,</if>
+			     <if test="readCount!=null">readCount,</if>
+			     <if test="status!=null">status,</if>
+			     <if test="enrollStatus!=null">enrollStatus,</if>
+			     <if test="creater!=null">creater,</if>
+			     <if test="createTime!=null">createTime,</if>
+			     <if test="enrollNum!=null">enrollNum,</if>
+			     <if test="note!=null">note,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="type!=null">#{type},</if>
+			     <if test="publicType!=null">#{publicType},</if>
+			     <if test="title!=null">#{title},</if>
+			     <if test="name!=null">#{name},</if>
+			     <if test="showTime!=null">#{showTime},</if>
+			     <if test="entranceTime!=null">#{entranceTime},</if>
+			     <if test="city!=null">#{city},</if>
+			     <if test="address!=null">#{address},</if>
+			     <if test="sex!=null">#{sex},</if>
+			     <if test="price!=null">#{price},</if>
+			     <if test="detail!=null">#{detail},</if>
+			     <if test="readCount!=null">#{readCount},</if>
+			     <if test="status!=null">#{status},</if>
+			     <if test="enrollStatus!=null">#{enrollStatus},</if>
+			     <if test="creater!=null">#{creater},</if>
+			     <if test="createTime!=null">#{createTime},</if>
+			     <if test="enrollNum!=null">#{enrollNum},</if>
+			     <if test="note!=null">#{note},</if>
+		</trim>
+	</insert>
+
+	<update id="update">
+	   update announce_info 
+	   <set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="type!=null">type=#{type},</if>
+			     <if test="publicType!=null">publicType=#{publicType},</if>
+			     <if test="title!=null">title=#{title},</if>
+			     <if test="name!=null">name=#{name},</if>
+			     <if test="showTime!=null">showTime=#{showTime},</if>
+			     <if test="entranceTime!=null">entranceTime=#{entranceTime},</if>
+			     <if test="city!=null">city=#{city},</if>
+			     <if test="address!=null">address=#{address},</if>
+			     <if test="sex!=null">sex=#{sex},</if>
+			     <if test="price!=null">price=#{price},</if>
+			     <if test="detail!=null">detail=#{detail},</if>
+			     <if test="readCount!=null">readCount=#{readCount},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="enrollStatus!=null">enrollStatus=#{enrollStatus},</if>
+			     <if test="creater!=null">creater=#{creater},</if>
+			     <if test="createTime!=null">createTime=#{createTime},</if>
+			     <if test="enrollNum!=null">enrollNum=#{enrollNum},</if>
+			     <if test="note!=null">note=#{note},</if>
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     announce_info 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectCityList" resultMap="colomnResult">
+		select distinct(city) from announce_info
+		<where>
+			<if test="type!=null">
+				and type=#{type} 
+			</if>
+	   	</where>   
+	</select>
+
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from announce_info
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" type != null and type != '' ">
+					and type=#{type} 
+				</if>
+				<if test=" publicType != null and publicType != '' ">
+					and publicType=#{publicType} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and title=#{title} 
+				</if>
+				<if test=" name != null and name != '' ">
+					and name=#{name} 
+				</if>
+				<if test=" showTime != null and showTime != '' ">
+					and showTime=#{showTime} 
+				</if>
+				<if test=" entranceTime != null and entranceTime != '' ">
+					and entranceTime=#{entranceTime} 
+				</if>
+				<if test=" city != null and city != '' ">
+					and city=#{city} 
+				</if>
+				<if test=" address != null and address != '' ">
+					and address=#{address} 
+				</if>
+				<if test=" sex != null ">
+					and sex=#{sex} 
+				</if>
+				<if test=" price != null ">
+					and price=#{price} 
+				</if>
+				<if test=" detail != null and detail != '' ">
+					and detail=#{detail} 
+				</if>
+				<if test=" readCount != null ">
+					and readCount=#{readCount} 
+				</if>
+				<if test=" status != null ">
+					and status=#{status} 
+				</if>
+				<if test=" enrollStatus != null ">
+					and enrollStatus=#{enrollStatus} 
+				</if>
+				<if test=" creater != null and creater != '' ">
+					and creater=#{creater} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and createTime=#{createTime} 
+				</if>
+				<if test=" enrollNum != null ">
+					and enrollNum=#{enrollNum} 
+				</if>
+				<if test=" note != null and note != '' ">
+					and note=#{note} 
+				</if>
+		</where>
+	</select>
+	
+	<!-- 查询基本信息 -->
+	<select id = "selectAllSummary" resultMap="announceInfo">
+		select 
+		t.*,
+		avg(ac.score) as avgScore
+		from 
+			(select
+			<![CDATA[
+					a.id,
+					a.type,
+					a.title,
+					a.name,
+					a.showTime,
+					a.entranceTime,
+					a.city,
+					a.address,
+					a.sex,
+					a.price,
+					a.detail,
+					a.readCount,
+					a.status,
+					a.enrollStatus,
+					a.creater,
+					a.createTime,
+					a.enrollNum,
+					a.note,
+					ai.name as createrName,
+					ai.authenticateLevel as authenticateLevel,
+					group_concat(pt.id) as publicType,
+					group_concat(pt.name) as publicTypeNames,
+					spi.urlPath as headImgUrl
+		 	]]>
+	
+		 	from announce_info a
+		 	join actor_info ai on a.creater = ai.id
+			left join card_announce_public_type capt on a.id = capt.cardAnnounceId
+		 	left join public_type pt on capt.publicTypeId = pt.id
+			left join system_picture_info spi on ai.imgUuid = spi.uuid
+			<where>
+				<if test=" id != null and id !=''">
+					and a.id=#{id} 
+				</if>
+				<if test=" type != null">
+					and a.type=#{type} 
+				</if>
+				<if test=" status != null">
+					and a.status=#{status} 
+				</if>
+				<if test=" enrollStatus != null ">
+					and a.enrollStatus=#{enrollStatus} 
+				</if>
+				<if test=" creater != null and creater !=''">
+					and a.creater=#{creater} 
+				</if>
+				<if test=" city != null and city !=''">
+					and a.city=#{city} 
+				</if>
+				<if test=" sex != null">
+					and a.sex=#{sex} 
+				</if>
+				<if test=" authenticateLevel != null">
+					and ai.authenticateLevel=#{authenticateLevel}
+				</if>
+			</where>
+			group by a.id) t
+			left join actor_comment ac on t.creater = ac.actorId
+		<where>	
+			<if test=" publicType != null and publicType != ''">
+				and t.publicType like concat('%', #{publicType}, '%') 
+			</if>
+			<if test=" keyword != null and keyword != '' ">
+				and (t.city like concat('%', #{keyword}, '%')
+				or t.title like concat('%', #{keyword}, '%')
+				or t.name like concat('%', #{keyword}, '%')
+				or t.publicTypeNames like concat('%', #{keyword}, '%')
+				or t.detail like concat('%', #{keyword}, '%')
+				or t.address like concat('%', #{keyword}, '%'))
+			</if>
+		</where>
+		group by t.id
+		<if test="sort != null and sort != ''">
+			order by ${sort} ${order}
+		</if>
+	</select>
+	
+	<!-- 查询基本信息 -->
+	<select id = "selectMyEnroll" resultMap="announceInfo">
+		select t.*, count(aen.id) as enrollNum
+		from (select
+					a.id,
+					a.type,
+					a.title,
+					a.name,
+					a.showTime,
+					a.entranceTime,
+					a.city,
+					a.address,
+					a.sex,
+					a.price,
+					a.detail,
+					a.readCount,
+					a.status,
+					a.enrollStatus,
+					a.creater,
+					a.createTime,
+					a.note,
+					ae.checkStatus as enrollActorCheckState,
+					ai.name as createrName,
+					ai.authenticateLevel as authenticateLevel,
+					group_concat(pt.id) as publicType,
+					group_concat(pt.name) as publicTypeNames,
+					spi.urlPath as headImgUrl
+	
+			 	from annouce_enroll ae
+			 	join announce_info a on ae.announceId=a.id
+			 	join actor_info ai on a.creater = ai.id
+				left join card_announce_public_type capt on a.id = capt.cardAnnounceId
+			 	left join public_type pt on capt.publicTypeId = pt.id
+				left join system_picture_info spi on ai.imgUuid = spi.uuid
+				
+				where ae.actorId=#{enrollActorId} and ae.enrollStatus=0 and a.status=0 and a.enrollStatus=0 
+				group by a.id) t
+			left join annouce_enroll aen on t.id=aen.announceId
+			where aen.enrollStatus = 0
+			group by t.id
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	
+		<!-- 查询基本信息 -->
+	<select id = "selectAllDetails" resultMap="announceInfoDetails">
+		select
+		<![CDATA[
+				a.id,
+				a.type,
+				a.title,
+				a.name,
+				a.showTime,
+				a.entranceTime,
+				a.city,
+				a.address,
+				a.sex,
+				a.price,
+				a.detail,
+				a.readCount,
+				a.status,
+				a.enrollStatus,
+				a.creater,
+				a.createTime,
+				a.enrollNum,
+				a.note,
+				ai.name as createrName,
+				ai.authenticateLevel as authenticateLevel,
+				spi.urlPath as headImgUrl,
+				group_concat(pt.id) as publicType,
+				group_concat(pt.name) as publicTypeNames
+	 	]]>
+
+	 	from announce_info a
+	 	join actor_info ai on a.creater = ai.id
+		left join system_picture_info spi on ai.imgUuid = spi.uuid
+		left join card_announce_public_type capt on a.id = capt.cardAnnounceId
+		left join public_type pt on capt.publicTypeId = pt.id
+		
+		<where>
+			<if test=" id != null and id != '' ">
+				and a.id=#{id} 
+			</if>
+			<if test=" type != null">
+				and a.type=#{type} 
+			</if>
+			<if test=" status != null">
+				and a.status=#{status} 
+			</if>
+			<if test=" enrollStatus != null ">
+				and a.enrollStatus=#{enrollStatus} 
+			</if>
+		</where>
+		group by a.id
+	</select>
+
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		
+		<![CDATA[
+			select a.*,b.name createrName
+			from announce_info a
+			left join actor_info b on b.id=a.creater
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and a.id=#{id} 
+				</if>
+				<if test=" type != null ">
+					and a.type=#{type} 
+				</if>
+				<if test=" publicType != null and publicType != '' ">
+					and a.publicType=#{publicType} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and a.title like CONCAT('%','${title}','%') 
+				</if>
+				<if test=" createrName != null and createrName != '' ">
+					and b.name like CONCAT('%','${createrName}','%') 
+				</if>
+				<if test=" name != null and name != '' ">
+					and a.name like CONCAT('%','${name}','%') 
+				</if>
+				<if test=" showTime != null and showTime != '' ">
+					and a.showTime=#{showTime} 
+				</if>
+				<if test=" entranceTime != null and entranceTime != '' ">
+					and a.entranceTime=#{entranceTime} 
+				</if>
+				<if test=" city != null and city != '' ">
+					and a.city=#{city} 
+				</if>
+				<if test=" address != null and address != '' ">
+					and a.address=#{address} 
+				</if>
+				<if test=" sex != null ">
+					and a.sex=#{sex} 
+				</if>
+				<if test=" price != null ">
+					and a.price=#{price} 
+				</if>
+				<if test=" detail != null and detail != '' ">
+					and a.detail=#{detail} 
+				</if>
+				<if test=" readCount != null ">
+					and a.readCount=#{readCount} 
+				</if>
+				<if test=" status != null ">
+					and a.status=#{status} 
+				</if>
+				<if test=" enrollStatus != null ">
+					and a.enrollStatus=#{enrollStatus} 
+				</if>
+				<if test=" creater != null and creater != '' ">
+					and a.creater=#{creater} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and a.createTime=#{createTime} 
+				</if>
+				<if test=" enrollNum != null ">
+					and a.enrollNum=#{enrollNum} 
+				</if>
+				<if test=" note != null and note != '' ">
+					and a.note=#{note} 
+				</if>
+		</where>
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+
+		select count(id) from announce_info
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" type != null ">
+					and type=#{type} 
+				</if>
+				<if test=" publicType != null and publicType != '' ">
+					and publicType=#{publicType} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and title=#{title} 
+				</if>
+				<if test=" name != null and name != '' ">
+					and name=#{name} 
+				</if>
+				<if test=" showTime != null and showTime != '' ">
+					and showTime=#{showTime} 
+				</if>
+				<if test=" entranceTime != null and entranceTime != '' ">
+					and entranceTime=#{entranceTime} 
+				</if>
+				<if test=" city != null and city != '' ">
+					and city=#{city} 
+				</if>
+				<if test=" address != null and address != '' ">
+					and address=#{address} 
+				</if>
+				<if test=" sex != null ">
+					and sex=#{sex} 
+				</if>
+				<if test=" price != null ">
+					and price=#{price} 
+				</if>
+				<if test=" detail != null and detail != '' ">
+					and detail=#{detail} 
+				</if>
+				<if test=" readCount != null ">
+					and readCount=#{readCount} 
+				</if>
+				<if test=" status != null ">
+					and status=#{status} 
+				</if>
+				<if test=" enrollStatus != null ">
+					and enrollStatus=#{enrollStatus} 
+				</if>
+				<if test=" creater != null and creater != '' ">
+					and creater=#{creater} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and createTime=#{createTime} 
+				</if>
+				<if test=" enrollNum != null ">
+					and enrollNum=#{enrollNum} 
+				</if>
+				<if test=" note != null and note != '' ">
+					and note=#{note} 
+				</if>
+		</where>
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="announceInfo">
+		select a.*, group_concat(pt.name) as publicTypeNames
+		from announce_info a 
+		left join card_announce_public_type capt on a.id = capt.cardAnnounceId
+		left join public_type pt on capt.publicTypeId = pt.id
+		where a.id = #{id}
+		group by a.id
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from announce_info where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from announce_info where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update announce_info
+		<set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="type!=null">type=#{type},</if>
+			     <if test="publicType!=null">publicType=#{publicType},</if>
+			     <if test="title!=null">title=#{title},</if>
+			     <if test="name!=null">name=#{name},</if>
+			     <if test="showTime!=null">showTime=#{showTime},</if>
+			     <if test="entranceTime!=null">entranceTime=#{entranceTime},</if>
+			     <if test="city!=null">city=#{city},</if>
+			     <if test="address!=null">address=#{address},</if>
+			     <if test="sex!=null">sex=#{sex},</if>
+			     <if test="price!=null">price=#{price},</if>
+			     <if test="detail!=null">detail=#{detail},</if>
+			     <if test="readCount!=null">readCount=#{readCount},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="enrollStatus!=null">enrollStatus=#{enrollStatus},</if>
+			     <if test="creater!=null">creater=#{creater},</if>
+			     <if test="createTime!=null">createTime=#{createTime},</if>
+			     <if test="enrollNum!=null">enrollNum=#{enrollNum},</if>
+			     <if test="note!=null">note=#{note},</if>
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+</mapper> 

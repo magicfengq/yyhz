@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.yyhz.sc.data.dao.SiteListDao">
+
+	<resultMap id="colomnResult" type="com.yyhz.sc.data.model.SiteList">
+		<id property="id" column="id" />
+		<result property="siteName" column="siteName" />
+		<result property="phone" column="phone" />
+		<result property="passageway" column="passageway" />
+		<result property="alert" column="alert" />
+		<result property="address" column="address" />
+		<result property="latitude" column="latitude" />
+		<result property="longitude" column="longitude" />
+		<result property="createTime" column="createTime" />
+		<result property="imgUuid" column="imgUuid" />
+		<result property="textArea" column="textArea" />
+		<result property="mutiImgUuid" column="mutiImgUuid" />
+		<result property="refereeUuid" column="refereeUuid" />
+		<result property="refereeName" column="refereeName" />
+		<result property="refereePhone" column="refereePhone" />
+		<result property="type" column="type" />
+		<result property="publicType" column="publicType" />
+		<result property="city" column="city" />
+		<result property="publicTypeName" column="publicTypeName" />
+		<result property="siteImgUrls" column="siteImgUrls" />
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     siteName,
+	     phone,
+	     passageway,
+	     alert,
+	     address,
+	     latitude,
+	     longitude,
+	     createTime,
+	     imgUuid,
+	     textArea,
+	     mutiImgUuid,
+	     refereeUuid,
+	     refereeName,
+	     type,
+	     refereePhone,
+	     city,
+	     publicType
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into site_list  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="siteName!=null">siteName,</if>
+			     <if test="phone!=null">phone,</if>
+			     <if test="passageway!=null">passageway,</if>
+			     <if test="alert!=null">alert,</if>
+			     <if test="address!=null">address,</if>
+			     <if test="latitude!=null">latitude,</if>
+			     <if test="longitude!=null">longitude,</if>
+			     <if test="createTime!=null">createTime,</if>
+			     <if test="imgUuid!=null">imgUuid,</if>
+			     <if test="textArea!=null">textArea,</if>
+			     <if test="mutiImgUuid!=null">mutiImgUuid,</if>
+			     <if test="refereeUuid!=null">refereeUuid,</if>
+			     <if test="refereeName!=null">refereeName,</if>
+			     <if test="refereePhone!=null">refereePhone,</if>
+			     <if test="type!=null">type,</if>
+			     <if test="publicType!=null">publicType,</if>
+			     <if test="city!=null">city,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="siteName!=null">#{siteName},</if>
+			     <if test="phone!=null">#{phone},</if>
+			     <if test="passageway!=null">#{passageway},</if>
+			     <if test="alert!=null">#{alert},</if>
+			     <if test="address!=null">#{address},</if>
+			     <if test="latitude!=null">#{latitude},</if>
+			     <if test="longitude!=null">#{longitude},</if>
+			     <if test="createTime!=null">#{createTime},</if>
+			     <if test="imgUuid!=null">#{imgUuid},</if>
+			     <if test="textArea!=null">#{textArea},</if>
+			     <if test="mutiImgUuid!=null">#{mutiImgUuid},</if>
+			     <if test="refereeUuid!=null">#{refereeUuid},</if>
+			     <if test="refereeName!=null">#{refereeName},</if>
+			     <if test="refereePhone!=null">#{refereePhone},</if>
+			     <if test="type!=null">#{type},</if>
+			     <if test="publicType!=null">#{publicType},</if>
+			     <if test="city!=null">#{city},</if>
+		</trim>
+	</insert>
+
+	<update id="update">
+	   update site_list 
+	   <set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="siteName!=null">siteName=#{siteName},</if>
+			     <if test="phone!=null">phone=#{phone},</if>
+			     <if test="passageway!=null">passageway=#{passageway},</if>
+			     <if test="alert!=null">alert=#{alert},</if>
+			     <if test="address!=null">address=#{address},</if>
+			     <if test="latitude!=null">latitude=#{latitude},</if>
+			     <if test="longitude!=null">longitude=#{longitude},</if>
+			     <if test="createTime!=null">createTime=#{createTime},</if>
+			     <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
+			     <if test="textArea!=null">textArea=#{textArea},</if>
+			     <if test="mutiImgUuid!=null">mutiImgUuid=#{mutiImgUuid},</if>
+			     <if test="refereeUuid!=null">refereeUuid=#{refereeUuid},</if>
+			     <if test="refereeName!=null">refereeName=#{refereeName},</if>
+			     <if test="refereePhone!=null">refereePhone=#{refereePhone},</if>
+			     <if test="type!=null">type=#{type},</if>
+			     <if test="city!=null">city=#{city},</if>
+			     <if test="publicType!=null">publicType=#{publicType},</if>
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     site_list 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectCityList" resultMap="colomnResult">
+		  select distinct(city) from site_list
+	   	  <where>
+			<if test="type!=null">
+				and type=#{type} 
+			</if>
+	   	</where>
+	</select>
+
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from site_list
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" siteName != null and siteName != '' ">
+					and siteName=#{siteName} 
+				</if>
+				<if test=" phone != null and phone != '' ">
+					and phone=#{phone} 
+				</if>
+				<if test=" passageway != null and passageway != '' ">
+					and passageway=#{passageway} 
+				</if>
+				<if test=" alert != null and alert != '' ">
+					and alert=#{alert} 
+				</if>
+				<if test=" address != null and address != '' ">
+					and address=#{address} 
+				</if>
+				<if test=" latitude != null and latitude != '' ">
+					and latitude=#{latitude} 
+				</if>
+				<if test=" longitude != null and longitude != '' ">
+					and longitude=#{longitude} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and createTime=#{createTime} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
+				<if test=" textArea != null and textArea != '' ">
+					and textArea=#{textArea} 
+				</if>
+				
+				<if test=" mutiImgUuid != null and mutiImgUuid != '' ">
+					and mutiImgUuid=#{mutiImgUuid} 
+				</if>
+				<if test=" refereeUuid != null and refereeUuid != '' ">
+					and refereeUuid=#{refereeUuid} 
+				</if>
+				<if test=" refereeName != null and refereeName != '' ">
+					and refereeName=#{refereeName} 
+				</if>
+				<if test=" refereePhone != null and refereePhone != '' ">
+					and refereePhone=#{refereePhone} 
+				</if>
+				<if test=" type != null and type != '' ">
+					and type=#{type} 
+				</if>
+				<if test=" publicType != null and publicType != '' ">
+					and publicType=#{publicType} 
+				</if>
+				<if test=" city != null and city != '' ">
+					and city=#{city} 
+				</if>
+				
+		</where>
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		select 
+		t.*,
+		spii.urlPath as logoUrl
+		from
+		(select
+		<![CDATA[
+			sl.id,
+			sl.siteName,
+			sl.phone,
+			sl.passageway,
+			sl.alert,
+			sl.address,
+			sl.latitude,
+			sl.longitude,
+			sl.createTime,
+			sl.imgUuid,
+			sl.textArea,
+			sl.mutiImgUuid,
+			sl.refereeUuid,
+			sl.refereeName,
+			sl.type,
+			sl.refereePhone,
+			sl.city,
+			sl.publicType,
+			pt.name as publicTypeName,
+			group_concat(spi.urlPath) as siteImgUrls
+		
+			from site_list sl
+			left join public_type pt on sl.publicType=pt.id
+			left join site_list_picture slp on slp.siteId=sl.id
+			left join system_picture_info spi on slp.imgUuid = spi.uuid
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and sl.id=#{id} 
+				</if>
+				<if test=" siteName != null and siteName != '' ">
+					and sl.siteName like CONCAT('%','${siteName}','%')
+				</if>
+				<if test=" phone != null and phone != '' ">
+					and sl.phone=#{phone} 
+				</if>
+				<if test=" passageway != null and passageway != '' ">
+					and sl.passageway=#{passageway} 
+				</if>
+				<if test=" alert != null and alert != '' ">
+					and sl.alert=#{alert} 
+				</if>
+				<if test=" address != null and address != '' ">
+					and sl.address like CONCAT('%','${address}','%')
+				</if>
+				<if test=" latitude != null and latitude != '' ">
+					and sl.latitude=#{latitude} 
+				</if>
+				<if test=" longitude != null and longitude != '' ">
+					and sl.longitude=#{longitude} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and sl.createTime=#{createTime} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and sl.imgUuid=#{imgUuid} 
+				</if>
+				<if test=" textArea != null and textArea != '' ">
+					and sl.textArea=#{textArea} 
+				</if>
+				
+				<if test=" mutiImgUuid != null and mutiImgUuid != '' ">
+					and sl.mutiImgUuid=#{mutiImgUuid} 
+				</if>
+				<if test=" refereeUuid != null and refereeUuid != '' ">
+					and sl.refereeUuid=#{refereeUuid} 
+				</if>
+				<if test=" refereeName != null and refereeName != '' ">
+					and sl.refereeName=#{refereeName} 
+				</if>
+				<if test=" refereePhone != null and refereePhone != '' ">
+					and sl.refereePhone=#{refereePhone} 
+				</if>
+				<if test=" type != null and type != '' ">
+					and sl.type=#{type} 
+				</if>
+				<if test=" publicType != null and publicType != '' ">
+					and sl.publicType=#{publicType} 
+				</if>
+				<if test=" city != null and city != '' ">
+					and sl.city=#{city} 
+				</if>
+				<if test=" keyword != null and keyword != '' ">
+					and (sl.siteName like CONCAT('%','${keyword}','%')
+						or sl.address like CONCAT('%','${keyword}','%')
+						or sl.textArea like CONCAT('%','${keyword}','%')
+						or pt.name like CONCAT('%','${keyword}','%')
+					) 
+				</if>
+		</where>
+		group by sl.id) t
+		left join system_picture_info spii on t.imgUuid = spii.uuid
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+
+		select count(id) from site_list
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" siteName != null and siteName != '' ">
+					and siteName=#{siteName} 
+				</if>
+				<if test=" phone != null and phone != '' ">
+					and phone=#{phone} 
+				</if>
+				<if test=" passageway != null and passageway != '' ">
+					and passageway=#{passageway} 
+				</if>
+				<if test=" alert != null and alert != '' ">
+					and alert=#{alert} 
+				</if>
+				<if test=" address != null and address != '' ">
+					and address=#{address} 
+				</if>
+				<if test=" latitude != null and latitude != '' ">
+					and latitude=#{latitude} 
+				</if>
+				<if test=" longitude != null and longitude != '' ">
+					and longitude=#{longitude} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and createTime=#{createTime} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
+				<if test=" textArea != null and textArea != '' ">
+					and textArea=#{textArea} 
+				</if>
+				
+				<if test=" mutiImgUuid != null and mutiImgUuid != '' ">
+					and mutiImgUuid=#{mutiImgUuid} 
+				</if>
+				<if test=" refereeUuid != null and refereeUuid != '' ">
+					and refereeUuid=#{refereeUuid} 
+				</if>
+				<if test=" refereeName != null and refereeName != '' ">
+					and refereeName=#{refereeName} 
+				</if>
+				<if test=" refereePhone != null and refereePhone != '' ">
+					and refereePhone=#{refereePhone} 
+				</if>
+				<if test=" type != null and type != '' ">
+					and type=#{type} 
+				</if>
+				<if test=" publicType != null and publicType != '' ">
+					and publicType=#{publicType} 
+				</if>
+				<if test=" city != null and city != '' ">
+					and city=#{city} 
+				</if>
+		</where>
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from site_list where 
+			
+			   	 id=#{id} 
+		]]>
+		
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from site_list where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from site_list where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update site_list
+		<set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="siteName!=null">siteName=#{siteName},</if>
+			     <if test="phone!=null">phone=#{phone},</if>
+			     <if test="passageway!=null">passageway=#{passageway},</if>
+			     <if test="alert!=null">alert=#{alert},</if>
+			     <if test="address!=null">address=#{address},</if>
+			     <if test="latitude!=null">latitude=#{latitude},</if>
+			     <if test="longitude!=null">longitude=#{longitude},</if>
+			     <if test="createTime!=null">createTime=#{createTime},</if>
+			     <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
+			     <if test="textArea!=null">textArea=#{textArea},</if>
+			     
+			     <if test="mutiImgUuid!=null">mutiImgUuid=#{mutiImgUuid},</if>
+			     <if test="refereeUuid!=null">refereeUuid=#{refereeUuid},</if>
+			     <if test="refereeName!=null">refereeName=#{refereeName},</if>
+			     <if test="refereePhone!=null">refereePhone=#{refereePhone},</if>
+			     <if test="type!=null">type=#{type},</if>
+			     <if test="city!=null">city=#{city},</if>
+			     <if test="publicType!=null">publicType=#{publicType},</if>
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+</mapper> 

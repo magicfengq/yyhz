@@ -1,0 +1,131 @@
+BODY {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 10px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; FONT-FAMILY: tahoma,����,fantasy; TEXT-ALIGN: center
+}
+
+.mainbox {
+	FONT-SIZE: 12px; WIDTH: 98%
+}
+DIV {
+	BORDER-TOP-WIDTH: 0px; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; BORDER-RIGHT-WIDTH: 0px
+}
+FORM {
+	BORDER-TOP-WIDTH: 0px; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; BORDER-RIGHT-WIDTH: 0px
+}
+IMG {
+	BORDER-TOP-WIDTH: 0px; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; BORDER-RIGHT-WIDTH: 0px
+}
+A {
+	COLOR: #0365bf; TEXT-DECORATION: none
+}
+A:hover {
+	COLOR: #f60; TEXT-DECORATION: underline
+}
+UL {
+	CLEAR: both
+}
+LABEL {
+	CURSOR: pointer
+}
+
+.mainbox {
+	CLEAR: both; MARGIN: 10px auto; min-width: 960px
+}
+
+
+.td2 {
+	COLOR: gray; BACKGROUND-COLOR: #e7f3fa
+}
+.td3 {
+	LINE-HEIGHT: 30px; HEIGHT: 30px; TEXT-ALIGN: center
+}
+.tableLine TD {
+	PADDING-LEFT: 10px; BORDER-BOTTOM: #eeeeff 1px solid
+}
+.tableBorder TD {
+	BORDER-RIGHT: #c1d1f7 1px solid; BORDER-TOP: #c1d1f7 1px solid; PADDING-LEFT: 10px; BORDER-LEFT: #c1d1f7 1px solid; BORDER-BOTTOM: #c1d1f7 1px solid
+}
+.menu {
+	CLEAR: both; BORDER-RIGHT: #c0d3de 1px solid; PADDING-RIGHT: 10px; BORDER-TOP: #c0d3de 1px solid; BACKGROUND: url(../navmenubg.gif) repeat-x; BORDER-LEFT: #c0d3de 1px solid; LINE-HEIGHT: 27px; PADDING-TOP: 2px; BORDER-BOTTOM: #c0d3de 1px solid; HEIGHT: 27px; TEXT-ALIGN: right
+}
+.menu UL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FLOAT: right; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; LIST-STYLE-TYPE: none; TEXT-ALIGN: right
+}
+.menu UL LI {
+	FLOAT: left; LINE-HEIGHT: 25px
+}
+.menu UL LI A {
+	PADDING-RIGHT: 8px; PADDING-LEFT: 8px; BACKGROUND: url(../menu_itemline.gif) no-repeat; PADDING-BOTTOM: 3px; PADDING-TOP: 0px
+}
+.mypanelList {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; LIST-STYLE-TYPE: none
+}
+.mypanelList LI {
+	FLOAT: left; WIDTH: 69px; BORDER-BOTTOM: #e7e7e7 1px dotted; TEXT-ALIGN: center
+}
+.border {
+	BORDER-RIGHT: #c1d1f7 1px solid; BORDER-TOP: #c1d1f7 1px solid; BORDER-LEFT: #c1d1f7 1px solid; BORDER-BOTTOM: #c1d1f7 1px solid
+}
+.padding3 {
+	PADDING-RIGHT: 3px; PADDING-LEFT: 3px; PADDING-BOTTOM: 3px; PADDING-TOP: 3px
+}
+.padding5 {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; PADDING-TOP: 5px
+}
+.padding10 {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 10px; PADDING-BOTTOM: 10px; PADDING-TOP: 10px
+}
+.gray {
+	COLOR: gray
+}
+.small {
+	FONT-SIZE: 11px! important
+}
+.small A {
+	FONT-SIZE: 11px! important
+}
+.bold {
+	FONT-WEIGHT: bold
+}
+.lineheight18 {
+	LINE-HEIGHT: 18px
+}
+.lineheight20 {
+	LINE-HEIGHT: 20px
+}
+IMG {
+	BORDER-TOP-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; VERTICAL-ALIGN: middle; BORDER-RIGHT-WIDTH: 0px
+}
+INPUT {
+	BORDER-TOP-WIDTH: 1px; PADDING-RIGHT: 2px; PADDING-LEFT: 2px; BORDER-LEFT-WIDTH: 1px; BORDER-LEFT-COLOR: #ddd; BACKGROUND: #fff; BORDER-BOTTOM-WIDTH: 1px; BORDER-BOTTOM-COLOR: #ddd; PADDING-BOTTOM: 2px; BORDER-TOP-COLOR: #ddd; PADDING-TOP: 2px; BORDER-RIGHT-WIDTH: 1px; BORDER-RIGHT-COLOR: #ddd
+}
+
+.GOPAGE{
+	FONT-SIZE: 11px; VERTICAL-ALIGN: middle; FONT-FAMILY: tahoma,����,fantasy;height: 18
+}
+
+TEXTAREA {
+	BORDER-TOP-WIDTH: 1px; PADDING-RIGHT: 2px; PADDING-LEFT: 2px; BORDER-LEFT-WIDTH: 1px; BORDER-LEFT-COLOR: #ddd; BACKGROUND: #fff; BORDER-BOTTOM-WIDTH: 1px; BORDER-BOTTOM-COLOR: #ddd; PADDING-BOTTOM: 2px; BORDER-TOP-COLOR: #ddd; PADDING-TOP: 2px; BORDER-RIGHT-WIDTH: 1px; BORDER-RIGHT-COLOR: #ddd
+}
+
+BUTTON {
+	FONT-SIZE: 12px; VERTICAL-ALIGN: middle; FONT-FAMILY: tahoma,����,fantasy;
+	WIDTH:50PX;
+}
+INPUT {
+	FONT-SIZE: 19px; VERTICAL-ALIGN: middle; FONT-FAMILY: tahoma,����,fantasy;
+	height: 36px; *height: 32px;
+}
+SELECT {
+	FONT-SIZE: 12px; VERTICAL-ALIGN: middle; FONT-FAMILY: tahoma,����,fantasy
+}
+TEXTAREA {
+	FONT-SIZE: 12px; VERTICAL-ALIGN: middle; FONT-FAMILY: tahoma,����,fantasy
+}
+
+#linkstyle1 {
+     font-size: 11pt;font-family: inherit;	
+}
+
+#linkstyle2 {
+     font-size: 10pt;font-family: inherit;	
+}

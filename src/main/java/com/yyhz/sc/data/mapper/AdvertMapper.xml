@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.yyhz.sc.data.dao.AdvertDao">
+
+	<resultMap id="colomnResult" type="com.yyhz.sc.data.model.Advert">
+		<id property="id" column="id" />
+		<result property="position" column="position" />
+		<result property="title" column="title" />
+		<result property="type" column="type" />
+		<result property="imgUuid" column="imgUuid" />
+		<result property="picurl" column="picurl" />
+		<result property="params" column="params" />
+		<result property="readNum" column="readNum" />
+		<result property="creater" column="creater" />
+		<result property="createTime" column="createTime" />
+		<result property="status" column="status" />
+		<result property="operater" column="operater" />
+		<result property="operateTime" column="operateTime" />
+		<result property="orderNum" column="orderNum" />
+		<result property="orderTime" column="orderTime" />
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     position,
+	     title,
+	     type,
+	     imgUuid,
+	     params,
+	     readNum,
+	     creater,
+	     createTime,
+	     status,
+	     operater,
+	     operateTime,
+	     orderNum,
+	     orderTime
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into advert  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="position!=null">position,</if>
+			     <if test="title!=null">title,</if>
+			     <if test="type!=null">type,</if>
+			     <if test="imgUuid!=null">imgUuid,</if>
+			     <if test="picurl!=null">picurl,</if>
+			     <if test="params!=null">params,</if>
+			     <if test="readNum!=null">readNum,</if>
+			     <if test="creater!=null">creater,</if>
+			     <if test="createTime!=null">createTime,</if>
+			     <if test="status!=null">status,</if>
+			     <if test="operater!=null">operater,</if>
+			     <if test="operateTime!=null">operateTime,</if>
+			     <if test="orderNum!=null">orderNum,</if>
+			     <if test="orderTime!=null">orderTime,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="position!=null">#{position},</if>
+			     <if test="title!=null">#{title},</if>
+			     <if test="type!=null">#{type},</if>
+			     <if test="imgUuid!=null">#{imgUuid},</if>
+			     <if test="picurl!=null">#{picurl},</if>
+			     <if test="params!=null">#{params},</if>
+			     <if test="readNum!=null">#{readNum},</if>
+			     <if test="creater!=null">#{creater},</if>
+			     <if test="createTime!=null">#{createTime},</if>
+			     <if test="status!=null">#{status},</if>
+			     <if test="operater!=null">#{operater},</if>
+			     <if test="operateTime!=null">#{operateTime},</if>
+			     <if test="orderNum!=null">#{orderNum},</if>
+			     <if test="orderTime!=null">#{orderTime},</if>
+		</trim>
+	</insert>
+
+	<update id="update">
+	   update advert 
+	   <set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="position!=null">position=#{position},</if>
+			     <if test="title!=null">title=#{title},</if>
+			     <if test="type!=null">type=#{type},</if>
+			     <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
+			     <if test="picurl!=null">picurl=#{picurl},</if>
+			     <if test="params!=null">params=#{params},</if>
+			     <if test="readNum!=null">readNum=#{readNum},</if>
+			     <if test="creater!=null">creater=#{creater},</if>
+			     <if test="createTime!=null">createTime=#{createTime},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="operater!=null">operater=#{operater},</if>
+			     <if test="operateTime!=null">operateTime=#{operateTime},</if>
+			     <if test="orderNum!=null">orderNum=#{orderNum},</if>
+			     <if test="orderTime!=null">orderTime=#{orderTime},</if>
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     advert 
+	   where 
+	    id=#{id} 
+	</delete>
+	
+	<!-- 关联查询图片url -->
+	<select id="selectAdvertWithUrl" resultMap="colomnResult">
+		select a.id,a.position,a.title,a.type,a.imgUuid,a.params,a.readNum,a.creater,a.createTime,a.status,a.operater,a.operateTime,a.orderNum,a.orderTime,sp.urlPath as picurl
+		from advert a 
+		join system_picture_info sp on a.imgUuid = sp.uuid
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" position != null and position != '' ">
+					and position=#{position} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and title=#{title} 
+				</if>
+				<if test=" type != null ">
+					and type=#{type} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
+				<if test=" params != null and params != '' ">
+					and params=#{params} 
+				</if>
+				<if test=" readNum != null and readNum != '' ">
+					and readNum=#{readNum} 
+				</if>
+				<if test=" creater != null and creater != '' ">
+					and creater=#{creater} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and createTime=#{createTime} 
+				</if>
+				<if test=" status != null ">
+					and status=#{status} 
+				</if>
+				<if test=" operater != null and operater != '' ">
+					and operater=#{operater} 
+				</if>
+				<if test=" operateTime != null and operateTime != '' ">
+					and operateTime=#{operateTime} 
+				</if>
+				<if test=" orderNum != null and orderNum != '' ">
+					and orderNum=#{orderNum} 
+				</if>
+				<if test=" orderTime != null and orderTime != '' ">
+					and orderTime=#{orderTime} 
+				</if>
+		</where>
+		order by a.orderNum asc, a.orderTime desc
+ 	</select>
+
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from advert
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" position != null and position != '' ">
+					and position=#{position} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and title=#{title} 
+				</if>
+				<if test=" type != null ">
+					and type=#{type} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
+				<if test=" picurl != null and picurl != '' ">
+					and picurl=#{picurl} 
+				</if>
+				<if test=" params != null and params != '' ">
+					and params=#{params} 
+				</if>
+				<if test=" readNum != null and readNum != '' ">
+					and readNum=#{readNum} 
+				</if>
+				<if test=" creater != null and creater != '' ">
+					and creater=#{creater} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and createTime=#{createTime} 
+				</if>
+				<if test=" status != null ">
+					and status=#{status} 
+				</if>
+				<if test=" operater != null and operater != '' ">
+					and operater=#{operater} 
+				</if>
+				<if test=" operateTime != null and operateTime != '' ">
+					and operateTime=#{operateTime} 
+				</if>
+				<if test=" orderNum != null and orderNum != '' ">
+					and orderNum=#{orderNum} 
+				</if>
+				<if test=" orderTime != null and orderTime != '' ">
+					and orderTime=#{orderTime} 
+				</if>
+		</where>
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from advert
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" position != null and position != '' ">
+					and position=#{position} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and title=#{title} 
+				</if>
+				<if test=" type != null ">
+					and type=#{type} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
+				<if test=" picurl != null and picurl != '' ">
+					and picurl=#{picurl} 
+				</if>
+				<if test=" params != null and params != '' ">
+					and params=#{params} 
+				</if>
+				<if test=" readNum != null and readNum != '' ">
+					and readNum=#{readNum} 
+				</if>
+				<if test=" creater != null and creater != '' ">
+					and creater=#{creater} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and createTime=#{createTime} 
+				</if>
+				<if test=" status != null ">
+					and status=#{status} 
+				</if>
+				<if test=" operater != null and operater != '' ">
+					and operater=#{operater} 
+				</if>
+				<if test=" operateTime != null and operateTime != '' ">
+					and operateTime=#{operateTime} 
+				</if>
+				<if test=" orderNum != null and orderNum != '' ">
+					and orderNum=#{orderNum} 
+				</if>
+				<if test=" orderTime != null and orderTime != '' ">
+					and orderTime=#{orderTime} 
+				</if>
+		</where>
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+
+		select count(id) from advert
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" position != null and position != '' ">
+					and position=#{position} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and title=#{title} 
+				</if>
+				<if test=" type != null ">
+					and type=#{type} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
+				<if test=" picurl != null and picurl != '' ">
+					and picurl=#{picurl} 
+				</if>
+				<if test=" params != null and params != '' ">
+					and params=#{params} 
+				</if>
+				<if test=" readNum != null and readNum != '' ">
+					and readNum=#{readNum} 
+				</if>
+				<if test=" creater != null and creater != '' ">
+					and creater=#{creater} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and createTime=#{createTime} 
+				</if>
+				<if test=" status != null ">
+					and status=#{status} 
+				</if>
+				<if test=" operater != null and operater != '' ">
+					and operater=#{operater} 
+				</if>
+				<if test=" operateTime != null and operateTime != '' ">
+					and operateTime=#{operateTime} 
+				</if>
+				<if test=" orderNum != null and orderNum != '' ">
+					and orderNum=#{orderNum} 
+				</if>
+				<if test=" orderTime != null and orderTime != '' ">
+					and orderTime=#{orderTime} 
+				</if>
+		</where>
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from advert where 
+			
+			   	 id=#{id} 
+		]]>
+		
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from advert where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from advert where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update advert
+		<set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="position!=null">position=#{position},</if>
+			     <if test="title!=null">title=#{title},</if>
+			     <if test="type!=null">type=#{type},</if>
+			     <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
+			     <if test="picurl!=null">picurl=#{picurl},</if>
+			     <if test="params!=null">params=#{params},</if>
+			     <if test="readNum!=null">readNum=#{readNum},</if>
+			     <if test="creater!=null">creater=#{creater},</if>
+			     <if test="createTime!=null">createTime=#{createTime},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="operater!=null">operater=#{operater},</if>
+			     <if test="operateTime!=null">operateTime=#{operateTime},</if>
+			     <if test="orderNum!=null">orderNum=#{orderNum},</if>
+			     <if test="orderTime!=null">orderTime=#{orderTime},</if>
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+</mapper> 

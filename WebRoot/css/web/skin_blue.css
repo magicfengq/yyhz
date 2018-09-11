@@ -1,0 +1,11 @@
+.ul-page li{
+	background: #b0d1f1;
+	border:1px solid #4da3f6;
+	font-size:12px;
+	color:#4da3f6;
+	box-shadow:0px 0px 1px 1px #77b8f5 inset;
+}
+.ul-cj li{
+	color:#75b929;
+	font-size: 12px;
+}

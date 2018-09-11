@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.yyhz.sc.data.dao.VersionInfoDao">
+
+	<resultMap id="colomnResult" type="com.yyhz.sc.data.model.VersionInfo">
+		<id property="id" column="id" />
+		<result property="versionCode" column="versionCode" />
+		<result property="description" column="description" />
+		<result property="createTime" column="createTime" />
+		<result property="type" column="type" />
+		<result property="downloadUrl" column="downloadUrl" />
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     versionCode,
+	     description,
+	     createTime,
+	     type,
+	     downloadUrl
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into version_info  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="versionCode!=null">versionCode,</if>
+			     <if test="description!=null">description,</if>
+			     <if test="createTime!=null">createTime,</if>
+			     <if test="type!=null">type,</if>
+			     <if test="downloadUrl!=null">downloadUrl,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="versionCode!=null">#{versionCode},</if>
+			     <if test="description!=null">#{description},</if>
+			     <if test="createTime!=null">#{createTime},</if>
+			     <if test="type!=null">#{type},</if>
+			     <if test="downloadUrl!=null">#{downloadUrl},</if>
+		</trim>
+	</insert>
+
+	<update id="update">
+	   update version_info 
+	   <set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="versionCode!=null">versionCode=#{versionCode},</if>
+			     <if test="description!=null">description=#{description},</if>
+			     <if test="createTime!=null">createTime=#{createTime},</if>
+			     <if test="type!=null">type=#{type},</if>
+			     <if test="downloadUrl!=null">downloadUrl=#{downloadUrl},</if>
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     version_info 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from version_info
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" versionCode != null and versionCode != '' ">
+					and versionCode=#{versionCode} 
+				</if>
+				<if test=" description != null and description != '' ">
+					and description=#{description} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and createTime=#{createTime} 
+				</if>
+				<if test=" type != null and type != '' ">
+					and type=#{type} 
+				</if>
+				<if test=" downloadUrl != null and downloadUrl != '' ">
+					and downloadUrl=#{downloadUrl} 
+				</if>
+		</where>
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from version_info
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" versionCode != null and versionCode != '' ">
+					and versionCode=#{versionCode} 
+				</if>
+				<if test=" description != null and description != '' ">
+					and description=#{description} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and createTime=#{createTime} 
+				</if>
+				<if test=" type != null and type != '' ">
+					and type=#{type} 
+				</if>
+				<if test=" downloadUrl != null and downloadUrl != '' ">
+					and downloadUrl=#{downloadUrl} 
+				</if>
+		</where>
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+
+		select count(id) from version_info
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" versionCode != null and versionCode != '' ">
+					and versionCode=#{versionCode} 
+				</if>
+				<if test=" description != null and description != '' ">
+					and description=#{description} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and createTime=#{createTime} 
+				</if>
+				<if test=" type != null and type != '' ">
+					and type=#{type} 
+				</if>
+				<if test=" downloadUrl != null and downloadUrl != '' ">
+					and downloadUrl=#{downloadUrl} 
+				</if>
+		</where>
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from version_info where 
+			
+			   	 id=#{id} 
+		]]>
+		
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from version_info where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from version_info where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update version_info
+		<set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="versionCode!=null">versionCode=#{versionCode},</if>
+			     <if test="description!=null">description=#{description},</if>
+			     <if test="createTime!=null">createTime=#{createTime},</if>
+			     <if test="type!=null">type=#{type},</if>
+			     <if test="downloadUrl!=null">downloadUrl=#{downloadUrl},</if>
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+</mapper> 

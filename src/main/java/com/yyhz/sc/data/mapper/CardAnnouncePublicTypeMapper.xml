@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.yyhz.sc.data.dao.CardAnnouncePublicTypeDao">
+
+	<resultMap id="colomnResult" type="com.yyhz.sc.data.model.CardAnnouncePublicType">
+		<id property="id" column="id" />
+		<result property="cardAnnounceId" column="cardAnnounceId" />
+		<result property="publicTypeId" column="publicTypeId" />
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     cardAnnounceId,
+	     publicTypeId
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into card_announce_public_type  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="cardAnnounceId!=null">cardAnnounceId,</if>
+			     <if test="publicTypeId!=null">publicTypeId,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="cardAnnounceId!=null">#{cardAnnounceId},</if>
+			     <if test="publicTypeId!=null">#{publicTypeId},</if>
+		</trim>
+	</insert>
+	
+	<insert id="batchInsert">
+	   insert into card_announce_public_type (id,cardAnnounceId,publicTypeId) values
+	   	<foreach collection ="list" item="item" index= "index" separator =",">
+			(#{item.id}, #{item.cardAnnounceId},#{item.publicTypeId})
+		</foreach >
+	</insert>
+	
+
+	<update id="update">
+	   update card_announce_public_type 
+	   <set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="cardAnnounceId!=null">cardAnnounceId=#{cardAnnounceId},</if>
+			     <if test="publicTypeId!=null">publicTypeId=#{publicTypeId},</if>
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     card_announce_public_type 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<delete id="deleteByCardAnnounceId">
+	   delete from
+	     card_announce_public_type 
+	   where 
+	    cardAnnounceId=#{cardAnnounceId} 
+	</delete>
+
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from card_announce_public_type
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" cardAnnounceId != null and cardAnnounceId != '' ">
+					and cardAnnounceId=#{cardAnnounceId} 
+				</if>
+				<if test=" publicTypeId != null and publicTypeId != '' ">
+					and publicTypeId=#{publicTypeId} 
+				</if>
+		</where>
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from card_announce_public_type
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" cardAnnounceId != null and cardAnnounceId != '' ">
+					and cardAnnounceId=#{cardAnnounceId} 
+				</if>
+				<if test=" publicTypeId != null and publicTypeId != '' ">
+					and publicTypeId=#{publicTypeId} 
+				</if>
+		</where>
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+
+		select count(id) from card_announce_public_type
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" cardAnnounceId != null and cardAnnounceId != '' ">
+					and cardAnnounceId=#{cardAnnounceId} 
+				</if>
+				<if test=" publicTypeId != null and publicTypeId != '' ">
+					and publicTypeId=#{publicTypeId} 
+				</if>
+		</where>
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from card_announce_public_type where 
+			
+			   	 id=#{id} 
+		]]>
+		
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from card_announce_public_type where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from card_announce_public_type where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update card_announce_public_type
+		<set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="cardAnnounceId!=null">cardAnnounceId=#{cardAnnounceId},</if>
+			     <if test="publicTypeId!=null">publicTypeId=#{publicTypeId},</if>
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+</mapper> 

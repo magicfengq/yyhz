@@ -1,0 +1,14 @@
+.mytable {text-align: center;border-collapse: collapse;width: 100%;}
+.mytable th {background-color: #0099FF;height: 30px;color: #ffffff;border: 1px solid #797979;}
+.mytable td {border: 1px solid #797979;}
+.myT th {width: 80px;text-align: right;}
+.text {vertical-align: middle;border: 1px solid #95B8E7;height: 23px;width: 250px;}
+.inputText {vertical-align: middle;border: 1px solid #95B8E7;height: 23px;width: 150px;}
+.checkbox {vertical-align: middle;}
+.t_grid {border: 1px solid #95B8E7;text-align: center;}
+.t_grid_title {background-image: url("../images/t_01.jpg");background-repeat: repeat-x;height: 26px;color: #0E2D5F;}
+.t_grid_title th {text-align: left;border-bottom: 1px solid #95B8E7;padding: 0px 0px 0px 5px;}
+.t_grid_tool th{background-color: #F4F4F4;text-align: left;height: 30px;border-bottom: 1px solid #DDDDDD;}
+.t_grid_title1 td{background-color: #F4F4F4;height: 26px;border-bottom: 1px solid #DDDDDD;border-left: 1px dotted #CCCCCC;}
+.t_grid_body td{height: 26px;border-left: 1px dotted #CCCCCC;}
+.addContacts{display: none;padding: 5px;}

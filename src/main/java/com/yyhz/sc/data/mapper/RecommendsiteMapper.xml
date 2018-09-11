@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.yyhz.sc.data.dao.RecommendsiteDao">
+
+	<resultMap id="colomnResult" type="com.yyhz.sc.data.model.Recommendsite">
+		<id property="id" column="id" />
+		<result property="sitename" column="sitename" />
+		<result property="siteaddress" column="siteaddress" />
+		<result property="enterclose" column="enterclose" />
+		<result property="sitetelephone" column="sitetelephone" />
+		<result property="recomname" column="recomname" />
+		<result property="recomphone" column="recomphone" />
+		<result property="otherexplain" column="otherexplain" />
+		<result property="createdate" column="createdate" />
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     sitename,
+	     siteaddress,
+	     enterclose,
+	     sitetelephone,
+	     recomname,
+	     recomphone,
+	     otherexplain,
+	     createdate
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into recommendsite  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="sitename!=null">sitename,</if>
+			     <if test="siteaddress!=null">siteaddress,</if>
+			     <if test="enterclose!=null">enterclose,</if>
+			     <if test="sitetelephone!=null">sitetelephone,</if>
+			     <if test="recomname!=null">recomname,</if>
+			     <if test="recomphone!=null">recomphone,</if>
+			     <if test="otherexplain!=null">otherexplain,</if>
+			     <if test="createdate!=null">createdate,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="sitename!=null">#{sitename},</if>
+			     <if test="siteaddress!=null">#{siteaddress},</if>
+			     <if test="enterclose!=null">#{enterclose},</if>
+			     <if test="sitetelephone!=null">#{sitetelephone},</if>
+			     <if test="recomname!=null">#{recomname},</if>
+			     <if test="recomphone!=null">#{recomphone},</if>
+			     <if test="otherexplain!=null">#{otherexplain},</if>
+			     <if test="createdate!=null">#{createdate},</if>
+		</trim>
+	</insert>
+
+	<update id="update">
+	   update recommendsite 
+	   <set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="sitename!=null">sitename=#{sitename},</if>
+			     <if test="siteaddress!=null">siteaddress=#{siteaddress},</if>
+			     <if test="enterclose!=null">enterclose=#{enterclose},</if>
+			     <if test="sitetelephone!=null">sitetelephone=#{sitetelephone},</if>
+			     <if test="recomname!=null">recomname=#{recomname},</if>
+			     <if test="recomphone!=null">recomphone=#{recomphone},</if>
+			     <if test="otherexplain!=null">otherexplain=#{otherexplain},</if>
+			     <if test="createdate!=null">createdate=#{createdate},</if>
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     recommendsite 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from recommendsite
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" sitename != null and sitename != '' ">
+					and sitename=#{sitename} 
+				</if>
+				<if test=" siteaddress != null and siteaddress != '' ">
+					and siteaddress=#{siteaddress} 
+				</if>
+				<if test=" enterclose != null and enterclose != '' ">
+					and enterclose=#{enterclose} 
+				</if>
+				<if test=" sitetelephone != null and sitetelephone != '' ">
+					and sitetelephone=#{sitetelephone} 
+				</if>
+				<if test=" recomname != null and recomname != '' ">
+					and recomname=#{recomname} 
+				</if>
+				<if test=" recomphone != null and recomphone != '' ">
+					and recomphone=#{recomphone} 
+				</if>
+				<if test=" otherexplain != null and otherexplain != '' ">
+					and otherexplain=#{otherexplain} 
+				</if>
+				<if test=" createdate != null and createdate != '' ">
+					and createdate=#{createdate} 
+				</if>
+		</where>
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from recommendsite
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" sitename != null and sitename != '' ">
+					and sitename=#{sitename} 
+				</if>
+				<if test=" siteaddress != null and siteaddress != '' ">
+					and siteaddress=#{siteaddress} 
+				</if>
+				<if test=" enterclose != null and enterclose != '' ">
+					and enterclose=#{enterclose} 
+				</if>
+				<if test=" sitetelephone != null and sitetelephone != '' ">
+					and sitetelephone=#{sitetelephone} 
+				</if>
+				<if test=" recomname != null and recomname != '' ">
+					and recomname=#{recomname} 
+				</if>
+				<if test=" recomphone != null and recomphone != '' ">
+					and recomphone=#{recomphone} 
+				</if>
+				<if test=" otherexplain != null and otherexplain != '' ">
+					and otherexplain=#{otherexplain} 
+				</if>
+				<if test=" createdate != null and createdate != '' ">
+					and createdate=#{createdate} 
+				</if>
+		</where>
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+
+		select count(id) from recommendsite
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" sitename != null and sitename != '' ">
+					and sitename=#{sitename} 
+				</if>
+				<if test=" siteaddress != null and siteaddress != '' ">
+					and siteaddress=#{siteaddress} 
+				</if>
+				<if test=" enterclose != null and enterclose != '' ">
+					and enterclose=#{enterclose} 
+				</if>
+				<if test=" sitetelephone != null and sitetelephone != '' ">
+					and sitetelephone=#{sitetelephone} 
+				</if>
+				<if test=" recomname != null and recomname != '' ">
+					and recomname=#{recomname} 
+				</if>
+				<if test=" recomphone != null and recomphone != '' ">
+					and recomphone=#{recomphone} 
+				</if>
+				<if test=" otherexplain != null and otherexplain != '' ">
+					and otherexplain=#{otherexplain} 
+				</if>
+				<if test=" createdate != null and createdate != '' ">
+					and createdate=#{createdate} 
+				</if>
+		</where>
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from recommendsite where 
+			
+			   	 id=#{id} 
+		]]>
+		
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from recommendsite where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from recommendsite where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update recommendsite
+		<set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="sitename!=null">sitename=#{sitename},</if>
+			     <if test="siteaddress!=null">siteaddress=#{siteaddress},</if>
+			     <if test="enterclose!=null">enterclose=#{enterclose},</if>
+			     <if test="sitetelephone!=null">sitetelephone=#{sitetelephone},</if>
+			     <if test="recomname!=null">recomname=#{recomname},</if>
+			     <if test="recomphone!=null">recomphone=#{recomphone},</if>
+			     <if test="otherexplain!=null">otherexplain=#{otherexplain},</if>
+			     <if test="createdate!=null">createdate=#{createdate},</if>
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+</mapper> 

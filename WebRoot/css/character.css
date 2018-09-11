@@ -1,0 +1,84 @@
+.character {
+	width: 100%;
+	padding: 0.6rem 0.6rem 0.6rem 6.6rem;
+	background: #FFFFFF;
+	margin-bottom: 1rem;
+	overflow: hidden;
+	position:relative;
+}
+
+.c_photo {
+	position:absolute;
+	left:0.6rem;
+	top:0.6rem;
+	width: 5.5rem;
+	height:5.5rem;
+	overflow: hidden;
+	
+}
+.character_detail{width:100%;}
+.character_name {
+	display: inline-block;
+	margin-bottom:0.6rem;
+	max-width: 100%;
+	font-size: 1.7rem;
+	background-origin: padding-box;
+	-webkit-background-origin: padding-box;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+.women{padding-right: 1rem;
+	background: url(../img/sex.png) no-repeat;
+	background-position: right center;
+	background-size: 0.8rem 1.2rem;}
+.men{padding-right: 1.3rem;
+	background: url(../img/tubiao_21.png) no-repeat;
+	background-position: right center;
+	background-size: 1rem 1.1rem;
+}
+.characteritic{overflow: hidden;}
+.characteritic span {
+	width: 4.6rem;
+    display: inline-table;
+    float:left;
+	border: 1px solid #a87525;
+	border-radius: 1.2rem;
+	-webkit-border-radius: 1.2rem;
+	-moz-border-radius: 1.2rem;
+	-ms-border-radius: 1.2rem;
+	vertical-align:middle;
+	color: #a87525;
+	text-align: center;
+	font-size: 1rem;
+	overflow: hidden;
+	white-space: nowrap;
+	margin-right: 0.5rem;
+}
+
+.character_words {
+	margin-left:-6rem;
+	padding-top: 2rem;
+	font-size:1.2rem;
+}
+
+.actors_line {
+	width: 100%;
+	padding: 1rem;
+	background: #FFFFFF;
+	margin-bottom: 1rem;
+	overflow: hidden;
+}
+
+.actors_line span {
+	display: inline-block;
+	height: 2rem;
+	line-height: 2rem;
+	color: #FFFFFF;
+	border-radius: 1rem;
+	-webkit-border-radius: 1rem;
+	-moz-border-radius: 1rem;
+	background: #9c9c9c;
+	padding: 0 1.2rem;
+	margin-bottom: 0.5rem;
+}

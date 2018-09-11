@@ -1,0 +1,19 @@
+.q_pic{width: 100%;
+       padding: 15px 0;}
+.q_pic img{width: 24%;}
+.q_block{margin:0 15px 10px;
+         background: #FFFFFF;
+         -webkit-border-radius: 5px;
+         border-radius: 5px;
+         }
+.q_title{font-size: 16px;
+         color: #b69562;
+         padding: 10px 10px 10px 30px;
+         border-bottom: 1px solid #efefef;
+         position: relative;}
+.q_title span{position: absolute;
+              left: 10px;
+              top: 9px;}
+.q_detail{padding: 10px;
+          color: #000000;
+          }

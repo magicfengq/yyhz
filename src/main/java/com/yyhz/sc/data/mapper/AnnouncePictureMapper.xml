@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.yyhz.sc.data.dao.AnnouncePictureDao">
+
+	<resultMap id="colomnResult" type="com.yyhz.sc.data.model.AnnouncePicture">
+		<id property="id" column="id" />
+		<result property="announceId" column="announceId" />
+		<result property="imgUuid" column="imgUuid" />
+	</resultMap>
+
+	<resultMap id="colomnResultWithUrl" type="com.yyhz.sc.data.model.AnnouncePicture" extends="colomnResult">
+		<result property="imgUrl" column="imgUrl" />
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     announceId,
+	     imgUuid
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into announce_picture  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="announceId!=null">announceId,</if>
+			     <if test="imgUuid!=null">imgUuid,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="announceId!=null">#{announceId},</if>
+			     <if test="imgUuid!=null">#{imgUuid},</if>
+		</trim>
+	</insert>
+
+	<insert id="batchInsert">
+	   insert into announce_picture (id,announceId,imgUuid) values
+	   	<foreach collection ="list" item="item" index= "index" separator =",">
+			(#{item.id}, #{item.announceId},#{item.imgUuid})
+		</foreach >
+	</insert>
+
+	<update id="update">
+	   update announce_picture 
+	   <set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="announceId!=null">announceId=#{announceId},</if>
+			     <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
+		</set>
+		where 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     announce_picture 
+	   where 
+	</delete>
+
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from announce_picture
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" announceId != null and announceId != '' ">
+					and announceId=#{announceId} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
+		</where>
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAllWithUrl"  resultMap="colomnResultWithUrl">
+		select
+		a.id,
+		a.announceId,
+		a.imgUuid,
+		spi.urlPath as imgUrl
+		
+		from announce_picture a
+		join system_picture_info spi on a.imgUuid = spi.uuid
+		
+		<where>
+				<if test=" id != null and id != '' ">
+					and a.id=#{id} 
+				</if>
+				<if test=" announceId != null and announceId != '' ">
+					and a.announceId=#{announceId} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and a.imgUuid=#{imgUuid} 
+				</if>
+		</where>
+	</select>
+	
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from announce_picture
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" announceId != null and announceId != '' ">
+					and announceId=#{announceId} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
+		</where>
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+
+		select count(id) from announce_picture
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" announceId != null and announceId != '' ">
+					and announceId=#{announceId} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
+		</where>
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from announce_picture where 
+			
+		]]>
+		
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from announce_picture where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from announce_picture where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update announce_picture
+		<set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="announceId!=null">announceId=#{announceId},</if>
+			     <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+</mapper> 

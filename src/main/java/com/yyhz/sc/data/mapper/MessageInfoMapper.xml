@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.yyhz.sc.data.dao.MessageInfoDao">
+
+	<resultMap id="colomnResult" type="com.yyhz.sc.data.model.MessageInfo">
+		<id property="id" column="id" />
+		<result property="type" column="type" />
+		<result property="title" column="title" />
+		<result property="creater" column="creater" />
+		<result property="createTime" column="createTime" />
+		<result property="content" column="content" />
+		<result property="params" column="params" />
+		<result property="sendTime" column="sendTime" />
+		<result property="status" column="status" />
+		<result property="sendTarget" column="sendTarget" />
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     type,
+	     title,
+	     creater,
+	     createTime,
+	     content,
+	     params,
+	     sendTime,
+	     status,
+	     sendTarget
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into message_info  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="type!=null">type,</if>
+			     <if test="title!=null">title,</if>
+			     <if test="creater!=null">creater,</if>
+			     <if test="createTime!=null">createTime,</if>
+			     <if test="content!=null">content,</if>
+			     <if test="params!=null">params,</if>
+			     <if test="sendTime!=null">sendTime,</if>
+			     <if test="status!=null">status,</if>
+			     <if test="sendTarget!=null">sendTarget,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="type!=null">#{type},</if>
+			     <if test="title!=null">#{title},</if>
+			     <if test="creater!=null">#{creater},</if>
+			     <if test="createTime!=null">#{createTime},</if>
+			     <if test="content!=null">#{content},</if>
+			     <if test="params!=null">#{params},</if>
+			     <if test="sendTime!=null">#{sendTime},</if>
+			     <if test="status!=null">#{status},</if>
+			     <if test="sendTarget!=null">#{sendTarget},</if>
+		</trim>
+	</insert>
+
+	<update id="update">
+	   update message_info 
+	   <set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="type!=null">type=#{type},</if>
+			     <if test="title!=null">title=#{title},</if>
+			     <if test="creater!=null">creater=#{creater},</if>
+			     <if test="createTime!=null">createTime=#{createTime},</if>
+			     <if test="content!=null">content=#{content},</if>
+			     <if test="params!=null">params=#{params},</if>
+			     <if test="sendTime!=null">sendTime=#{sendTime},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="sendTarget!=null">sendTarget=#{sendTarget},</if>
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     message_info 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from message_info
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" type != null and type != '' ">
+					and type=#{type} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and title=#{title} 
+				</if>
+				<if test=" creater != null and creater != '' ">
+					and creater=#{creater} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and createTime=#{createTime} 
+				</if>
+				<if test=" content != null and content != '' ">
+					and content=#{content} 
+				</if>
+				<if test=" params != null and params != '' ">
+					and params=#{params} 
+				</if>
+				<if test=" sendTime != null and sendTime != '' ">
+					and sendTime=#{sendTime} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" sendTarget != null and sendTarget != '' ">
+					and sendTarget=#{sendTarget} 
+				</if>
+		</where>
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from message_info
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" type != null and type != '' ">
+					and type=#{type} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and title=#{title} 
+				</if>
+				<if test=" creater != null and creater != '' ">
+					and creater=#{creater} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and createTime=#{createTime} 
+				</if>
+				<if test=" content != null and content != '' ">
+					and content=#{content} 
+				</if>
+				<if test=" params != null and params != '' ">
+					and params=#{params} 
+				</if>
+				<if test=" sendTime != null and sendTime != '' ">
+					and sendTime=#{sendTime} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" sendTarget != null and sendTarget != '' ">
+					and sendTarget=#{sendTarget} 
+				</if>
+		</where>
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+
+		select count(id) from message_info
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" type != null and type != '' ">
+					and type=#{type} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and title=#{title} 
+				</if>
+				<if test=" creater != null and creater != '' ">
+					and creater=#{creater} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and createTime=#{createTime} 
+				</if>
+				<if test=" content != null and content != '' ">
+					and content=#{content} 
+				</if>
+				<if test=" params != null and params != '' ">
+					and params=#{params} 
+				</if>
+				<if test=" sendTime != null and sendTime != '' ">
+					and sendTime=#{sendTime} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" sendTarget != null and sendTarget != '' ">
+					and sendTarget=#{sendTarget} 
+				</if>
+		</where>
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from message_info where 
+			
+			   	 id=#{id} 
+		]]>
+		
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from message_info where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from message_info where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update message_info
+		<set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="type!=null">type=#{type},</if>
+			     <if test="title!=null">title=#{title},</if>
+			     <if test="creater!=null">creater=#{creater},</if>
+			     <if test="createTime!=null">createTime=#{createTime},</if>
+			     <if test="content!=null">content=#{content},</if>
+			     <if test="params!=null">params=#{params},</if>
+			     <if test="sendTime!=null">sendTime=#{sendTime},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="sendTarget!=null">sendTarget=#{sendTarget},</if>
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+</mapper> 

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.yyhz.sc.data.dao.FeedbackDao">
+
+	<resultMap id="colomnResult" type="com.yyhz.sc.data.model.Feedback">
+		<id property="id" column="id" />
+		<result property="type" column="type" />
+		<result property="content" column="content" />
+		<result property="userId" column="userId" />
+		<result property="createDate" column="createDate" />
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     type,
+	     content,
+	     userId,
+	     createDate
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into feedback  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="type!=null">type,</if>
+			     <if test="content!=null">content,</if>
+			     <if test="userId!=null">userId,</if>
+			     <if test="createDate!=null">createDate,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="type!=null">#{type},</if>
+			     <if test="content!=null">#{content},</if>
+			     <if test="userId!=null">#{userId},</if>
+			     <if test="createDate!=null">#{createDate},</if>
+		</trim>
+	</insert>
+
+	<update id="update">
+	   update feedback 
+	   <set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="type!=null">type=#{type},</if>
+			     <if test="content!=null">content=#{content},</if>
+			     <if test="userId!=null">userId=#{userId},</if>
+			     <if test="createDate!=null">createDate=#{createDate},</if>
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     feedback 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	 	id,
+	 	title,
+	     type,
+	     content,
+	     userId,
+	     createDate
+	   from feedback a
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and title like CONCAT('%','${title}','%') 
+				</if>
+				<if test=" type != null and type != '' ">
+					and type=#{type} 
+				</if>
+				<if test=" content != null and content != '' ">
+					and content=#{content} 
+				</if>
+				<if test=" userId != null and userId != '' ">
+					and userId=#{userId} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+		</where>
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		select
+		<![CDATA[
+		a.id,
+	 	a.title,
+	     a.type,
+	     a.content,
+	     a.userId,
+	     a.createDate,
+	   		b.name username 
+			from feedback a
+			left join actor_info b on b.id=a.userId
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and a.id=#{id} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and a.title like CONCAT('%','${title}','%') 
+				</if>
+				<if test=" type != null and type != '' ">
+					and a.type=#{type} 
+				</if>
+				<if test=" content != null and content != '' ">
+					and a.content=#{content} 
+				</if>
+				<if test=" userId != null and userId != '' ">
+					and a.userId=#{userId} 
+				</if>
+				<if test=" username != null and username != '' ">
+					and b.name like CONCAT('%','${username}','%') 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and a.createDate=#{createDate} 
+				</if>
+		</where>
+		<if test="sort != null">
+				order by a.${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+
+		select count(id) from feedback
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" type != null and type != '' ">
+					and type=#{type} 
+				</if>
+				<if test=" content != null and content != '' ">
+					and content=#{content} 
+				</if>
+				<if test=" userId != null and userId != '' ">
+					and userId=#{userId} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+		</where>
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from feedback where 
+			
+			   	 id=#{id} 
+		]]>
+		
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from feedback where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from feedback where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update feedback
+		<set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="type!=null">type=#{type},</if>
+			     <if test="content!=null">content=#{content},</if>
+			     <if test="userId!=null">userId=#{userId},</if>
+			     <if test="createDate!=null">createDate=#{createDate},</if>
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+</mapper> 

@@ -1,0 +1,370 @@
+@charset "utf-8";
+.c_person_info {
+	width: 100%;
+	padding: 0.6rem 0.6rem 0.6rem 6.6rem;
+	margin-bottom: 0.5rem;
+	background: #FFFFFF;
+	position: relative;
+}
+
+.c_photo {
+	width: 5.5rem;
+	overflow: hidden;
+	position: absolute;
+	left: 0.6rem;
+	top: 0.6rem;
+}
+
+.c_name_info {
+	width: 100%;
+	position: relative;
+}
+
+.c_name {
+	font-size: 1.6rem;
+	width: 100%;
+	color:#b69562;
+}
+
+.c_icon {
+	display: inline-block;
+	width: 1.2rem;
+	height: 1.2rem;
+	line-height: 1.2rem;
+	text-align: center;
+	border-radius: 1.2rem;
+	-webkit-border-radius: 1.2rem;
+	-moz-border-radius: 1.2rem;
+	background: #b69562;
+	color: #FFFFFF;
+	font-size: 1rem;
+	margin-bottom: 0.3rem;
+}
+.c_time{margin-bottom: 0.2rem;}
+
+
+/*  */
+
+.add {
+	width: 100%;
+	padding: 0.6rem;
+	margin-bottom: 0.5rem;
+	background: #FFFFFF;
+}
+
+.c_title {
+	font-size: 1.8rem;
+	margin-bottom: 0.6rem;
+}
+
+.add span {
+	display: inline-block;
+	margin-right: 0.3rem;
+	border-radius: 0.5rem;
+	-webkit-border-radius: 0.5rem;
+	-moz-border-radius: 0.5rem;
+	height: 2rem;
+	font-size:1rem
+}
+
+.add span:last-child {
+	margin-right: 0;
+}
+
+span.green {
+	background: url(../img/icon_03.png) no-repeat #709630;
+	border:1px solid #709630;
+	background-position: -1.3rem center;
+	background-size: 1rem 1.1rem;
+	background-origin: content-box;
+	-webkit-background-origin: content-box;
+	padding: 0 1.3rem 0 2.5rem;
+	color: #FFFFFF;
+	line-height: 2rem;
+}
+
+span.blue {
+	background: url(../img/icon_06.png) no-repeat #4f86aa;
+	border:1px solid #4f86aa;
+	background-position: -1.4rem center;
+	background-size: 1.2rem 1.4rem;
+	background-origin: content-box;
+	-webkit-background-origin: content-box;
+	padding: 0 1.3rem 0 2.5rem;
+	color: #FFFFFF;
+	line-height: 2rem;
+}
+
+span.white {
+	background: #FFFFFF;
+	border: 1px solid #757575;
+	padding: 0 1.3rem;
+	color: #757575;
+	line-height: 2rem;
+}
+
+
+/*鍓х洰淇℃伅*/
+
+.c_title1 {
+	font-size: 1rem;
+	padding: 0 0.6rem;
+	color: #757575;
+	margin-bottom: 0.5rem;
+}
+
+.info_list {
+	width: 100%;
+	padding: 0.6rem;
+	margin-bottom: 0.5rem;
+	background: #FFFFFF;
+	font-size: 1.2rem;
+}
+
+
+
+.deadline {
+	display: inline-block;
+	margin-left: 10px;
+	color: #b69562;
+	position: relative;
+	padding-left: 10px;
+	float: right;
+}
+
+.deadline:before{
+	content: "";
+	display: block;
+	width: 10px;
+	height: 12px;
+	border-left: 1px solid #b69562;
+	position: absolute;
+	left: 0;
+	top: 50%;
+	margin-top: -6px;
+}
+
+
+
+
+.script {
+	width: 100%;
+	padding: 0.6rem;
+	margin-bottom: 0.5rem;
+	background: #FFFFFF;
+}
+
+.up,
+.down,
+.c_title01,
+.c_title02,
+.c_title03 {
+	width: 100%;
+	font-size: 1rem;
+	position: relative;
+}
+
+.c_title01 {
+	padding-left: 1.3rem;
+}
+
+.c_title02 {
+	padding-left: 1.4rem;
+}
+
+.c_title03 {
+	padding-left: 2rem;
+	margin-bottom: 0.5rem;
+}
+
+.c_title01:before {
+	width: 0.8rem;
+	height: 1rem;
+	display: block;
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 50%;
+	margin-top: -0.5rem;
+	background: url(../img/tubiao_07.png) no-repeat;
+	background-size: 0.8rem 1rem;
+}
+
+.c_title02:before {
+	width: 1rem;
+	height: 0.9rem;
+	display: block;
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 60%;
+	margin-top: -0.5rem;
+	background: url(../img/tubiao_11.png) no-repeat;
+	background-size: 1rem 0.9rem;
+}
+
+.down:after {
+	-webkit-transform: scaleY(0.9) rotateZ(-45deg);
+	-ms-transform: scaleY(0.9) rotateZ(-45deg);
+	transform: scaleY(0.9) rotateZ(-45deg);
+	display: inline-block;
+	content: "";
+	width: 0.6rem;
+	height: 0.6rem;
+	border-bottom: 1px solid #afafaf;
+	border-left: 1px solid #afafaf;
+	position: absolute;
+	right: 0.6rem;
+	top: 40%;
+	margin-top: -0.3rem;
+}
+
+.up:after {
+	-webkit-transform: scaleY(0.9) rotateZ(135deg);
+	-ms-transform: scaleY(0.9) rotateZ(135deg);
+	transform: scaleY(0.9) rotateZ(135deg);
+	display: inline-block;
+	content: "";
+	width: 10px;
+	height: 10px;
+	border-bottom: 1px solid #afafaf;
+	border-left: 1px solid #afafaf;
+	position: absolute;
+	right: 6px;
+	top: 60%;
+	margin-top: -5px;
+}
+
+.script_detail {
+	width: 100%;
+	padding: 0.6rem;
+	margin-bottom: 0.5rem;
+	background: #FFFFFF;
+	position: relative;
+}
+
+
+/*瑙掕壊鎷涘嫙*/
+
+.actor {
+	width: 100%;
+	padding: 0.6rem 0 0 0;
+	background: #FFFFFF;
+
+}
+
+.actor_title {
+	position: relative;
+}
+
+.c_title03:before {
+	width: 1rem;
+	height: 1rem;
+	display: block;
+	content: "";
+	position: absolute;
+	left: 0.6rem;
+	top: 50%;
+	margin-top: -0.5rem;
+	background: url(../img/tubiao_14.png) no-repeat;
+	background-size: 1rem 1rem;
+}
+
+.actorlist {
+	position: relative;
+	padding: 1rem 2rem 0.5rem 8rem;
+	background: #efefef;
+	margin-bottom: 0.5rem;
+}
+
+.actor_pic {
+	width: 5.5rem;
+	overflow: hidden;
+	position: absolute;
+	left: 0.6rem;
+	top: 1rem;
+}
+
+.actor_detail {
+	width: 100%;
+}
+
+.actor_name {
+	display: inline-block;
+	font-size: 1.6rem;
+	background-origin: padding-box;
+	-webkit-background-origin: padding-box;
+}
+
+.woman {padding-right: 1.2rem;
+	background: url(../img/tubiao_18.png) no-repeat;
+	background-size: 1rem 1.5rem;
+	background-position: right center;
+}
+
+.man {padding-right: 1.2rem;
+	background: url(../img/tubiao_21.png) no-repeat;
+	background-size: 1rem 1.1rem;
+	background-position: right center;
+}
+
+.wage {
+	/** margin-top:0.5rem; */
+	/** margin-left:0.5rem; */
+	color: #ed770b;
+	font-size: 1.2rem;
+}
+
+.actor_item span {
+	width: 5rem;
+	display: inline-block;
+	border: 1px solid #a87525;
+	border-radius: 1rem;
+	-webkit-border-radius: 1rem;
+	-moz-border-radius: 1rem;
+	color: #a87525;
+	text-align: center;
+	font-size: 1rem;
+	overflow: hidden;
+	white-space: nowrap;
+	margin-top: 0.5rem;
+}
+
+.actorlist:before {
+	-webkit-transform: scaleY(0.9) rotateZ(-135deg);
+	-ms-transform: scaleY(0.9) rotateZ(-135deg);
+	transform: scaleY(0.9) rotateZ(-135deg);
+	display: inline-block;
+	content: "";
+	width: 0.8rem;
+	height: 0.8rem;
+	border-bottom: 1px solid #b0b0b0;
+	border-left: 1px solid #b0b0b0;
+	position: absolute;
+	right: 1.6rem;
+	top: 55%;
+	margin-top: -0.4rem;
+	z-index: 200;
+}
+
+.actorlist:after {
+	display: block;
+	content: "";
+	position: absolute;
+	right: 0.6rem;
+	top: 50%;
+	margin-top: -0.8rem;
+	width: 2rem;
+	height: 2rem;
+	border: 1px solid #b0b0b0;
+	color: #b0b0b0;
+	border-radius: 1rem;
+	-webkit-border-radius: 1rem;
+	-moz-border-radius: 1rem;
+}
+.actor_name_box{width:59rem;
+                /** height: 5.5rem; **/
+                /** line-height: 5.5rem; **/
+                /** position: absolute;**/
+                left:6.6rem;
+                top:1rem;}

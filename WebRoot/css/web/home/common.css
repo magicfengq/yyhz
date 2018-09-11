@@ -1,0 +1,77 @@
+@charset "utf-8";
+* {
+	margin: 0;
+	padding: 0;
+	-webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+	font-family: "Microsoft Yahei","微软雅黑","Helvetica Neue",Helvetica,Arial,"黑体",SimHei,"宋体",SimSun,sans-serif;
+	font-size: 14px;
+	line-height: 1.5;
+	color: #535353;
+	background: #ffffff;
+	overflow-x: hidden;
+}
+
+img {
+	border: 0 none;
+	display: block;
+	margin: 0 auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-weight: normal;
+}
+
+ul {
+	list-style: outside none none;
+}
+
+:focus,
+a {
+	outline: 0 none;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+a:focus,
+a:active,
+a:hover {
+	outline: medium none;
+}
+
+a:link {
+	color: #535353;
+}
+
+a:visited {
+	color: #535353;
+}
+
+a:hover {
+	color: #535353;
+}
+
+a img {
+	-webkit-transition: all .4s;
+	-moz-transition: all .4s;
+	-ms-transition: all .4s;
+	transition: all .4s;
+}
+
+a:hover img {
+	opacity: .8;
+	-webkit-transition: all .4s;
+	-moz-transition: all .4s;
+	-ms-transition: all .4s;
+	transition: all .4s;
+}

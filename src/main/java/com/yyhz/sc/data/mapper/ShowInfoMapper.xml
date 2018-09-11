@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.yyhz.sc.data.dao.ShowInfoDao">
+
+	<resultMap id="colomnResult" type="com.yyhz.sc.data.model.ShowInfo">
+		<id property="id" column="id" />
+		<result property="content" column="content" />
+		<result property="publicType" column="publicType" />
+		<result property="city" column="city" />
+		<result property="commentNum" column="commentNum" />
+		<result property="praiseNum" column="praiseNum" />
+		<result property="shareNum" column="shareNum" />
+		<result property="creater" column="creater" />
+		<result property="createTime" column="createTime" />
+		<result property="type" column="type" />
+		<result property="imgUuid" column="imgUuid" />
+		<result property="videoUuid" column="videoUuid" />
+		<result property="status" column="status" />
+		<result property="videoPreviewUuid" column="videoPreviewUuid" />
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     content,
+	     publicType,
+	     city,
+	     commentNum,
+	     praiseNum,
+	     shareNum,
+	     creater,
+	     createTime,
+	     type,
+	     imgUuid,
+	     videoUuid,
+	     status,
+	     videoPreviewUuid
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into show_info  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="content!=null">content,</if>
+			     <if test="publicType!=null">publicType,</if>
+			     <if test="city!=null">city,</if>
+			     <if test="commentNum!=null">commentNum,</if>
+			     <if test="praiseNum!=null">praiseNum,</if>
+			     <if test="shareNum!=null">shareNum,</if>
+			     <if test="creater!=null">creater,</if>
+			     <if test="createTime!=null">createTime,</if>
+			     <if test="type!=null">type,</if>
+			     <if test="imgUuid!=null">imgUuid,</if>
+			     <if test="videoUuid!=null">videoUuid,</if>
+			     <if test="status!=null">status,</if>
+			     <if test="videoPreviewUuid!=null">videoPreviewUuid,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="content!=null">#{content},</if>
+			     <if test="publicType!=null">#{publicType},</if>
+			     <if test="city!=null">#{city},</if>
+			     <if test="commentNum!=null">#{commentNum},</if>
+			     <if test="praiseNum!=null">#{praiseNum},</if>
+			     <if test="shareNum!=null">#{shareNum},</if>
+			     <if test="creater!=null">#{creater},</if>
+			     <if test="createTime!=null">#{createTime},</if>
+			     <if test="type!=null">#{type},</if>
+			     <if test="imgUuid!=null">#{imgUuid},</if>
+			     <if test="videoUuid!=null">#{videoUuid},</if>
+			     <if test="status!=null">#{status},</if>
+			     <if test="videoPreviewUuid!=null">#{videoPreviewUuid},</if>
+		</trim>
+	</insert>
+
+	<update id="update">
+	   update show_info 
+	   <set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="content!=null">content=#{content},</if>
+			     <if test="publicType!=null">publicType=#{publicType},</if>
+			     <if test="city!=null">city=#{city},</if>
+			     <if test="commentNum!=null">commentNum=#{commentNum},</if>
+			     <if test="praiseNum!=null">praiseNum=#{praiseNum},</if>
+			     <if test="shareNum!=null">shareNum=#{shareNum},</if>
+			     <if test="creater!=null">creater=#{creater},</if>
+			     <if test="createTime!=null">createTime=#{createTime},</if>
+			     <if test="type!=null">type=#{type},</if>
+			     <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
+			     <if test="videoUuid!=null">videoUuid=#{videoUuid},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="videoPreviewUuid!=null">videoPreviewUuid=#{videoPreviewUuid},</if>
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     show_info 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from show_info
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" content != null and content != '' ">
+					and content=#{content} 
+				</if>
+				<if test=" publicType != null and publicType != '' ">
+					and publicType=#{publicType} 
+				</if>
+				<if test=" city != null and city != '' ">
+					and city=#{city} 
+				</if>
+				<if test=" commentNum != null and commentNum != '' ">
+					and commentNum=#{commentNum} 
+				</if>
+				<if test=" praiseNum != null and praiseNum != '' ">
+					and praiseNum=#{praiseNum} 
+				</if>
+				<if test=" shareNum != null and shareNum != '' ">
+					and shareNum=#{shareNum} 
+				</if>
+				<if test=" creater != null and creater != '' ">
+					and creater=#{creater} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and createTime=#{createTime} 
+				</if>
+				<if test=" type != null and type != '' ">
+					and type=#{type} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
+				<if test=" videoUuid != null and videoUuid != '' ">
+					and videoUuid=#{videoUuid} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" videoPreviewUuid != null and videoPreviewUuid != '' ">
+					and videoPreviewUuid=#{videoPreviewUuid} 
+				</if>
+		</where>
+	</select>
+	
+	<!-- 根据主键查询信息 -->
+	<select id="selectAllSummary"  resultMap="colomnResult">
+		select
+		 si.id,
+	     si.content,
+	     si.publicType,
+	     si.city,
+	     si.commentNum,
+	     si.praiseNum,
+	     si.shareNum,
+	     si.creater,
+	     si.createTime,
+	     si.type,
+	     si.imgUuid,
+	     si.videoUuid,
+	     si.videoPreviewUuid,
+	     si.status,
+		 spi.urlPath as videoUrl,
+		 spiv.urlPath as videoPreviewUrl,
+		 group_concat(spi2.urlPath) as imgUrls
+		 from show_info si
+		 left join system_picture_info spi on si.videoUuid = spi.uuid
+		 left join system_picture_info spiv on si.videoPreviewUuid = spiv.uuid
+		 left join show_info_pictures sip on sip.showId = si.id
+		 left join system_picture_info spi2 on spi2.uuid=sip.imgUuid
+		<where>
+			<if test=" creater != null and creater != '' ">
+				and si.creater=#{creater} 
+			</if>
+
+			<if test=" status != null and status != '' ">
+				and si.status=#{status} 
+			</if>
+		</where>
+		group by si.id
+		<if test="sort != null">
+			order by si.${sort} ${order}
+		</if>
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from show_info
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" content != null and content != '' ">
+					and content=#{content} 
+				</if>
+				<if test=" publicType != null and publicType != ''">
+					and publicType=#{publicType} 
+				</if>
+				<if test=" city != null and city != '' ">
+					and city=#{city} 
+				</if>
+				<if test=" commentNum != null and commentNum != '' ">
+					and commentNum=#{commentNum} 
+				</if>
+				<if test=" praiseNum != null and praiseNum != '' ">
+					and praiseNum=#{praiseNum} 
+				</if>
+				<if test=" shareNum != null and shareNum != '' ">
+					and shareNum=#{shareNum} 
+				</if>
+				<if test=" creater != null and creater != '' ">
+					and creater=#{creater} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and createTime=#{createTime} 
+				</if>
+				<if test=" type != null and type != '' ">
+					and type=#{type} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
+				<if test=" videoUuid != null and videoUuid != '' ">
+					and videoUuid=#{videoUuid} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" videoPreviewUuid != null and videoPreviewUuid != '' ">
+					and videoPreviewUuid=#{videoPreviewUuid} 
+				</if>
+				<if test=" actorIdList != null and actorIdList.size() > 0">
+					and creater in 
+					<foreach item="actorId" index="index" collection="actorIdList" open="(" separator="," close=")">
+  						'${actorId}'
+ 					</foreach>
+				</if>
+		</where>
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+
+		select count(id) from show_info
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" content != null and content != '' ">
+					and content=#{content} 
+				</if>
+				<if test=" publicType != null and publicType != '' ">
+					and publicType=#{publicType} 
+				</if>
+				<if test=" city != null and city != '' ">
+					and city=#{city} 
+				</if>
+				<if test=" commentNum != null and commentNum != '' ">
+					and commentNum=#{commentNum} 
+				</if>
+				<if test=" praiseNum != null and praiseNum != '' ">
+					and praiseNum=#{praiseNum} 
+				</if>
+				<if test=" shareNum != null and shareNum != '' ">
+					and shareNum=#{shareNum} 
+				</if>
+				<if test=" creater != null and creater != '' ">
+					and creater=#{creater} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and createTime=#{createTime} 
+				</if>
+				<if test=" type != null and type != ''">
+					and type=#{type}
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid}
+				</if>
+				<if test=" videoUuid != null and videoUuid != '' ">
+					and videoUuid=#{videoUuid}
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status}
+				</if>
+				<if test=" videoPreviewUuid != null and videoPreviewUuid != '' ">
+					and videoPreviewUuid=#{videoPreviewUuid}
+				</if>
+				<if test=" actorIdList != null and actorIdList.size() > 0">
+					and creater in
+					<foreach item="actorId" index="index" collection="actorIdList" open="(" separator="," close=")">
+  						#{actorId}
+ 					</foreach>
+				</if>
+		</where>
+	</select>
+	
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from show_info where 
+			
+			   	 id=#{id} 
+		]]>
+		
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from show_info where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from show_info where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update show_info
+		<set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="content!=null">content=#{content},</if>
+			     <if test="publicType!=null">publicType=#{publicType},</if>
+			     <if test="city!=null">city=#{city},</if>
+			     <if test="commentNum!=null">commentNum=#{commentNum},</if>
+			     <if test="praiseNum!=null">praiseNum=#{praiseNum},</if>
+			     <if test="shareNum!=null">shareNum=#{shareNum},</if>
+			     <if test="creater!=null">creater=#{creater},</if>
+			     <if test="createTime!=null">createTime=#{createTime},</if>
+			     <if test="type!=null">type=#{type},</if>
+			     <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
+			     <if test="videoUuid!=null">videoUuid=#{videoUuid},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="videoPreviewUuid!=null">videoPreviewUuid=#{videoPreviewUuid},</if>
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+</mapper> 

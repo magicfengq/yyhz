@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.yyhz.sc.data.dao.AuthenticateApplyDao">
+
+	<resultMap id="colomnResult" type="com.yyhz.sc.data.model.AuthenticateApply">
+		<id property="id" column="id" />
+		<result property="actorId" column="actorId" />
+		<result property="userCurrentLevel" column="userCurrentLevel" />
+		<result property="applyTime" column="applyTime" />
+		<result property="realName" column="realName" />
+		<result property="mobile" column="mobile" />
+		<result property="idcard" column="idcard" />
+		<result property="photo1" column="photo1" />
+		<result property="photo2" column="photo2" />
+		<result property="photo3" column="photo3" />
+		<result property="photo4" column="photo4" />
+		<result property="checkUser" column="checkUser" />
+		<result property="checkTime" column="checkTime" />
+		<result property="checkStatus" column="checkStatus" />
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     actorId,
+	     userCurrentLevel,
+	     applyTime,
+	     realName,
+	     mobile,
+	     idcard,
+	     photo1,
+	     photo2,
+	     photo3,
+	     photo4,
+	     checkUser,
+	     checkTime,
+	     checkStatus
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into authenticate_apply  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="actorId!=null">actorId,</if>
+			     <if test="userCurrentLevel!=null">userCurrentLevel,</if>
+			     <if test="applyTime!=null">applyTime,</if>
+			     <if test="realName!=null">realName,</if>
+			     <if test="mobile!=null">mobile,</if>
+			     <if test="idcard!=null">idcard,</if>
+			     <if test="photo1!=null">photo1,</if>
+			     <if test="photo2!=null">photo2,</if>
+			     <if test="photo3!=null">photo3,</if>
+			     <if test="photo4!=null">photo4,</if>
+			     <if test="checkUser!=null">checkUser,</if>
+			     <if test="checkTime!=null">checkTime,</if>
+			     <if test="checkStatus!=null">checkStatus,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="actorId!=null">#{actorId},</if>
+			     <if test="userCurrentLevel!=null">#{userCurrentLevel},</if>
+			     <if test="applyTime!=null">#{applyTime},</if>
+			     <if test="realName!=null">#{realName},</if>
+			     <if test="mobile!=null">#{mobile},</if>
+			     <if test="idcard!=null">#{idcard},</if>
+			     <if test="photo1!=null">#{photo1},</if>
+			     <if test="photo2!=null">#{photo2},</if>
+			     <if test="photo3!=null">#{photo3},</if>
+			     <if test="photo4!=null">#{photo4},</if>
+			     <if test="checkUser!=null">#{checkUser},</if>
+			     <if test="checkTime!=null">#{checkTime},</if>
+			     <if test="checkStatus!=null">#{checkStatus},</if>
+		</trim>
+	</insert>
+
+	<update id="update">
+	   update authenticate_apply 
+	   <set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="actorId!=null">actorId=#{actorId},</if>
+			     <if test="userCurrentLevel!=null">userCurrentLevel=#{userCurrentLevel},</if>
+			     <if test="applyTime!=null">applyTime=#{applyTime},</if>
+			     <if test="realName!=null">realName=#{realName},</if>
+			     <if test="mobile!=null">mobile=#{mobile},</if>
+			     <if test="idcard!=null">idcard=#{idcard},</if>
+			     <if test="photo1!=null">photo1=#{photo1},</if>
+			     <if test="photo2!=null">photo2=#{photo2},</if>
+			     <if test="photo3!=null">photo3=#{photo3},</if>
+			     <if test="photo4!=null">photo4=#{photo4},</if>
+			     <if test="checkUser!=null">checkUser=#{checkUser},</if>
+			     <if test="checkTime!=null">checkTime=#{checkTime},</if>
+			     <if test="checkStatus!=null">checkStatus=#{checkStatus},</if>
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     authenticate_apply 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from authenticate_apply
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" actorId != null and actorId != '' ">
+					and actorId=#{actorId} 
+				</if>
+				<if test=" userCurrentLevel != null and userCurrentLevel != '' ">
+					and userCurrentLevel=#{userCurrentLevel} 
+				</if>
+				<if test=" applyTime != null and applyTime != '' ">
+					and applyTime=#{applyTime} 
+				</if>
+				<if test=" realName != null and realName != '' ">
+					and realName=#{realName} 
+				</if>
+				<if test=" mobile != null and mobile != '' ">
+					and mobile=#{mobile} 
+				</if>
+				<if test=" idcard != null and idcard != '' ">
+					and idcard=#{idcard} 
+				</if>
+				<if test=" photo1 != null and photo1 != '' ">
+					and photo1=#{photo1} 
+				</if>
+				<if test=" photo2 != null and photo2 != '' ">
+					and photo2=#{photo2} 
+				</if>
+				<if test=" photo3 != null and photo3 != '' ">
+					and photo3=#{photo3} 
+				</if>
+				<if test=" photo4 != null and photo4 != '' ">
+					and photo4=#{photo4} 
+				</if>
+				<if test=" checkUser != null and checkUser != '' ">
+					and checkUser=#{checkUser} 
+				</if>
+				<if test=" checkTime != null and checkTime != '' ">
+					and checkTime=#{checkTime} 
+				</if>
+				<if test=" checkStatus != null and checkStatus != '' ">
+					and checkStatus=#{checkStatus} 
+				</if>
+		</where>
+	</select>
+	
+	<select id="selectAllWithUrl"  resultMap="colomnResult">
+		select
+			aa.id,
+			aa.actorId,
+			aa.userCurrentLevel,
+			aa.applyTime,
+			aa.realName,
+			aa.mobile,
+			aa.idcard,
+			spi1.urlPath as photo1,
+			spi2.urlPath as photo2,
+			spi3.urlPath as photo3,
+			spi4.urlPath as photo4,
+			aa.checkUser,
+			aa.checkTime,
+			aa.checkStatus
+		from authenticate_apply aa
+		left join system_picture_info spi1 on aa.photo1 = spi1.uuid
+		left join system_picture_info spi2 on aa.photo2 = spi2.uuid
+		left join system_picture_info spi3 on aa.photo3 = spi3.uuid
+		left join system_picture_info spi4 on aa.photo4 = spi4.uuid
+		
+		where aa.actorId = #{actorId}
+
+	</select>
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from authenticate_apply
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" actorId != null and actorId != '' ">
+					and actorId=#{actorId} 
+				</if>
+				<if test=" userCurrentLevel != null and userCurrentLevel != '' ">
+					and userCurrentLevel=#{userCurrentLevel} 
+				</if>
+				<if test=" applyTime != null and applyTime != '' ">
+					and applyTime=#{applyTime} 
+				</if>
+				<if test=" realName != null and realName != '' ">
+					and realName like CONCAT('%','${realName}','%')
+				</if>
+				<if test=" mobile != null and mobile != '' ">
+					and mobile=#{mobile} 
+				</if>
+				<if test=" idcard != null and idcard != '' ">
+					and idcard=#{idcard} 
+				</if>
+				<if test=" photo1 != null and photo1 != '' ">
+					and photo1=#{photo1} 
+				</if>
+				<if test=" photo2 != null and photo2 != '' ">
+					and photo2=#{photo2} 
+				</if>
+				<if test=" photo3 != null and photo3 != '' ">
+					and photo3=#{photo3} 
+				</if>
+				<if test=" photo4 != null and photo4 != '' ">
+					and photo4=#{photo4} 
+				</if>
+				<if test=" checkUser != null and checkUser != '' ">
+					and checkUser=#{checkUser} 
+				</if>
+				<if test=" checkTime != null and checkTime != '' ">
+					and checkTime=#{checkTime} 
+				</if>
+				<if test=" checkStatus != null and checkStatus != '' ">
+					and checkStatus=#{checkStatus} 
+				</if>
+				<if test=" actorIdList != null and actorIdList.size() > 0">
+					and actorId in
+					<foreach item="actorId" index="index" collection="actorIdList" open="(" separator="," close=")">
+  						'${actorId}'
+ 					</foreach>
+				</if>
+		</where>
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+
+		select count(id) from authenticate_apply
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" actorId != null and actorId != '' ">
+					and actorId=#{actorId} 
+				</if>
+				<if test=" userCurrentLevel != null and userCurrentLevel != '' ">
+					and userCurrentLevel=#{userCurrentLevel} 
+				</if>
+				<if test=" applyTime != null and applyTime != '' ">
+					and applyTime=#{applyTime} 
+				</if>
+				<if test=" realName != null and realName != '' ">
+					and realName=#{realName} 
+				</if>
+				<if test=" mobile != null and mobile != '' ">
+					and mobile=#{mobile} 
+				</if>
+				<if test=" idcard != null and idcard != '' ">
+					and idcard=#{idcard} 
+				</if>
+				<if test=" photo1 != null and photo1 != '' ">
+					and photo1=#{photo1} 
+				</if>
+				<if test=" photo2 != null and photo2 != '' ">
+					and photo2=#{photo2} 
+				</if>
+				<if test=" photo3 != null and photo3 != '' ">
+					and photo3=#{photo3} 
+				</if>
+				<if test=" photo4 != null and photo4 != '' ">
+					and photo4=#{photo4} 
+				</if>
+				<if test=" checkUser != null and checkUser != '' ">
+					and checkUser=#{checkUser} 
+				</if>
+				<if test=" checkTime != null and checkTime != '' ">
+					and checkTime=#{checkTime} 
+				</if>
+				<if test=" checkStatus != null and checkStatus != '' ">
+					and checkStatus=#{checkStatus} 
+				</if>
+		</where>
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from authenticate_apply where 
+			
+			   	 id=#{id} 
+		]]>
+		
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from authenticate_apply where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from authenticate_apply where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update authenticate_apply
+		<set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="actorId!=null">actorId=#{actorId},</if>
+			     <if test="userCurrentLevel!=null">userCurrentLevel=#{userCurrentLevel},</if>
+			     <if test="applyTime!=null">applyTime=#{applyTime},</if>
+			     <if test="realName!=null">realName=#{realName},</if>
+			     <if test="mobile!=null">mobile=#{mobile},</if>
+			     <if test="idcard!=null">idcard=#{idcard},</if>
+			     <if test="photo1!=null">photo1=#{photo1},</if>
+			     <if test="photo2!=null">photo2=#{photo2},</if>
+			     <if test="photo3!=null">photo3=#{photo3},</if>
+			     <if test="photo4!=null">photo4=#{photo4},</if>
+			     <if test="checkUser!=null">checkUser=#{checkUser},</if>
+			     <if test="checkTime!=null">checkTime=#{checkTime},</if>
+			     <if test="checkStatus!=null">checkStatus=#{checkStatus},</if>
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+</mapper> 

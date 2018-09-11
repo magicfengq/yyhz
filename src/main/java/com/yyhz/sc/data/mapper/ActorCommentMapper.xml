@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.yyhz.sc.data.dao.ActorCommentDao">
+
+	<resultMap id="colomnResult" type="com.yyhz.sc.data.model.ActorComment">
+		<id property="id" column="id" />
+		<result property="actorId" column="actorId" />
+		<result property="type" column="type" />
+		<result property="creater" column="creater" />
+		<result property="createTime" column="createTime" />
+		<result property="announceId" column="announceId" />
+		<result property="content" column="content" />
+		<result property="score" column="score" />
+		<result property="status" column="status" />
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     actorId,
+	     type,
+	     creater,
+	     createTime,
+	     announceId,
+	     content,
+	     score,
+	     status
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into actor_comment  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="actorId!=null">actorId,</if>
+			     <if test="type!=null">type,</if>
+			     <if test="creater!=null">creater,</if>
+			     <if test="createTime!=null">createTime,</if>
+			     <if test="announceId!=null">announceId,</if>
+			     <if test="content!=null">content,</if>
+			     <if test="score!=null">score,</if>
+			     <if test="status!=null">status,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="actorId!=null">#{actorId},</if>
+			     <if test="type!=null">#{type},</if>
+			     <if test="creater!=null">#{creater},</if>
+			     <if test="createTime!=null">#{createTime},</if>
+			     <if test="announceId!=null">#{announceId},</if>
+			     <if test="content!=null">#{content},</if>
+			     <if test="score!=null">#{score},</if>
+			     <if test="status!=null">#{status},</if>
+		</trim>
+	</insert>
+
+	<update id="update">
+	   update actor_comment 
+	   <set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="actorId!=null">actorId=#{actorId},</if>
+			     <if test="type!=null">type=#{type},</if>
+			     <if test="creater!=null">creater=#{creater},</if>
+			     <if test="createTime!=null">createTime=#{createTime},</if>
+			     <if test="announceId!=null">announceId=#{announceId},</if>
+			     <if test="content!=null">content=#{content},</if>
+			     <if test="score!=null">score=#{score},</if>
+			     <if test="status!=null">status=#{status},</if>
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     actor_comment 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<!-- 根据条件信息 -->
+	<select id="selectAvgScore"  resultType="float">
+		select avg(score) 
+		from actor_comment
+		<where>
+			status=0 
+			<if test=" actorId != null and actorId != '' ">
+				and actorId=#{actorId}
+			</if>
+			<if test=" type != null">
+				and type=#{type} 
+			</if>
+		</where>
+	</select>
+
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from actor_comment
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" actorId != null and actorId != '' ">
+					and actorId=#{actorId} 
+				</if>
+				<if test=" type != null and type != '' ">
+					and type=#{type} 
+				</if>
+				<if test=" creater != null and creater != '' ">
+					and creater=#{creater} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and createTime=#{createTime} 
+				</if>
+				<if test=" announceId != null and announceId != '' ">
+					and announceId=#{announceId} 
+				</if>
+				<if test=" content != null and content != '' ">
+					and content=#{content} 
+				</if>
+				<if test=" score != null and score != '' ">
+					and score=#{score} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+		</where>
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectMyComment"  resultMap="colomnResult">
+		select
+			 ac.id,
+		     ac.actorId,
+		     ac.type,
+		     ac.creater,
+		     ac.createTime,
+		     ac.announceId,
+		     ac.content,
+		     ac.score,
+		     ac.status,
+		     ai.name as createrName,
+		     an.title as announceTitle,
+		     an.type as announceType,
+			 spi.urlPath as createrHeadUrl,
+			 group_concat(pt.id) as announcePublicType,
+		 	 group_concat(pt.name) as announcePublicTypeName
+			 
+		from actor_comment ac
+		join actor_info ai on ac.creater = ai.id
+		join announce_info an on ac.announceId=an.id
+		left join system_picture_info spi on ai.imgUuid=spi.uuid
+		left join card_announce_public_type capt on an.id = capt.cardAnnounceId
+		left join public_type pt on capt.publicTypeId = pt.id
+
+		<where>
+			ac.status=0 
+			<if test=" actorId != null and actorId != '' ">
+				and ac.actorId=#{actorId} 
+			</if>
+			<if test=" type != null">
+				and ac.type=#{type} 
+			</if>
+		</where>
+		
+		group by ac.id
+		
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from actor_comment
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" actorId != null and actorId != '' ">
+					and actorId=#{actorId} 
+				</if>
+				<if test=" type != null and type != '' ">
+					and type=#{type} 
+				</if>
+				<if test=" creater != null and creater != '' ">
+					and creater=#{creater} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and createTime=#{createTime} 
+				</if>
+				<if test=" announceId != null and announceId != '' ">
+					and announceId=#{announceId} 
+				</if>
+				<if test=" content != null and content != '' ">
+					and content=#{content} 
+				</if>
+				<if test=" score != null and score != '' ">
+					and score=#{score} 
+				</if>
+				<if test=" status != null ">
+					and status=#{status} 
+				</if>
+		</where>
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+
+		select count(id) from actor_comment
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" actorId != null and actorId != '' ">
+					and actorId=#{actorId} 
+				</if>
+				<if test=" type != null">
+					and type=#{type} 
+				</if>
+				<if test=" creater != null and creater != '' ">
+					and creater=#{creater} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and createTime=#{createTime} 
+				</if>
+				<if test=" announceId != null and announceId != '' ">
+					and announceId=#{announceId} 
+				</if>
+				<if test=" content != null and content != '' ">
+					and content=#{content} 
+				</if>
+				<if test=" score != null and score != '' ">
+					and score=#{score} 
+				</if>
+				<if test=" status != null ">
+					and status=#{status} 
+				</if>
+		</where>
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from actor_comment where 
+			
+			   	 id=#{id} 
+		]]>
+		
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from actor_comment where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from actor_comment where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update actor_comment
+		<set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="actorId!=null">actorId=#{actorId},</if>
+			     <if test="type!=null">type=#{type},</if>
+			     <if test="creater!=null">creater=#{creater},</if>
+			     <if test="createTime!=null">createTime=#{createTime},</if>
+			     <if test="announceId!=null">announceId=#{announceId},</if>
+			     <if test="content!=null">content=#{content},</if>
+			     <if test="score!=null">score=#{score},</if>
+			     <if test="status!=null">status=#{status},</if>
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+</mapper> 

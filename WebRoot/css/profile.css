@@ -1,0 +1,205 @@
+body{background-color: #ffffff;}
+.basic_info{background: #f4f4f4;
+            padding: 1rem 0;
+            margin-bottom: 0.4rem;}
+h1.b_title{font-size: 1.3rem;
+           color: #b69562;
+           padding: 0.5rem 1.5rem 0.5rem 1rem;
+           margin-bottom: 1rem;
+           border-bottom: 1px solid #d9d9d9;
+           position: relative;
+           margin: 0 1rem;
+           }
+h1.b_title .cube{width: 0.5rem;
+                 height: 0.5rem;
+                 background: #B69562;
+                 display: inline-block;
+                 margin-right: 0.3rem;
+                 position: absolute;
+                 top:50%;
+                 margin-top: -0.25rem;
+                 left:0;
+                 }
+.info{width: 100%;
+      position: relative;
+      padding: 0 10.5rem 0 1rem;}
+.info ul li{padding: 0.2rem 0;
+            border-bottom: 1px solid #cdcdcd;
+            font-size:1.2rem;}
+.info ul li .item_name{display: inline-block;
+                       color: #6d6d6d;
+                       margin-right: 0.3rem;
+                      
+                       }
+.info ul li .items{display: inline-block;
+                   margin-right: 0.3rem;}
+.personal_photo{width: 8rem;
+                height:8rem;
+                position: absolute;
+                top: 0.5rem;
+                right:1.5rem;}
+.photo_pic{width: 100%;
+           height: 100%;
+           margin: 0 auto 0.5rem;
+           border-radius: 50%;
+           -webkit-border-radius: 50%;
+           -moz-border-radius: 50%;
+           overflow: hidden;
+           border: 1px solid #B69562;
+           }
+.photo_pic img{width: 100%;}
+.name{text-align: center;
+      font-size: 1.3rem;
+      position: relative;
+      }
+.age{text-align: center;
+     margin-top:0.5rem; 
+     margin-bottom: 0.5rem; 
+     font-size:0.9rem;}
+.age span{display: inline-block;
+          margin-left: 0.1rem;}
+.age .sex1{width: 0.8rem;
+          height: 0.8rem;
+          display: inline-block;
+          background: url(../img/tubiao_21.png) no-repeat left center/cover;
+          }
+.age .sex2{width: 0.6rem;
+          height: 0.9rem;
+          display: inline-block;
+          background: url(../img/sex.png) no-repeat left center/cover;
+          }
+.renzheng{border: 1px solid #B69562;
+          padding: 0.3rem;
+          width: 80px;
+          margin: 0 auto;
+          border-radius: 10px;
+          -webkit-border-radius: 10px;
+          -moz-border-radius: 10px;
+          background: #FFFFFF;
+          text-align: center;}
+.renzheng2{border: 1px solid #BDBDBD;
+          padding: 3px;
+          width: 80px;
+          margin: 0 auto;
+          border-radius: 10px;
+          -webkit-border-radius: 10px;
+          -moz-border-radius: 10px;
+          background: #FFFFFF;
+          text-align: center;}
+.c_icon1 {
+    display: inline-block;
+    width: 1.2rem;
+    height: 1.2rem;
+    line-height: 1.2rem;
+    text-align: center;
+    border-radius: 50%;
+    -webkit-ring-radius: 50%;
+    -moz-border-radius: 50%;
+    background: #B69562;
+    color: #FFFFFF;
+    margin-right: 0.3rem;
+    font-size: 0.8rem;
+    position: absolute;
+    top:0.2rem;
+}
+.c_icon2 {
+    display: inline-block;
+    width: 1.2rem;
+    height: 1.2rem;
+    line-height: 1.2rem;
+    text-align: center;
+    border-radius: 50%;
+    -webkit-ring-radius: 50%;
+    -moz-border-radius: 50%;
+    background: #BDBDBD;
+    color: #FFFFFF;
+    margin-right: 0.3rem;
+    font-size: 0.8rem;
+    position: absolute;
+    top:0.2rem;
+}
+.character_item{background: #f4f4f4;
+            padding: 1rem 0;
+            margin-bottom: 0.4rem;}
+.actor_item1{padding: 0.2rem 1.5rem 0; }
+.actor_item1 span {
+    width: 6rem;
+    display:inline-table;
+    border: 1px solid #a87525;
+    border-radius: 1.2rem;
+    -webkit-border-radius: 1.2rem;
+    -moz-border-radius: 1.2rem;
+    color: #a87525;
+    text-align: center;
+    font-size: 1.3rem;
+    overflow: hidden;
+    white-space: nowrap;
+    margin:0.4rem 0;
+}
+
+.act_photo{
+            padding: 1rem 0;
+            margin-bottom: 0.4rem;
+            overflow: hidden;}
+.c_photos{width: 100%;
+         padding: 0.5rem 1rem;
+         overflow: hidden;}
+.c_photos a{width: 32%;
+            padding:0 5px;
+            margin-bottom: 10px;
+            display: inline-block;
+            float: left;
+            position: relative;
+            overflow: hidden;
+            background-color: #000;
+            }
+.c_photos a:nth-child(3n-1){margin: 0 2%;}
+.c_photos a img{width: 100%; }
+.c_photos a span{display: block;
+                 background: #B69562;
+                 border-radius: 1rem;
+                 -webkit-border-radius: 1rem;
+                 -moz-border-radius: 1rem;
+                 color: #000000;
+                 text-align: center;
+                 position: absolute;
+                 width: 60%;
+                 padding: 0 0.5rem;
+                 left: 50%;
+                 margin-left: -30%;
+                 bottom: 1rem;
+                 font-size:1.2rem;}
+#boxer .boxer-position,#boxer .boxer-caption p{text-align: center;}
+.video{
+            padding: 1rem 0;
+            margin-bottom: 0.4rem;
+           }
+.videobox{width: 100%;
+             padding: 0.5rem 1rem;}
+.video_photo{
+            padding: 1rem 0;
+            margin-bottom: 0.4rem;
+           }
+.description,.v_photo{padding: 0.5rem 0;
+                      border-bottom: 1px solid #cdcdcd;
+                      margin: 0 1rem;}
+.boxer0.y{display: none;}
+.boxer1.y{display: none;}
+.boxer2.y{display: none;}
+.boxer3.y{display: none;}
+.boxer4.y{display: none;}
+.boxer5.y{display: none;}
+.v_photo
+.alertbox{width: 100%;
+          background: rgba(0,0,0,1);
+          position: absolute;
+          top: 0;
+          padding: 1rem;
+          opacity: 0;
+          overflow: hidden;
+         }
+.bx-wrapper .bx-viewport{    box-shadow: none!important;
+    border: none!important;
+    background: none!important;}
+.slide{overflow: hidden;}
+.description{color:#b69562; font-size:1.2rem;}

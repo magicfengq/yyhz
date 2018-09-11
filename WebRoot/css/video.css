@@ -1,0 +1,182 @@
+@charset "utf-8";
+.gray {
+	background: #efefef;
+}
+
+.person_info {
+	width: 100%;
+	padding: 1rem 1rem 0.5rem 4.5rem;
+	background: #FFFFFF;
+	position: relative;
+}
+
+.photo {
+	width: 3rem;
+	heigth:3rem;
+	overflow: hidden;
+	position: absolute;
+	left: 1rem;
+	top: 1rem;
+}
+
+.name_info {
+	width: 100%;
+	position: relative;
+}
+
+.name {
+	position: absolute;
+	left: 0;
+	top: 0;
+	font-size: 1.4rem;
+	width: 100%;
+	color: #b69562;
+	text-align: left;
+}
+
+.icon {
+	display: inline-block;
+	width: 1.2rem;
+	height: 1.2rem;
+	line-height: 1.2rem;
+	text-align: center;
+	border-radius: 1.2rem;
+	-webkit-border-radius: 1.2rem;
+	-moz-border-radius: 1.2rem;
+	background: #b69562;
+	color: #FFFFFF;
+	font-size: 1rem;
+	margin-bottom: 0.3rem;
+}
+
+.time {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	color: #787878;
+}
+.tele{width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;}
+.time span {
+	color: #b69562;
+	display: inline-block;
+	margin-left: 3px;
+}
+/*瑙嗛*/
+.video_block {
+	width: 100%;
+	padding: 1rem;
+	background: #FFFFFF;
+	border-bottom: 1px solid #dfdfdf; 
+}
+
+.video_block h2 {
+	font-size: 1.8rem;
+	padding-bottom: 0.5rem;
+}
+
+.video_block .introduce {
+	line-height: 24px;
+}
+
+.video_box {
+	width: 100%;
+	padding: 0 1rem;
+	position: relative;
+}
+.sharebox {
+	height: 4rem;
+	background: #000000;
+	position:absolute;
+	left:1rem;
+	right:1rem;
+	bottom:0;
+	overflow: hidden;
+}
+
+.sharebox a {
+	height: 4rem;
+	line-height: 4rem;
+	display: inline-block;
+	float: left;
+	width: 25%;
+	overflow: hidden;
+	white-space: nowrap;
+	text-align: center;
+	color: #FFFFFF;
+}
+
+.sharebox i {
+	width: 2.2rem;
+	height:4rem;
+	display: inline-block;
+}
+
+.sharebox .a1 {
+	background: url(../img/video_07.png) no-repeat left center;
+	background-size: 2rem auto;
+}
+
+.words {
+	height: 4rem;
+	line-height: 4rem;
+	display: inline-block;
+	vertical-align: top;
+}
+
+.sharebox .a2 {
+	background: url(../img/video_09.png) no-repeat left center;
+	background-size: 2rem auto;
+	display: inline-block;
+}
+
+.sharebox .a3 {
+	background: url(../img/video_11.png) no-repeat left center;
+	background-size: 2rem auto;
+	display: inline-block;
+}
+
+.sharebox .a4 {
+	background: url(../img/video_13.png) no-repeat left center;
+	background-size: 2rem auto;
+	display: inline-block;
+}
+
+.comment_block {
+	margin-bottom: 0!important;
+}
+
+.comment li {
+	border-bottom: 1px solid #dbdbdb;
+}
+
+.comment_box {
+	width: 100%;
+	overflow: hidden;
+	display: -webkit-box;
+	-moz-box-orient: vertical;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+	text-overflow: ellipsis;
+}
+
+
+
+@media screen and (min-width: 600px) {
+.name_info{height: auto!important; }
+.person_info{padding-bottom:0.5REM;}
+.name {
+	position: relative;
+	left: inherit;
+	top: inherit;
+	
+}
+ .time {
+	position: relative;
+	left: inherit;
+	bottom: inherit;
+ }
+
+}

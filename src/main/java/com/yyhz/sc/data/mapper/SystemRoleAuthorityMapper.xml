@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.yyhz.sc.data.dao.SystemRoleAuthorityDao">
+
+    <resultMap id="colomnResult"
+               type="com.yyhz.sc.data.model.SystemRoleAuthority">
+        <id property="id" column="id"/>
+        <result property="roleId" column="roleId"/>
+        <result property="menuId" column="menuId"/>
+        <result property="actId" column="actId"/>
+    </resultMap>
+    <resultMap id="resultMap" type="java.util.HashMap">
+    </resultMap>
+    <!-- 动态sql -->
+    <sql id="colomnResult">
+        <![CDATA[
+	     id,
+	     roleId,
+	     menuId,
+	     actId
+	 ]]>
+    </sql>
+    <insert id="insert">
+        insert into system_role_authority
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id!=null">id,</if>
+            <if test="roleId!=null">roleId,</if>
+            <if test="menuId!=null">menuId,</if>
+            <if test="actId!=null">actId,</if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="id!=null">#{id},</if>
+            <if test="roleId!=null">#{roleId},</if>
+            <if test="menuId!=null">#{menuId},</if>
+            <if test="actId!=null">#{actId},</if>
+        </trim>
+    </insert>
+
+    <update id="update">
+        update system_role_authority
+        <set>
+            <if test="id!=null">id=#{id},</if>
+            <if test="roleId!=null">roleId=#{roleId},</if>
+            <if test="menuId!=null">menuId=#{menuId},</if>
+            <if test="actId!=null">actId=#{actId},</if>
+        </set>
+        where
+        id=#{id}
+    </update>
+
+    <delete id="delete">
+        delete from
+        system_role_authority
+        <where>
+            <if test=" id != null">
+                and id=#{id}
+            </if>
+            <if test=" roleId != null">
+                and roleId=#{roleId}
+            </if>
+            <if test=" menuId != null">
+                and menuId=#{menuId}
+            </if>
+            <if test=" actId != null">
+                and actId=#{actId}
+            </if>
+        </where>
+    </delete>
+
+    <select id="selectEntity" resultMap="colomnResult">
+        select
+        <include refid="colomnResult"/>
+        from system_role_authority
+        <where>
+            <if test=" id != null">
+                and id=#{id}
+            </if>
+            <if test=" roleId != null">
+                and roleId=#{roleId}
+            </if>
+            <if test=" menuId != null">
+                and menuId=#{menuId}
+            </if>
+            <if test=" actId != null">
+                and actId=#{actId}
+            </if>
+        </where>
+    </select>
+
+    <!-- 根据条件信息 -->
+    <select id="selectAll" resultMap="colomnResult">
+        select
+        <include refid="colomnResult"/>
+        <![CDATA[
+			from system_role_authority
+		]]>
+        <where>
+            <if test=" id != null">
+                and id=#{id}
+            </if>
+            <if test=" roleId != null">
+                and roleId=#{roleId}
+            </if>
+            <if test=" menuId != null">
+                and menuId=#{menuId}
+            </if>
+            <if test=" actId != null">
+                and actId=#{actId}
+            </if>
+        </where>
+        <if test="sort != null">
+            order by ${sort} ${order}
+        </if>
+    </select>
+    <!-- 根据条件查询数量 -->
+    <select id="selectCount" resultType="int">
+
+        select count(id) from system_role_authority
+        <where>
+            <if test=" id != null">
+                and id=#{id}
+            </if>
+            <if test=" roleId != null">
+                and roleId=#{roleId}
+            </if>
+            <if test=" menuId != null">
+                and menuId=#{menuId}
+            </if>
+            <if test=" actId != null">
+                and actId=#{actId}
+            </if>
+        </where>
+    </select>
+    <!-- 根据主键查询信息 -->
+    <select id="selectById" resultMap="colomnResult">
+        select
+        <include refid="colomnResult"/>
+        <![CDATA[
+			from system_role_authority where 
+			
+			   	 id=#{id} 
+		]]>
+
+    </select>
+    <select id="selectPermissUrl" resultMap="resultMap">
+        <![CDATA[
+			select distinct case when LOCATE('?',menuurl)>0 then substring(menuurl,1,LOCATE('?',menuurl)-1) else menuurl end url from system_menu_info where id in(select menuid from system_role_authority where roleId=#{roleId})
+			and LENGTH(trim(menuurl))>0 and menuurl is not null
+			union
+			select 'system/initSystemMenuTree.do' url
+			union
+			select distinct url from system_menu_act_url where actid in(select actid from system_role_authority where roleId=#{roleId})
+		]]>
+    </select>
+</mapper> 

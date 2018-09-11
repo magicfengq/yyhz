@@ -1,0 +1,7 @@
+*{margin:0;padding:0;border:0;}
+.ul{width: 100%;margin: 0;padding: 0;}
+.ul li{list-style-type: none;float: left;width: 100px;border: 1px solid #000000;text-align: center;}
+.rq_div{width: 800px;}
+.bL{background-color: #378EFF;}
+.nR{height: 50px; cursor: pointer;}
+.c_div{margin: 15px;}

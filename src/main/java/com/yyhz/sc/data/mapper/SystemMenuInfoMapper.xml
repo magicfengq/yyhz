@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yyhz.sc.data.dao.SystemMenuInfoDao">
+
+    <resultMap id="commonResultMap" type="com.yyhz.sc.data.model.SystemMenuInfo">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="menuUrl" column="menuUrl"/>
+        <result property="pid" column="pid"/>
+        <result property="orderList" column="orderList"/>
+        <result property="description" column="description"/>
+        <collection property="children"
+                    select="com.yyhz.sc.data.dao.SystemMenuInfoDao.selectAllByPid"
+                    column="id" ofType="SystemMenuInfo">
+        </collection>
+        <!-- 删除按钮权限查询 -->
+        <collection property="systemMenuActs"
+                    select="com.yyhz.sc.data.dao.SystemMenuActDao.selectAllByMenuId"
+                    column="id">
+        </collection>
+    </resultMap>
+
+    <resultMap id="roleMenuResultMap" type="com.yyhz.sc.data.model.SystemMenuInfo">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="menuUrl" column="menuUrl"/>
+        <result property="pid" column="pid"/>
+        <result property="orderList" column="orderList"/>
+        <result property="description" column="description"/>
+        <result property="isCheck" column="isCheck"/>
+        <result property="roleId" column="roleId"/>
+        <collection property="children"
+                    select="com.yyhz.sc.data.dao.SystemMenuInfoDao.selectAllByPidRole"
+                    column="{roleId=roleId,id=id}" ofType="SystemMenuInfo">
+        </collection>
+        <!-- 删除按钮权限查询 -->
+        <collection property="systemMenuActs"
+                    select="com.yyhz.sc.data.dao.SystemMenuActDao.selectAllByRole"
+                    column="{roleId=roleId,id=id}">
+        </collection>
+    </resultMap>
+
+    <resultMap id="roleMenuLoginResultMap" type="com.yyhz.sc.data.model.SystemMenuInfo">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="menuUrl" column="menuUrl"/>
+        <result property="pid" column="pid"/>
+        <result property="orderList" column="orderList"/>
+        <result property="description" column="description"/>
+        <result property="isCheck" column="isCheck"/>
+        <result property="roleId" column="roleId"/>
+        <collection property="children"
+                    select="com.yyhz.sc.data.dao.SystemMenuInfoDao.selectAllByPidRoleLogin"
+                    column="{roleId=roleId,id=id}" ofType="SystemMenuInfo">
+        </collection>
+        <!-- 删除按钮权限查询 -->
+        <collection property="systemMenuActs"
+                    select="com.yyhz.sc.data.dao.SystemMenuActDao.selectAllByRoleLogin"
+                    column="{roleId=roleId,id=id}">
+        </collection>
+    </resultMap>
+    <!-- 动态sql -->
+    <sql id="colomnResult">
+        <![CDATA[
+	   id,name,pid,level,menuUrl,orderList,description
+	 ]]>
+    </sql>
+    <!-- 根据条件信息 -->
+    <select id="selectAll" resultMap="commonResultMap">
+        select
+        <include refid="colomnResult"/>
+        <![CDATA[
+			from system_menu_info
+		]]>
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="pid != null">
+                and pid = #{pid}
+            </if>
+            <if test="level != null">
+                and level = #{level}
+            </if>
+        </where>
+        order by pid,orderList
+    </select>
+
+    <!-- 根据条件信息 -->
+    <!-- 角色权限管理start -->
+    <select id="selectAllByRole" resultMap="roleMenuResultMap">
+        select
+        id,name,pid,level,menuUrl,orderList,description,'${roleId}'
+        roleId,
+        case when exists(select id from system_role_authority where
+        roleId=#{roleId} and menuId=system_menu_info.id)
+        then 1 else 0 end isCheck
+        <![CDATA[
+			from system_menu_info
+		]]>
+        where pid='0'
+        order by pid,orderList
+    </select>
+    <select id="selectAllByPidRole" resultMap="roleMenuResultMap">
+        select
+        id,name,pid,level,menuUrl,orderList,description,'${roleId}'
+        roleId,
+        case when exists(select id from system_role_authority where
+        roleId=#{roleId} and menuId=system_menu_info.id)
+        then 1 else 0 end isCheck
+        <![CDATA[
+			from system_menu_info
+		]]>
+        where pid=#{id}
+        order by pid,orderList
+    </select>
+    <!-- 角色权限管理end -->
+
+    <!-- 角色登陆start -->
+    <select id="selectAllByRoleLogin" resultMap="roleMenuLoginResultMap">
+        select
+        id,name,pid,level,menuUrl,orderList,description,'${roleId}'
+        roleId,
+        case when exists(select id from system_role_authority where
+        roleId=#{roleId} and menuId=system_menu_info.id)
+        then 1 else 0 end isCheck
+        <![CDATA[
+			from system_menu_info
+		]]>
+        where pid='0' and id in(select menuId from system_role_authority where
+        roleId=#{roleId})
+        order by pid,orderList
+    </select>
+    <select id="selectAllByPidRoleLogin" resultMap="roleMenuLoginResultMap">
+        select
+        id,name,pid,level,menuUrl,orderList,description,'${roleId}'
+        roleId,
+        case when exists(select id from system_role_authority where
+        roleId=#{roleId} and menuId=system_menu_info.id)
+        then 1 else 0 end isCheck
+        <![CDATA[
+			from system_menu_info
+		]]>
+        where pid=#{id} and id in(select menuId from system_role_authority
+        where roleId=#{roleId})
+        order by pid,orderList
+    </select>
+    <!-- 角色登陆end -->
+    <select id="selectAllByPid" resultMap="commonResultMap">
+        select
+        <include refid="colomnResult"/>
+        <![CDATA[
+			from system_menu_info
+		]]>
+        where pid = #{id}
+        order by orderList
+    </select>
+    <!-- 根据条件查询数量 -->
+    <select id="selectCount" resultType="int">
+
+        select count(id) from system_menu_info
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="level != null">
+                and level = #{level}
+            </if>
+        </where>
+    </select>
+    <select id="selectMaxOrderListByPid" resultType="int">
+        select max(orderList) from system_menu_info where pid=#{pid}
+    </select>
+    <!-- 根据主键查询信息 -->
+    <select id="selectById" resultMap="commonResultMap">
+        select
+        <include refid="colomnResult"/>
+        <![CDATA[
+			from system_menu_info where id=#{id}
+		]]>
+
+    </select>
+    <!-- 插入信息 -->
+    <insert id="insert">
+        insert into system_menu_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id!=null">id,</if>
+            <if test="name!=null">name,</if>
+            <if test="pid!=null">pid,</if>
+            <if test="level!=null">level,</if>
+            <if test="menuUrl!=null">menuUrl,</if>
+            <if test="orderList!=null">orderList,</if>
+            <if test="description!=null">description,</if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="id!=null">#{id},</if>
+            <if test="name!=null">#{name},</if>
+            <if test="pid!=null">#{pid},</if>
+            <if test="level!=null">#{level},</if>
+            <if test="menuUrl!=null">#{menuUrl},</if>
+            <if test="orderList!=null">#{orderList},</if>
+            <if test="description!=null">#{description},</if>
+        </trim>
+
+    </insert>
+    <!-- 根据主键删除信息 -->
+    <delete id="delete">
+        <![CDATA[
+		delete from system_menu_info 
+		]]>
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="ids != null">
+                and id in
+                <foreach item="item" index="index" collection="ids" open="("
+                         separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </delete>
+    <!-- 根据主键更新信息 -->
+    <update id="update">
+        <![CDATA[
+		update system_menu_info 
+		]]>
+        <set>
+            <if test="name!=null">name=#{name},</if>
+            <if test="pid!=null">pid=#{pid},</if>
+            <if test="orderList!=null">orderList=#{orderList},</if>
+            <if test="menuUrl!=null">menuUrl=#{menuUrl},</if>
+            <if test="level!=null">level=#{level},</if>
+            <if test="description!=null">description=#{description},</if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <update id="updateOrderListDown">
+        <![CDATA[
+		update system_menu_info set orderList=orderList+1
+		]]>
+        <where>
+            <if test="orderList != null">
+                and orderList > #{orderList}
+            </if>
+            <if test="ids != null">
+                and id in
+                <foreach item="item" index="index" collection="ids" open="("
+                         separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </update>
+    <update id="updateOrderListUp">
+        <![CDATA[
+		update system_menu_info set orderList=orderList-1
+		]]>
+        <where>
+            <if test="orderList != null">
+                and orderList > #{orderList}
+            </if>
+            <if test="ids != null">
+                and id in
+                <foreach item="item" index="index" collection="ids" open="("
+                         separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </update>
+</mapper> 

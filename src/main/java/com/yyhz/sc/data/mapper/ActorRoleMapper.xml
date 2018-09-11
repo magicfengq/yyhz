@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.yyhz.sc.data.dao.ActorRoleDao">
+
+	<resultMap id="colomnResult" type="com.yyhz.sc.data.model.ActorRole">
+		<id property="id" column="id" />
+		<result property="actorId" column="actorId" />
+		<result property="roleId" column="roleId" />
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     actorId,
+	     roleId
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into actor_role  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="actorId!=null">actorId,</if>
+			     <if test="roleId!=null">roleId,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="actorId!=null">#{actorId},</if>
+			     <if test="roleId!=null">#{roleId},</if>
+		</trim>
+	</insert>
+
+	<insert id="batchInsert">
+	   insert into actor_role (id,actorId,roleId) values
+	   	<foreach collection ="list" item="item" index= "index" separator =",">
+			(#{item.id}, #{item.actorId},#{item.roleId})
+		</foreach >
+	</insert>
+
+	<update id="update">
+	   update actor_role 
+	   <set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="actorId!=null">actorId=#{actorId},</if>
+			     <if test="roleId!=null">roleId=#{roleId},</if>
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     actor_role 
+	   where 
+	    id=#{id} 
+	</delete>
+	
+	<delete id="deleteByActorId">
+	   delete from
+	     actor_role 
+	   where 
+	    actorId=#{actorId} 
+	</delete>
+	
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from actor_role
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" actorId != null and actorId != '' ">
+					and actorId=#{actorId} 
+				</if>
+				<if test=" roleId != null and roleId != '' ">
+					and roleId=#{roleId} 
+				</if>
+		</where>
+	</select>
+	
+	<select id="selectAllWithName" resultMap="colomnResult">
+		select ar.id, ar.actorId, ar.roleId, r.name roleName from actor_role ar
+		  join role_info r on ar.roleId = r.id
+		<where>
+			r.status = 0
+			<if test=" id != null and id != '' ">
+				and ar.id=#{id} 
+			</if>
+			<if test=" actorId != null and actorId != '' ">
+				and ar.actorId=#{actorId} 
+			</if>
+			<if test=" roleId != null and roleId != '' ">
+				and ar.roleId=#{roleId} 
+			</if>
+		</where>
+	</select>
+	
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from actor_role
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" actorId != null and actorId != '' ">
+					and actorId=#{actorId} 
+				</if>
+				<if test=" roleId != null and roleId != '' ">
+					and roleId=#{roleId} 
+				</if>
+				<if test=" roleIdList != null and roleIdList.size() > 0 ">
+					and roleId in
+					<foreach item="roleId" index="index" collection="roleIdList" open="(" separator="," close=")">
+			  			#{roleId}
+			 		</foreach>
+				</if>
+		</where>
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+
+		select count(id) from actor_role
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" actorId != null and actorId != '' ">
+					and actorId=#{actorId} 
+				</if>
+				<if test=" roleId != null and roleId != '' ">
+					and roleId=#{roleId} 
+				</if>
+		</where>
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from actor_role where 
+			
+			   	 id=#{id} 
+		]]>
+		
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from actor_role where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from actor_role where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update actor_role
+		<set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="actorId!=null">actorId=#{actorId},</if>
+			     <if test="roleId!=null">roleId=#{roleId},</if>
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+	
+	<select id="selectActorRoleInfo" resultMap="colomnResult" parameterType="java.lang.String">
+		select ar.actorId,ar.roleId,r.name roleName from actor_role ar
+		  join role_info r on ar.roleId = r.id
+		 where r.name like CONCAT('%','${_parameter}','%')
+		   and r.status = 0
+	</select>
+	
+	<select id="selectActorRoleInfoByActorIds" resultMap="colomnResult">
+		select ar.actorId,ar.roleId,r.name roleName from actor_role ar
+		  join role_info r on ar.roleId = r.id
+		 where r.status = 0
+		   and actorId in 
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+	
+</mapper> 

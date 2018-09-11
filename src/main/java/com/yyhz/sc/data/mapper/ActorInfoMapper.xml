@@ -1,0 +1,635 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.yyhz.sc.data.dao.ActorInfoDao">
+
+	<resultMap id="colomnResult" type="com.yyhz.sc.data.model.ActorInfo">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="realName" column="realName" />
+		<result property="mobile" column="mobile" />
+		<result property="password" column="password" />
+		<result property="mkey" column="mkey" />
+		<result property="imgUuid" column="imgUuid" />
+		<result property="sex" column="sex" />
+		<result property="birthDay" column="birthDay" />
+		<result property="city" column="city" />
+		<result property="actCities" column="actCities" />
+		<result property="height" column="height" />
+		<result property="weight" column="weight" />
+		<result property="shoesSize" column="shoesSize" />
+		<result property="size" column="size" />
+		<result property="easemobStatusCode" column="easemobStatusCode" />
+		<result property="lastLoginTime" column="lastLoginTime" />
+		<result property="createTime" column="createTime" />
+		<result property="status" column="status" />
+		<result property="pushStatus" column="pushStatus" />
+		<result property="logintoken" column="logintoken" />
+		<result property="registerType" column="registerType" />
+		<result property="authenticateLevel" column="authenticateLevel" />
+		<result property="level" column="level" />
+		<result property="idcard" column="idcard" />
+		<result property="totalScore" column="totalScore" />
+		<result property="commentNum" column="commentNum" />
+		<result property="lon" column="lon" />
+		<result property="lat" column="lat" />
+		<result property="headImgUrl" column="headImgUrl" />
+		<result property="introduction" column="introduction" />
+	</resultMap>
+	<resultMap id="actorInfoDetailsResult" type="com.yyhz.sc.data.model.ActorInfo" extends="colomnResult">
+		<association property="systemPictureInfo" resultMap="com.yyhz.sc.data.dao.SystemPictureInfoDao.commonResult" columnPrefix="spi_"/>
+		<collection property="roleInfos" ofType="com.yyhz.sc.data.model.RoleInfo" resultMap="com.yyhz.sc.data.dao.RoleInfoDao.colomnResult" columnPrefix="r_"/>
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     name,
+	     realName,
+	     mobile,
+	     password,
+	     mkey,
+	     imgUuid,
+	     sex,
+	     birthDay,
+	     city,
+	     actCities,
+	     height,
+	     weight,
+	     shoesSize,
+	     size,
+	     easemobStatusCode,
+	     lastLoginTime,
+	     createTime,
+	     status,
+	     pushStatus,
+	     logintoken,
+	     registerType,
+	     authenticateLevel,
+	     level,
+	     idcard,
+	     totalScore,
+	     commentNum,
+	     lon,
+	     lat,
+	     introduction
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into actor_info  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="name!=null">name,</if>
+			     <if test="realName!=null">realName,</if>
+			     <if test="mobile!=null">mobile,</if>
+			     <if test="password!=null">password,</if>
+			     <if test="mkey!=null">mkey,</if>
+			     <if test="imgUuid!=null">imgUuid,</if>
+			     <if test="sex!=null">sex,</if>
+			     <if test="birthDay!=null">birthDay,</if>
+			     <if test="city!=null">city,</if>
+			     <if test="actCities!=null">actCities,</if>
+			     <if test="height!=null">height,</if>
+			     <if test="weight!=null">weight,</if>
+			     <if test="shoesSize!=null">shoesSize,</if>
+			     <if test="size!=null">size,</if>
+			     <if test="easemobStatusCode!=null">easemobStatusCode,</if>
+			     <if test="lastLoginTime!=null">lastLoginTime,</if>
+			     <if test="createTime!=null">createTime,</if>
+			     <if test="status!=null">status,</if>
+			     <if test="pushStatus!=null">pushStatus,</if>
+			     <if test="logintoken!=null">logintoken,</if>
+			     <if test="registerType!=null">registerType,</if>
+			     <if test="authenticateLevel!=null">authenticateLevel,</if>
+			     <if test="level!=null">level,</if>
+			     <if test="idcard!=null">idcard,</if>
+			     <if test="totalScore!=null">totalScore,</if>
+			     <if test="commentNum!=null">commentNum,</if>
+			     <if test="lon!=null">lon,</if>
+			     <if test="lat!=null">lat,</if>
+			     <if test="introduction!=null">introduction,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="name!=null">#{name},</if>
+			     <if test="realName!=null">#{realName},</if>
+			     <if test="mobile!=null">#{mobile},</if>
+			     <if test="password!=null">#{password},</if>
+			     <if test="mkey!=null">#{mkey},</if>
+			     <if test="imgUuid!=null">#{imgUuid},</if>
+			     <if test="sex!=null">#{sex},</if>
+			     <if test="birthDay!=null">#{birthDay},</if>
+			     <if test="city!=null">#{city},</if>
+			     <if test="actCities!=null">#{actCities},</if>
+			     <if test="height!=null">#{height},</if>
+			     <if test="weight!=null">#{weight},</if>
+			     <if test="shoesSize!=null">#{shoesSize},</if>
+			     <if test="size!=null">#{size},</if>
+			     <if test="easemobStatusCode!=null">#{easemobStatusCode},</if>
+			     <if test="lastLoginTime!=null">#{lastLoginTime},</if>
+			     <if test="createTime!=null">#{createTime},</if>
+			     <if test="status!=null">#{status},</if>
+			     <if test="pushStatus!=null">#{pushStatus},</if>
+			     <if test="logintoken!=null">#{logintoken},</if>
+			     <if test="registerType!=null">#{registerType},</if>
+			     <if test="authenticateLevel!=null">#{authenticateLevel},</if>
+			     <if test="level!=null">#{level},</if>
+			     <if test="idcard!=null">#{idcard},</if>
+			     <if test="totalScore!=null">#{totalScore},</if>
+			     <if test="commentNum!=null">#{commentNum},</if>
+			     <if test="lon!=null">#{lon},</if>
+			     <if test="lat!=null">#{lat},</if>
+			     <if test="introduction!=null">#{introduction},</if>
+		</trim>
+	</insert>
+
+	<update id="update">
+	   update actor_info 
+	   <set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="name!=null">name=#{name},</if>
+			     <if test="realName!=null">realName=#{realName},</if>
+			     <if test="mobile!=null">mobile=#{mobile},</if>
+			     <if test="password!=null">password=#{password},</if>
+			     <if test="mkey!=null">mkey=#{mkey},</if>
+			     <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
+			     <if test="sex!=null">sex=#{sex},</if>
+			     <if test="birthDay!=null">birthDay=#{birthDay},</if>
+			     <if test="city!=null">city=#{city},</if>
+			     <if test="actCities!=null">actCities=#{actCities},</if>
+			     <if test="height!=null">height=#{height},</if>
+			     <if test="weight!=null">weight=#{weight},</if>
+			     <if test="shoesSize!=null">shoesSize=#{shoesSize},</if>
+			     <if test="size!=null">size=#{size},</if>
+			     <if test="easemobStatusCode!=null">easemobStatusCode=#{easemobStatusCode},</if>
+			     <if test="lastLoginTime!=null">lastLoginTime=#{lastLoginTime},</if>
+			     <if test="createTime!=null">createTime=#{createTime},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="pushStatus!=null">pushStatus=#{pushStatus},</if>
+			     <if test="logintoken!=null">logintoken=#{logintoken},</if>
+			     <if test="registerType!=null">registerType=#{registerType},</if>
+			     <if test="authenticateLevel!=null">authenticateLevel=#{authenticateLevel},</if>
+			     <if test="level!=null">level=#{level},</if>
+			     <if test="idcard!=null">idcard=#{idcard},</if>
+			     <if test="totalScore!=null">totalScore=#{totalScore},</if>
+			     <if test="commentNum!=null">commentNum=#{commentNum},</if>
+			     <if test="lon!=null">lon=#{lon},</if>
+			     <if test="lat!=null">lat=#{lat},</if>
+			     <if test="introduction!=null">introduction=#{introduction},</if>
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     actor_info 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from actor_info
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" name != null and name != '' ">
+					and name like CONCAT('%','${name}','%')
+				</if>
+				<if test=" realName != null and realName != '' ">
+					and realName like CONCAT('%','${realName}','%')
+				</if>
+				<if test=" mobile != null and mobile != '' ">
+					and mobile=#{mobile} 
+				</if>
+				<if test=" password != null and password != '' ">
+					and password=#{password} 
+				</if>
+				<if test=" mkey != null and mkey != '' ">
+					and mkey=#{mkey} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
+				<if test=" sex != null ">
+					and sex=#{sex} 
+				</if>
+				<if test=" birthDay != null and birthDay != '' ">
+					and birthDay=#{birthDay} 
+				</if>
+				<if test=" city != null and city != '' ">
+					and city like CONCAT('%','${city}','%')
+				</if>
+				<if test=" actCities != null and actCities != '' ">
+					and actCities=#{actCities} 
+				</if>
+				<if test=" height != null and height != '' ">
+					and height=#{height} 
+				</if>
+				<if test=" weight != null and weight != '' ">
+					and weight=#{weight} 
+				</if>
+				<if test=" shoesSize != null and shoesSize != '' ">
+					and shoesSize=#{shoesSize} 
+				</if>
+				<if test=" size != null and size != '' ">
+					and size=#{size} 
+				</if>
+				<if test=" easemobStatusCode != null and easemobStatusCode != '' ">
+					and easemobStatusCode=#{easemobStatusCode} 
+				</if>
+				<if test=" lastLoginTime != null and lastLoginTime != '' ">
+					and lastLoginTime=#{lastLoginTime} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and createTime=#{createTime} 
+				</if>
+				<if test=" status != null ">
+					and status=#{status} 
+				</if>
+				<if test=" pushStatus != null ">
+					and pushStatus=#{pushStatus} 
+				</if>
+				<if test=" logintoken != null and logintoken != '' ">
+					and logintoken=#{logintoken} 
+				</if>
+				<if test=" registerType != null ">
+					and registerType=#{registerType} 
+				</if>
+				<if test=" authenticateLevel != null ">
+					and authenticateLevel=#{authenticateLevel} 
+				</if>
+				<if test=" level != null ">
+					and level=#{level} 
+				</if>
+				<if test=" idcard != null and idcard != '' ">
+					and idcard=#{idcard} 
+				</if>
+				<if test=" totalScore != null ">
+					and totalScore=#{totalScore} 
+				</if>
+				<if test=" commentNum != null ">
+					and commentNum=#{commentNum} 
+				</if>
+				<if test=" lon != null and lon != '' ">
+					and lon=#{lon} 
+				</if>
+				<if test=" lat != null and lat != '' ">
+					and lat=#{lat} 
+				</if>
+		</where>
+	</select>
+	
+	<select id="selectActorInfoForPage"  resultMap="colomnResult">
+		select a.id,a.name,a.mobile,a.sex,a.createTime,a.status,a.registerType,a.level
+		from actor_info a
+		<where>
+				<if test=" mobile != null and mobile != '' ">
+					and a.mobile like CONCAT('%','${mobile}','%')
+				</if>
+				<if test=" name != null and name != '' ">
+					and a.name like CONCAT('%',#{name},'%')
+				</if>
+				<if test=" realName != null and realName != '' ">
+					and a.realName like CONCAT('%','${realName}','%')
+				</if>
+				<if test=" level != null ">
+					and a.level=#{level}
+				</if>
+				<if test=" sex != null ">
+					and a.sex=#{sex} 
+				</if>
+				<if test=" status != null ">
+					and a.status=#{status} 
+				</if>
+				<if test=" registerType != null ">
+					and a.registerType=#{registerType} 
+				</if>
+				<if test=" actorIdList != null and actorIdList.size() > 0">
+					and a.id in 
+					<foreach item="item" index="index" collection="actorIdList" open="(" separator="," close=")">
+			  			'${item}'
+			 		</foreach>
+				</if>				
+		</where>
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from actor_info
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" name != null and name != '' ">
+					and name=#{name} 
+				</if>
+				<if test=" realName != null and realName != '' ">
+					and realName=#{realName} 
+				</if>
+				<if test=" mobile != null and mobile != '' ">
+					and mobile=#{mobile} 
+				</if>
+				<if test=" password != null and password != '' ">
+					and password=#{password} 
+				</if>
+				<if test=" mkey != null and mkey != '' ">
+					and mkey=#{mkey} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
+				<if test=" sex != null ">
+					and sex=#{sex} 
+				</if>
+				<if test=" birthDay != null and birthDay != '' ">
+					and birthDay=#{birthDay} 
+				</if>
+				<if test=" city != null and city != '' ">
+					and city=#{city} 
+				</if>
+				<if test=" actCities != null and actCities != '' ">
+					and actCities=#{actCities} 
+				</if>
+				<if test=" height != null and height != '' ">
+					and height=#{height} 
+				</if>
+				<if test=" weight != null and weight != '' ">
+					and weight=#{weight} 
+				</if>
+				<if test=" shoesSize != null and shoesSize != '' ">
+					and shoesSize=#{shoesSize} 
+				</if>
+				<if test=" size != null and size != '' ">
+					and size=#{size} 
+				</if>
+				<if test=" easemobStatusCode != null and easemobStatusCode != '' ">
+					and easemobStatusCode=#{easemobStatusCode} 
+				</if>
+				<if test=" lastLoginTime != null and lastLoginTime != '' ">
+					and lastLoginTime=#{lastLoginTime} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and createTime=#{createTime} 
+				</if>
+				<if test=" status != null ">
+					and status=#{status} 
+				</if>
+				<if test=" pushStatus != null ">
+					and pushStatus=#{pushStatus} 
+				</if>
+				<if test=" logintoken != null and logintoken != '' ">
+					and logintoken=#{logintoken} 
+				</if>
+				<if test=" registerType != null ">
+					and registerType=#{registerType} 
+				</if>
+				<if test=" authenticateLevel != null ">
+					and authenticateLevel=#{authenticateLevel} 
+				</if>
+				<if test=" level != null ">
+					and level=#{level} 
+				</if>
+				<if test=" idcard != null and idcard != '' ">
+					and idcard=#{idcard} 
+				</if>
+				<if test=" totalScore != null ">
+					and totalScore=#{totalScore} 
+				</if>
+				<if test=" commentNum != null ">
+					and commentNum=#{commentNum} 
+				</if>
+				<if test=" lon != null and lon != '' ">
+					and lon=#{lon} 
+				</if>
+				<if test=" lat != null and lat != '' ">
+					and lat=#{lat} 
+				</if>
+				<if test=" actorIdList != null and actorIdList.size() > 0">
+					and id in 
+					<foreach item="item" index="index" collection="actorIdList" open="(" separator="," close=")">
+			  			#{item}
+			 		</foreach>
+				</if>
+		</where>
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+
+		select count(id) from actor_info
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" name != null and name != '' ">
+					and name=#{name} 
+				</if>
+				<if test=" realName != null and realName != '' ">
+					and realName=#{realName} 
+				</if>
+				<if test=" mobile != null and mobile != '' ">
+					and mobile=#{mobile} 
+				</if>
+				<if test=" password != null and password != '' ">
+					and password=#{password} 
+				</if>
+				<if test=" mkey != null and mkey != '' ">
+					and mkey=#{mkey} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
+				<if test=" sex != null ">
+					and sex=#{sex} 
+				</if>
+				<if test=" birthDay != null and birthDay != '' ">
+					and birthDay=#{birthDay} 
+				</if>
+				<if test=" city != null and city != '' ">
+					and city=#{city} 
+				</if>
+				<if test=" actCities != null and actCities != '' ">
+					and actCities=#{actCities} 
+				</if>
+				<if test=" height != null and height != '' ">
+					and height=#{height} 
+				</if>
+				<if test=" weight != null and weight != '' ">
+					and weight=#{weight} 
+				</if>
+				<if test=" shoesSize != null and shoesSize != '' ">
+					and shoesSize=#{shoesSize} 
+				</if>
+				<if test=" size != null and size != '' ">
+					and size=#{size} 
+				</if>
+				<if test=" easemobStatusCode != null and easemobStatusCode != '' ">
+					and easemobStatusCode=#{easemobStatusCode} 
+				</if>
+				<if test=" lastLoginTime != null and lastLoginTime != '' ">
+					and lastLoginTime=#{lastLoginTime} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and createTime=#{createTime} 
+				</if>
+				<if test=" status != null ">
+					and status=#{status} 
+				</if>
+				<if test=" pushStatus != null ">
+					and pushStatus=#{pushStatus} 
+				</if>
+				<if test=" logintoken != null and logintoken != '' ">
+					and logintoken=#{logintoken} 
+				</if>
+				<if test=" registerType != null ">
+					and registerType=#{registerType} 
+				</if>
+				<if test=" authenticateLevel != null ">
+					and authenticateLevel=#{authenticateLevel} 
+				</if>
+				<if test=" level != null ">
+					and level=#{level} 
+				</if>
+				<if test=" idcard != null and idcard != '' ">
+					and idcard=#{idcard} 
+				</if>
+				<if test=" totalScore != null ">
+					and totalScore=#{totalScore} 
+				</if>
+				<if test=" commentNum != null ">
+					and commentNum=#{commentNum} 
+				</if>
+				<if test=" lon != null and lon != '' ">
+					and lon=#{lon} 
+				</if>
+				<if test=" lat != null and lat != '' ">
+					and lat=#{lat} 
+				</if>
+				<if test=" actorIdList != null and actorIdList.size() > 0">
+					and id in 
+					<foreach item="item" index="index" collection="actorIdList" open="(" separator="," close=")">
+			  			#{item}
+			 		</foreach>
+				</if>
+		</where>
+	</select>
+	
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="colomnResult">
+		select
+		<![CDATA[
+			ai.id,
+			ai.name,
+			ai.realName,
+			ai.mobile,
+			ai.password,
+			ai.mkey,
+			ai.imgUuid,
+			ai.sex,
+			ai.birthDay,
+			ai.city,
+			ai.actCities,
+			ai.height,
+			ai.weight,
+			ai.shoesSize,
+			ai.size,
+			ai.easemobStatusCode,
+			ai.lastLoginTime,
+			ai.createTime,
+			ai.status,
+			ai.pushStatus,
+			ai.logintoken,
+			ai.registerType,
+			ai.authenticateLevel,
+			ai.level,
+			ai.idcard,
+			ai.totalScore,
+			ai.commentNum,
+			ai.lon,
+			ai.lat,
+			ai.introduction,
+			spi.urlPath as headImgUrl,
+			group_concat(ri.name) as roleName
+
+			from actor_info ai
+			left join system_picture_info spi on ai.imgUuid = spi.uuid
+			left join actor_role ar on ai.id = ar.actorId
+			left join role_info ri on ri.id = ar.roleId
+			where ai.id=#{id}
+			group by ai.id
+		]]>
+		
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from actor_info where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from actor_info where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update actor_info
+		<set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="name!=null">name=#{name},</if>
+			     <if test="realName!=null">realName=#{realName},</if>
+			     <if test="mobile!=null">mobile=#{mobile},</if>
+			     <if test="password!=null">password=#{password},</if>
+			     <if test="mkey!=null">mkey=#{mkey},</if>
+			     <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
+			     <if test="sex!=null">sex=#{sex},</if>
+			     <if test="birthDay!=null">birthDay=#{birthDay},</if>
+			     <if test="city!=null">city=#{city},</if>
+			     <if test="actCities!=null">actCities=#{actCities},</if>
+			     <if test="height!=null">height=#{height},</if>
+			     <if test="weight!=null">weight=#{weight},</if>
+			     <if test="shoesSize!=null">shoesSize=#{shoesSize},</if>
+			     <if test="size!=null">size=#{size},</if>
+			     <if test="easemobStatusCode!=null">easemobStatusCode=#{easemobStatusCode},</if>
+			     <if test="lastLoginTime!=null">lastLoginTime=#{lastLoginTime},</if>
+			     <if test="createTime!=null">createTime=#{createTime},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="pushStatus!=null">pushStatus=#{pushStatus},</if>
+			     <if test="logintoken!=null">logintoken=#{logintoken},</if>
+			     <if test="registerType!=null">registerType=#{registerType},</if>
+			     <if test="authenticateLevel!=null">authenticateLevel=#{authenticateLevel},</if>
+			     <if test="level!=null">level=#{level},</if>
+			     <if test="idcard!=null">idcard=#{idcard},</if>
+			     <if test="totalScore!=null">totalScore=#{totalScore},</if>
+			     <if test="commentNum!=null">commentNum=#{commentNum},</if>
+			     <if test="lon!=null">lon=#{lon},</if>
+			     <if test="lat!=null">lat=#{lat},</if>
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+</mapper> 

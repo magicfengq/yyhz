@@ -1,0 +1,30 @@
+
+.widget-box-overlay {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	background-color: rgba(0, 0, 0, 0.3);
+	z-index: 21;
+}
+
+.widget-box-overlay>[class *="icon-"] {
+	position: absolute;
+	top: 15%;
+	left: 0;
+	right: 0;
+	text-align: center;
+}
+
+.widget-box.collapsed .widget-box-overlay>[class *="icon-"] {
+	top: 5%;
+}
+
+.widget-box-overlay>.icon-spin {
+	-moz-animation-duration: 1.2s;
+	-webkit-animation-duration: 1.2s;
+	-o-animation-duration: 1.2s;
+	-ms-animation-duration: 1.2s;
+	animation-duration: 1.2s;
+}

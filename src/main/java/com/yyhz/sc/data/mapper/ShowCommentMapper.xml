@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.yyhz.sc.data.dao.ShowCommentDao">
+
+	<resultMap id="colomnResult" type="com.yyhz.sc.data.model.ShowComment">
+		<id property="id" column="id" />
+		<result property="showId" column="showId" />
+		<result property="creater" column="creater" />
+		<result property="createTime" column="createTime" />
+		<result property="toUserId" column="toUserId" />
+		<result property="content" column="content" />
+		<result property="status" column="status" />
+		<result property="operater" column="operater" />
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     showId,
+	     creater,
+	     createTime,
+	     toUserId,
+	     content,
+	     status,
+	     operater
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into show_comment  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="showId!=null">showId,</if>
+			     <if test="creater!=null">creater,</if>
+			     <if test="createTime!=null">createTime,</if>
+			     <if test="toUserId!=null">toUserId,</if>
+			     <if test="content!=null">content,</if>
+			     <if test="status!=null">status,</if>
+			     <if test="operater!=null">operater,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="showId!=null">#{showId},</if>
+			     <if test="creater!=null">#{creater},</if>
+			     <if test="createTime!=null">#{createTime},</if>
+			     <if test="toUserId!=null">#{toUserId},</if>
+			     <if test="content!=null">#{content},</if>
+			     <if test="status!=null">#{status},</if>
+			     <if test="operater!=null">#{operater},</if>
+		</trim>
+	</insert>
+
+	<update id="update">
+	   update show_comment 
+	   <set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="showId!=null">showId=#{showId},</if>
+			     <if test="creater!=null">creater=#{creater},</if>
+			     <if test="createTime!=null">createTime=#{createTime},</if>
+			     <if test="toUserId!=null">toUserId=#{toUserId},</if>
+			     <if test="content!=null">content=#{content},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="operater!=null">operater=#{operater},</if>
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     show_comment 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from show_comment
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" showId != null and showId != '' ">
+					and showId=#{showId} 
+				</if>
+				<if test=" creater != null and creater != '' ">
+					and creater=#{creater} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and createTime=#{createTime} 
+				</if>
+				<if test=" toUserId != null and toUserId != '' ">
+					and toUserId=#{toUserId} 
+				</if>
+				<if test=" content != null and content != '' ">
+					and content=#{content} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" operater != null and operater != '' ">
+					and operater=#{operater} 
+				</if>
+		</where>
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from show_comment
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" showId != null and showId != '' ">
+					and showId=#{showId} 
+				</if>
+				<if test=" creater != null and creater != '' ">
+					and creater=#{creater} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and createTime=#{createTime} 
+				</if>
+				<if test=" toUserId != null and toUserId != '' ">
+					and toUserId=#{toUserId} 
+				</if>
+				<if test=" content != null and content != '' ">
+					and content=#{content} 
+				</if>
+				<if test=" status != null ">
+					and status=#{status} 
+				</if>
+				<if test=" operater != null and operater != '' ">
+					and operater=#{operater} 
+				</if>
+				<if test=" showIdList != null and showIdList.size() > 0 ">
+					and showId in
+					<foreach item="showId" index="index" collection="showIdList" open="(" separator="," close=")">
+  						#{showId}
+ 					</foreach>
+				</if>
+		</where>
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+
+		select count(id) from show_comment
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" showId != null and showId != '' ">
+					and showId=#{showId} 
+				</if>
+				<if test=" creater != null and creater != '' ">
+					and creater=#{creater} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and createTime=#{createTime} 
+				</if>
+				<if test=" toUserId != null and toUserId != '' ">
+					and toUserId=#{toUserId} 
+				</if>
+				<if test=" content != null and content != '' ">
+					and content=#{content} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" operater != null and operater != '' ">
+					and operater=#{operater} 
+				</if>
+		</where>
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from show_comment where 
+			
+			   	 id=#{id} 
+		]]>
+		
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from show_comment where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+	
+	<select id="selectShowCommentNum" resultMap="colomnResult">
+		select showId,count(id) commentNum from show_comment 
+		<where>
+				<if test=" status != null ">
+					and status=#{status} 
+				</if>
+				<if test=" showIdList != null and showIdList.size > 0 ">
+					and showId in
+					<foreach item="item" index="index" collection="showIdList" open="(" separator="," close=")">
+  						#{item}
+ 					</foreach>
+				</if>
+				<if test=" showId != null and showId != '' ">
+					and showId=#{showId}
+				</if>
+		</where>
+		group by showId
+	</select>
+	
+	
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from show_comment where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update show_comment
+		<set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="showId!=null">showId=#{showId},</if>
+			     <if test="creater!=null">creater=#{creater},</if>
+			     <if test="createTime!=null">createTime=#{createTime},</if>
+			     <if test="toUserId!=null">toUserId=#{toUserId},</if>
+			     <if test="content!=null">content=#{content},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="operater!=null">operater=#{operater},</if>
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+</mapper> 

@@ -1,0 +1,659 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.yyhz.sc.data.dao.CardInfoDao">
+
+	<resultMap id="colomnResult" type="com.yyhz.sc.data.model.CardInfo">
+		<id property="id" column="id" />
+		<result property="type" column="type" />
+		<result property="cardName" column="cardName" />
+		<result property="sex" column="sex" />
+		<result property="cardRoleId" column="cardRoleId" />
+		<result property="detailRole" column="detailRole" />
+		<result property="publicType" column="publicType" />
+		<result property="birthDate" column="birthDate" />
+		<result property="city" column="city" />
+		<result property="actCities" column="actCities" />
+		<result property="price" column="price" />
+		<result property="height" column="height" />
+		<result property="weight" column="weight" />
+		<result property="shoesSize" column="shoesSize" />
+		<result property="size" column="size" />
+		<result property="institution" column="institution" />
+		<result property="details" column="details" />
+		<result property="imgUuid" column="imgUuid" />
+		<result property="mutiImgUuid" column="mutiImgUuid" />
+		<result property="creater" column="creater" />
+		<result property="createTime" column="createTime" />
+		<result property="status" column="status" />
+	</resultMap>
+	<resultMap id="cardInfo" type="com.yyhz.sc.data.model.CardInfo" extends="colomnResult">
+		<result property="cardRoleName" column="cardRoleName" />
+		<result property="cardImgUrls" column="cardImgUrls" />
+		<result property="authenticateLevel" column="authenticateLevel" />
+		<result property="publicTypeNames" column="publicTypeNames" />
+		<result property="avgScore" column="avgScore" />
+		<result property="createrName" column="createrName" />
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     type,
+	     cardName,
+	     sex,
+	     cardRoleId,
+	     detailRole,
+	     publicType,
+	     birthDate,
+	     city,
+	     actCities,
+	     price,
+	     height,
+	     weight,
+	     shoesSize,
+	     size,
+	     institution,
+	     details,
+	     imgUuid,
+	     mutiImgUuid,
+	     creater,
+	     createTime,
+	     status
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into card_info  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="type!=null">type,</if>
+			     <if test="cardName!=null">cardName,</if>
+			     <if test="sex!=null">sex,</if>
+			     <if test="cardRoleId!=null">cardRoleId,</if>
+			     <if test="detailRole!=null">detailRole,</if>
+			     <if test="publicType!=null">publicType,</if>
+			     <if test="birthDate!=null">birthDate,</if>
+			     <if test="city!=null">city,</if>
+			     <if test="actCities!=null">actCities,</if>
+			     <if test="price!=null">price,</if>
+			     <if test="height!=null">height,</if>
+			     <if test="weight!=null">weight,</if>
+			     <if test="shoesSize!=null">shoesSize,</if>
+			     <if test="size!=null">size,</if>
+			     <if test="institution!=null">institution,</if>
+			     <if test="details!=null">details,</if>
+			     <if test="imgUuid!=null">imgUuid,</if>
+			     <if test="mutiImgUuid!=null">mutiImgUuid,</if>
+			     <if test="creater!=null">creater,</if>
+			     <if test="createTime!=null">createTime,</if>
+			     <if test="status!=null">status,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="type!=null">#{type},</if>
+			     <if test="cardName!=null">#{cardName},</if>
+			     <if test="sex!=null">#{sex},</if>
+			     <if test="cardRoleId!=null">#{cardRoleId},</if>
+			     <if test="detailRole!=null">#{detailRole},</if>
+			     <if test="publicType!=null">#{publicType},</if>
+			     <if test="birthDate!=null">#{birthDate},</if>
+			     <if test="city!=null">#{city},</if>
+			     <if test="actCities!=null">#{actCities},</if>
+			     <if test="price!=null">#{price},</if>
+			     <if test="height!=null">#{height},</if>
+			     <if test="weight!=null">#{weight},</if>
+			     <if test="shoesSize!=null">#{shoesSize},</if>
+			     <if test="size!=null">#{size},</if>
+			     <if test="institution!=null">#{institution},</if>
+			     <if test="details!=null">#{details},</if>
+			     <if test="imgUuid!=null">#{imgUuid},</if>
+			     <if test="mutiImgUuid!=null">#{mutiImgUuid},</if>
+			     <if test="creater!=null">#{creater},</if>
+			     <if test="createTime!=null">#{createTime},</if>
+			     <if test="status!=null">#{status},</if>
+		</trim>
+	</insert>
+
+	<update id="update">
+	   update card_info 
+	   <set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="type!=null">type=#{type},</if>
+			     <if test="cardName!=null">cardName=#{cardName},</if>
+			     <if test="sex!=null">sex=#{sex},</if>
+			     <if test="cardRoleId!=null">cardRoleId=#{cardRoleId},</if>
+			     <if test="detailRole!=null">detailRole=#{detailRole},</if>
+			     <if test="publicType!=null">publicType=#{publicType},</if>
+			     <if test="birthDate!=null">birthDate=#{birthDate},</if>
+			     <if test="city!=null">city=#{city},</if>
+			     <if test="actCities!=null">actCities=#{actCities},</if>
+			     <if test="price!=null">price=#{price},</if>
+			     <if test="height!=null">height=#{height},</if>
+			     <if test="weight!=null">weight=#{weight},</if>
+			     <if test="shoesSize!=null">shoesSize=#{shoesSize},</if>
+			     <if test="size!=null">size=#{size},</if>
+			     <if test="institution!=null">institution=#{institution},</if>
+			     <if test="details!=null">details=#{details},</if>
+			     <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
+			     <if test="mutiImgUuid!=null">mutiImgUuid=#{mutiImgUuid},</if>
+			     <if test="creater!=null">creater=#{creater},</if>
+			     <if test="createTime!=null">createTime=#{createTime},</if>
+			     <if test="status!=null">status=#{status},</if>
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     card_info 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectCityList" resultMap="colomnResult">
+		select distinct(actCities) from card_info
+		<where>
+			actCities != '全国'
+			<if test="type!=null">
+				and type=#{type} 
+			</if>
+	   	</where>   
+	</select>
+
+	<!-- 查询基本信息 -->
+	<select id = "selectAllSummary" resultMap="cardInfo">
+		select 
+		ccc.*,
+		cccspi.urlPath as createrHeadUrl,
+		avg(ac.score) as avgScore
+		from
+		(select 
+			sc.*,
+			group_concat(spi.urlPath) as cardImgUrls
+			from 
+			(select
+				c.id,
+				c.type,
+				c.cardName,
+				c.sex,
+				c.cardRoleId,
+				c.detailRole,
+				c.birthDate,
+				c.city,
+				c.actCities,
+				c.price,
+				c.height,
+				c.weight,
+				c.shoesSize,
+				c.size,
+				c.institution,
+				c.details,
+				c.creater,
+				c.createTime,
+				c.status,
+				r.name as cardRoleName,
+				ai.authenticateLevel as authenticateLevel,
+				ai.name as createrName,
+				ai.imgUuid as createrImgUuid,
+				group_concat(pt.id) as publicType,
+				group_concat(pt.name) as publicTypeNames
+	
+			 	from card_info c
+			 	left join actor_info ai on ai.id=c.creater
+			 	left join role_info r on c.cardRoleId = r.id
+				left join card_announce_public_type capt on c.id = capt.cardAnnounceId
+			 	left join public_type pt on capt.publicTypeId = pt.id
+		<where>
+			<if test=" id != null and id != ''">
+				and c.id=#{id} 
+			</if>
+			<if test=" type != null">
+				and c.type=#{type} 
+			</if>
+			<if test=" status != null">
+				and c.status=#{status} 
+			</if>
+			<if test=" city != null and city !=''">
+				and c.city=#{city} 
+			</if>
+			<if test=" actCities != null and actCities !=''">
+				and (c.actCities like concat('%', #{actCities}, '%') or c.actCities='全国')
+			</if>
+			<if test=" sex != null">
+				and c.sex=#{sex} 
+			</if>
+			<if test=" creater != null and creater != '' ">
+				and c.creater=#{creater} 
+			</if>
+			<if test=" authenticateLevel != null">
+				and ai.authenticateLevel=#{authenticateLevel}
+			</if>			
+		</where>
+	 	group by c.id) sc 
+	 	left join card_picture cp on sc.id=cp.cardId
+		left join system_picture_info spi on cp.imgUuid = spi.uuid
+		<where>
+			<if test=" publicType != null and publicType != ''">
+				and sc.publicType like concat('%', #{publicType}, '%') 
+			</if>
+			<if test=" keyword != null and keyword != ''">
+				and (sc.cardName like concat('%', #{keyword}, '%')
+					or sc.detailRole like concat('%', #{keyword}, '%')
+					or sc.city like concat('%', #{keyword}, '%')
+					or sc.actCities like concat('%', #{keyword}, '%')
+					or sc.institution like concat('%', #{keyword}, '%')
+					or sc.details like concat('%', #{keyword}, '%')
+					or sc.cardRoleName like concat('%', #{keyword}, '%')
+					or sc.publicTypeNames like concat('%', #{keyword}, '%')
+				)
+			</if>
+		</where>
+		group by sc.id) ccc
+		left join actor_comment ac on ccc.creater = ac.actorId
+		left join system_picture_info cccspi on ccc.createrImgUuid = cccspi.uuid
+		group by ccc.id
+		<if test="sort != null and sort != ''">
+			order by ${sort} ${order}
+		</if>
+	</select>
+	
+	<!-- 查询基本信息 -->
+	<select id = "searchAllSummary" resultMap="cardInfo">
+		select 
+			sc.*,
+			group_concat(spi.urlPath) as cardImgUrls
+			from 
+			(select
+				c.id,
+				c.type,
+				c.cardName,
+				c.sex,
+				c.cardRoleId,
+				c.detailRole,
+				c.birthDate,
+				c.city,
+				c.actCities,
+				c.price,
+				c.height,
+				c.weight,
+				c.shoesSize,
+				c.size,
+				c.institution,
+				c.details,
+				c.creater,
+				c.createTime,
+				c.status,
+				r.name as cardRoleName,
+				group_concat(pt.name) as publicType
+			 	from card_info c
+			 	left join role_info r on c.cardRoleId = r.id
+				left join card_announce_public_type capt on c.id = capt.cardAnnounceId
+			 	join public_type pt on capt.publicTypeId = pt.id
+		<where>
+			<if test=" status != null">
+				c.status=#{status} 
+			</if>
+			<choose>
+				<when test=" type != null and detailRole != null and detailRole != '' ">
+					and (c.type=#{type} or c.detailRole like concat('%', #{detailRole}, '%'))
+				</when>
+				<when test=" type != null">
+					and c.type=#{type} 
+				</when>
+				<when test=" detailRole != null and detailRole != '' ">
+					and c.detailRole like concat('%', #{detailRole}, '%') 
+				</when>
+			</choose>
+		</where>
+	 	group by c.id) sc 
+		 	
+	 	left join card_picture cp on sc.id=cp.cardId
+		join system_picture_info spi on cp.imgUuid = spi.uuid
+		
+		group by sc.id
+	</select>
+
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from card_info
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" type != null">
+					and type=#{type} 
+				</if>
+				<if test=" cardName != null and cardName != '' ">
+					and cardName=#{cardName} 
+				</if>
+				<if test=" sex != null">
+					and sex=#{sex} 
+				</if>
+				<if test=" cardRoleId != null and cardRoleId != '' ">
+					and cardRoleId=#{cardRoleId} 
+				</if>
+				<if test=" detailRole != null and detailRole != '' ">
+					and detailRole=#{detailRole} 
+				</if>
+				<if test=" publicType != null and publicType != '' ">
+					and publicType=#{publicType} 
+				</if>
+				<if test=" birthDate != null and birthDate != '' ">
+					and birthDate=#{birthDate} 
+				</if>
+				<if test=" city != null and city != '' ">
+					and city=#{city} 
+				</if>
+				<if test=" actCities != null and actCities != '' ">
+					and actCities=#{actCities} 
+				</if>
+				<if test=" price != null ">
+					and price=#{price} 
+				</if>
+				<if test=" height != null and height != '' ">
+					and height=#{height} 
+				</if>
+				<if test=" weight != null and weight != '' ">
+					and weight=#{weight} 
+				</if>
+				<if test=" shoesSize != null and shoesSize != '' ">
+					and shoesSize=#{shoesSize} 
+				</if>
+				<if test=" size != null and size != '' ">
+					and size=#{size} 
+				</if>
+				<if test=" institution != null and institution != '' ">
+					and institution=#{institution} 
+				</if>
+				<if test=" details != null and details != '' ">
+					and details=#{details} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
+				<if test=" mutiImgUuid != null and mutiImgUuid != '' ">
+					and mutiImgUuid=#{mutiImgUuid} 
+				</if>
+				<if test=" creater != null and creater != '' ">
+					and creater=#{creater} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and createTime=#{createTime} 
+				</if>
+				<if test=" status != null ">
+					and status=#{status} 
+				</if>
+		</where>
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		<![CDATA[
+		select
+		 a.id,
+	     a.type,
+	     a.cardName,
+	     a.sex,
+	     a.cardRoleId,
+	     a.detailRole,
+	     a.publicType,
+	     a.birthDate,
+	     a.city,
+	     a.actCities,
+	     a.price,
+	     a.height,
+	     a.weight,
+	     a.shoesSize,
+	     a.size,
+	     a.institution,
+	     a.details,
+	     a.imgUuid,
+	     a.mutiImgUuid,
+	     a.creater,
+	     a.createTime,
+	     a.status,
+	     b.name createrName
+			from card_info a
+			left join actor_info b on b.id=a.creater
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and a.id=#{id} 
+				</if>
+				<if test=" type != null ">
+					and a.type=#{type} 
+				</if>
+				<if test=" cardName != null and cardName != '' ">
+					and a.cardName like CONCAT('%','${cardName}','%') 
+				</if>
+				<if test=" sex != null ">
+					and a.sex=#{sex} 
+				</if>
+				<if test=" cardRoleId != null and cardRoleId != '' ">
+					and a.cardRoleId like CONCAT('%','${cardRoleId}','%') 
+				</if>
+				<if test=" detailRole != null and detailRole != '' ">
+					and a.detailRole like CONCAT('%','${detailRole}','%') 
+				</if>
+				<if test=" createrName != null and createrName != '' ">
+					and b.name like CONCAT('%','${createrName}','%') 
+				</if>
+				<if test=" publicType != null and publicType != '' ">
+					and a.publicType=#{publicType} 
+				</if>
+				<if test=" birthDate != null and birthDate != '' ">
+					and a.birthDate=#{birthDate} 
+				</if>
+				<if test=" city != null and city != '' ">
+					and a.city like CONCAT('%','${city}','%')  
+				</if>
+				<if test=" actCities != null and actCities != '' ">
+					and a.actCities=#{actCities} 
+				</if>
+				<if test=" price != null ">
+					and a.price=#{price} 
+				</if>
+				<if test=" height != null and height != '' ">
+					and a.height=#{height} 
+				</if>
+				<if test=" weight != null and weight != '' ">
+					and a.weight=#{weight} 
+				</if>
+				<if test=" shoesSize != null and shoesSize != '' ">
+					and a.shoesSize=#{shoesSize} 
+				</if>
+				<if test=" size != null and size != '' ">
+					and a.size=#{size} 
+				</if>
+				<if test=" institution != null and institution != '' ">
+					and a.institution=#{institution} 
+				</if>
+				<if test=" details != null and details != '' ">
+					and a.details=#{details} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and a.imgUuid=#{imgUuid} 
+				</if>
+				<if test=" mutiImgUuid != null and mutiImgUuid != '' ">
+					and a.mutiImgUuid=#{mutiImgUuid} 
+				</if>
+				<if test=" creater != null and creater != '' ">
+					and a.creater=#{creater} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and a.createTime=#{createTime} 
+				</if>
+				<if test=" status != null ">
+					and a.status=#{status} 
+				</if>
+		</where>
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+
+		select count(id) from card_info
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" type != null ">
+					and type=#{type} 
+				</if>
+				<if test=" cardName != null and cardName != '' ">
+					and cardName=#{cardName} 
+				</if>
+				<if test=" sex != null ">
+					and sex=#{sex} 
+				</if>
+				<if test=" cardRoleId != null and cardRoleId != '' ">
+					and cardRoleId=#{cardRoleId} 
+				</if>
+				<if test=" detailRole != null and detailRole != '' ">
+					and detailRole=#{detailRole} 
+				</if>
+				<if test=" publicType != null and publicType != '' ">
+					and publicType=#{publicType} 
+				</if>
+				<if test=" birthDate != null and birthDate != '' ">
+					and birthDate=#{birthDate} 
+				</if>
+				<if test=" city != null and city != '' ">
+					and city=#{city} 
+				</if>
+				<if test=" actCities != null and actCities != '' ">
+					and actCities=#{actCities} 
+				</if>
+				<if test=" price != null ">
+					and price=#{price} 
+				</if>
+				<if test=" height != null and height != '' ">
+					and height=#{height} 
+				</if>
+				<if test=" weight != null and weight != '' ">
+					and weight=#{weight} 
+				</if>
+				<if test=" shoesSize != null and shoesSize != '' ">
+					and shoesSize=#{shoesSize} 
+				</if>
+				<if test=" size != null and size != '' ">
+					and size=#{size} 
+				</if>
+				<if test=" institution != null and institution != '' ">
+					and institution=#{institution} 
+				</if>
+				<if test=" details != null and details != '' ">
+					and details=#{details} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
+				<if test=" mutiImgUuid != null and mutiImgUuid != '' ">
+					and mutiImgUuid=#{mutiImgUuid} 
+				</if>
+				<if test=" creater != null and creater != '' ">
+					and creater=#{creater} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and createTime=#{createTime} 
+				</if>
+				<if test=" status != null ">
+					and status=#{status} 
+				</if>
+		</where>
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="colomnResult">
+		select cc.*,
+			 group_concat(pt.id) as publicType,
+		 	 group_concat(pt.name) as publicTypeNames
+		from 
+			(select
+				c.id,
+				c.type,
+				c.cardName,
+				c.sex,
+				c.cardRoleId,
+				c.detailRole,
+				c.birthDate,
+				c.city,
+				c.actCities,
+				c.price,
+				c.height,
+				c.weight,
+				c.shoesSize,
+				c.size,
+				c.institution,
+				c.details,
+				c.creater,
+				c.createTime,
+				c.status,
+				r.name as cardRoleName,
+				group_concat(spi.urlPath) as cardImgUrls
+			 	from card_info c
+			 	left join role_info r on c.cardRoleId = r.id
+			 	left join card_picture cp on c.id=cp.cardId
+				left join system_picture_info spi on cp.imgUuid = spi.uuid
+			 	where c.id=#{id}
+			 	group by c.id) cc
+		left join card_announce_public_type capt on cc.id = capt.cardAnnounceId
+		left join public_type pt on capt.publicTypeId = pt.id
+		group by cc.id
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from card_info where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from card_info where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update card_info
+		<set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="type!=null">type=#{type},</if>
+			     <if test="cardName!=null">cardName=#{cardName},</if>
+			     <if test="sex!=null">sex=#{sex},</if>
+			     <if test="cardRoleId!=null">cardRoleId=#{cardRoleId},</if>
+			     <if test="detailRole!=null">detailRole=#{detailRole},</if>
+			     <if test="publicType!=null">publicType=#{publicType},</if>
+			     <if test="birthDate!=null">birthDate=#{birthDate},</if>
+			     <if test="city!=null">city=#{city},</if>
+			     <if test="actCities!=null">actCities=#{actCities},</if>
+			     <if test="price!=null">price=#{price},</if>
+			     <if test="height!=null">height=#{height},</if>
+			     <if test="weight!=null">weight=#{weight},</if>
+			     <if test="shoesSize!=null">shoesSize=#{shoesSize},</if>
+			     <if test="size!=null">size=#{size},</if>
+			     <if test="institution!=null">institution=#{institution},</if>
+			     <if test="details!=null">details=#{details},</if>
+			     <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
+			     <if test="mutiImgUuid!=null">mutiImgUuid=#{mutiImgUuid},</if>
+			     <if test="creater!=null">creater=#{creater},</if>
+			     <if test="createTime!=null">createTime=#{createTime},</if>
+			     <if test="status!=null">status=#{status},</if>
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+</mapper> 

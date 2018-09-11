@@ -1,0 +1,4 @@
+部署的时候resource目录有如下配置文件需要修改
+1. jdbc.properties文件，关于数据库连接的需要根据部署情况修改ip，账号，密码等。
+2. stream-config.properties文件中，DOWNLOAD_FILE_URL_PREFIX需要根据部署服务器修改对应的的ip和端口。
+3. script目录中是数据库初始化脚本，执行后，会自动创建数据库和相关表以及初始数据。

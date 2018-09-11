@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.yyhz.sc.data.dao.SystemMenuActUrlDao">
+
+    <resultMap id="colomnResult"
+               type="com.yyhz.sc.data.model.SystemMenuActUrl">
+        <id property="id" column="id"/>
+        <result property="actId" column="actId"/>
+        <result property="url" column="url"/>
+        <result property="name" column="name"/>
+    </resultMap>
+    <!-- 动态sql -->
+    <sql id="colomnResult">
+        <![CDATA[
+	     id,
+	     actId,
+	     url,
+	     name
+	 ]]>
+    </sql>
+    <sql id="commonWhere">
+        <where>
+            <if test=" id != null">
+                and id=#{id}
+            </if>
+            <if test=" actId != null">
+                and actId=#{actId}
+            </if>
+            <if test=" url != null">
+                and url=#{url}
+            </if>
+            <if test=" name != null">
+                and name=#{name}
+            </if>
+            <if test="menuIds != null">
+                and actId in(
+                select id from system_menu_act where menuId in
+                <foreach item="item" index="index" collection="menuIds"
+                         open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+                )
+            </if>
+        </where>
+    </sql>
+    <insert id="insert">
+        insert into system_menu_act_url
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id!=null">id,</if>
+            <if test="actId!=null">actId,</if>
+            <if test="url!=null">url,</if>
+            <if test="name!=null">name,</if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="id!=null">#{id},</if>
+            <if test="actId!=null">#{actId},</if>
+            <if test="url!=null">#{url},</if>
+            <if test="name!=null">#{name},</if>
+        </trim>
+    </insert>
+
+    <update id="update">
+        update system_menu_act_url
+        <set>
+            <if test="id!=null">id=#{id},</if>
+            <if test="actId!=null">actId=#{actId},</if>
+            <if test="url!=null">url=#{url},</if>
+            <if test="name!=null">name=#{name},</if>
+        </set>
+        where
+        id=#{id}
+    </update>
+
+    <delete id="delete">
+        delete from
+        system_menu_act_url
+        <include refid="commonWhere"/>
+    </delete>
+
+    <select id="selectEntity" resultMap="colomnResult">
+        select
+        <include refid="colomnResult"/>
+        from system_menu_act_url
+        <include refid="commonWhere"/>
+    </select>
+
+    <!-- 根据条件信息 -->
+    <select id="selectAll" resultMap="colomnResult">
+        select
+        <include refid="colomnResult"/>
+        <![CDATA[
+			from system_menu_act_url
+		]]>
+        <include refid="commonWhere"/>
+        <if test="sort != null">
+            order by ${sort} ${order}
+        </if>
+    </select>
+    <!-- 根据条件查询数量 -->
+    <select id="selectCount" resultType="int">
+
+        select count(id) from system_menu_act_url
+        <include refid="commonWhere"/>
+    </select>
+    <!-- 根据主键查询信息 -->
+    <select id="selectById" resultMap="colomnResult">
+        select
+        <include refid="colomnResult"/>
+        <![CDATA[
+			from system_menu_act_url where 
+			
+			   	 id=#{id} 
+		]]>
+
+    </select>
+</mapper> 

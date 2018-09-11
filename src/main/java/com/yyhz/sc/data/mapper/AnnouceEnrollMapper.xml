@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.yyhz.sc.data.dao.AnnouceEnrollDao">
+
+	<resultMap id="colomnResult" type="com.yyhz.sc.data.model.AnnouceEnroll">
+		<id property="id" column="id" />
+		<result property="announceId" column="announceId" />
+		<result property="actorId" column="actorId" />
+		<result property="createTime" column="createTime" />
+		<result property="checkTime" column="checkTime" />
+		<result property="checkStatus" column="checkStatus" />
+		<result property="enrollStatus" column="enrollStatus" />
+	</resultMap>
+	<resultMap id="AnnouceEnrollDetailsResult" type="com.yyhz.sc.data.model.AnnouceEnroll" extends="colomnResult">
+		<result property="actorImgUrl" column="actorImgUrl" />
+		<result property="actorName" column="actorName" />
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     announceId,
+	     actorId,
+	     createTime,
+	     checkTime,
+	     checkStatus,
+	     enrollStatus
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into annouce_enroll  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="announceId!=null">announceId,</if>
+			     <if test="actorId!=null">actorId,</if>
+			     <if test="createTime!=null">createTime,</if>
+			     <if test="checkTime!=null">checkTime,</if>
+			     <if test="checkStatus!=null">checkStatus,</if>
+			     <if test="enrollStatus!=null">enrollStatus,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="announceId!=null">#{announceId},</if>
+			     <if test="actorId!=null">#{actorId},</if>
+			     <if test="createTime!=null">#{createTime},</if>
+			     <if test="checkTime!=null">#{checkTime},</if>
+			     <if test="checkStatus!=null">#{checkStatus},</if>
+			     <if test="enrollStatus!=null">#{enrollStatus},</if>
+		</trim>
+	</insert>
+
+	<update id="update">
+	   update annouce_enroll 
+	   <set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="announceId!=null">announceId=#{announceId},</if>
+			     <if test="actorId!=null">actorId=#{actorId},</if>
+			     <if test="createTime!=null">createTime=#{createTime},</if>
+			     <if test="checkTime!=null">checkTime=#{checkTime},</if>
+			     <if test="checkStatus!=null">checkStatus=#{checkStatus},</if>
+			     <if test="enrollStatus!=null">enrollStatus=#{enrollStatus},</if>
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     annouce_enroll 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from annouce_enroll
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" announceId != null and announceId != '' ">
+					and announceId=#{announceId} 
+				</if>
+				<if test=" actorId != null and actorId != '' ">
+					and actorId=#{actorId} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and createTime=#{createTime} 
+				</if>
+				<if test=" checkTime != null and checkTime != '' ">
+					and checkTime=#{checkTime} 
+				</if>
+				<if test=" checkStatus != null ">
+					and checkStatus=#{checkStatus} 
+				</if>
+				<if test=" enrollStatus != null ">
+					and enrollStatus=#{enrollStatus} 
+				</if>
+		</where>
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAllDetail"  resultMap="AnnouceEnrollDetailsResult">
+			select
+			 ain.creater as announceCreater,
+			 ae.id,
+		     ae.announceId,
+		     ae.actorId,
+		     ae.createTime,
+		     ae.checkTime,
+		     ae.checkStatus,
+		     ae.enrollStatus,
+		     ai.name actorName,
+		     ai.authenticateLevel,
+		     spi.urlPath as actorImgUrl,
+		     avg(ac.score) as avgScore
+			 from annouce_enroll ae
+			 join announce_info ain on ain.id=ae.announceId
+			 join actor_info ai on ae.actorid=ai.id
+			 left join system_picture_info spi on spi.uuid=ai.imgUuid
+			 left join actor_comment ac on ae.actorId = ac.actorId
+			 <where>
+			 	ae.enrollStatus=0 and ai.status != 1
+				<if test=" announceId != null and announceId != '' ">
+					and ae.announceId = #{announceId} 
+				</if>
+				<if test=" checkStatus != null">
+					and ae.checkStatus = #{checkStatus} 
+				</if>
+			 </where>
+			 group by ae.id
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		<![CDATA[
+			select 
+			 a.id,
+		     a.announceId,
+		     a.actorId,
+		     a.createTime,
+		     a.checkTime,
+		     a.checkStatus,
+		     a.enrollStatus,
+		     b.name actorName,
+		     b.realName,
+		     b.imgUuid
+			 from annouce_enroll a
+			 left join actor_info b on a.actorid=b.id
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and a.id=#{id} 
+				</if>
+				<if test=" announceId != null and announceId != '' ">
+					and a.announceId=#{announceId} 
+				</if>
+				<if test=" actorId != null and actorId != '' ">
+					and a.actorId=#{actorId} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and a.createTime=#{createTime} 
+				</if>
+				<if test=" checkTime != null and checkTime != '' ">
+					and a.checkTime=#{checkTime} 
+				</if>
+				<if test=" checkStatus != null ">
+					and a.checkStatus=#{checkStatus} 
+				</if>
+				<if test=" enrollStatus != null ">
+					and a.enrollStatus=#{enrollStatus} 
+				</if>
+		</where>
+		<if test="sort != null">
+				order by a.${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+
+		select count(id) from annouce_enroll
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" announceId != null and announceId != '' ">
+					and announceId=#{announceId} 
+				</if>
+				<if test=" actorId != null and actorId != '' ">
+					and actorId=#{actorId} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and createTime=#{createTime} 
+				</if>
+				<if test=" checkTime != null and checkTime != '' ">
+					and checkTime=#{checkTime} 
+				</if>
+				<if test=" checkStatus != null ">
+					and checkStatus=#{checkStatus} 
+				</if>
+				<if test=" enrollStatus != null ">
+					and enrollStatus=#{enrollStatus} 
+				</if>
+		</where>
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from annouce_enroll where 
+			
+			   	 id=#{id} 
+		]]>
+		
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from annouce_enroll where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from annouce_enroll where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update annouce_enroll
+		<set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="announceId!=null">announceId=#{announceId},</if>
+			     <if test="actorId!=null">actorId=#{actorId},</if>
+			     <if test="createTime!=null">createTime=#{createTime},</if>
+			     <if test="checkTime!=null">checkTime=#{checkTime},</if>
+			     <if test="checkStatus!=null">checkStatus=#{checkStatus},</if>
+			     <if test="enrollStatus!=null">enrollStatus=#{enrollStatus},</if>
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+</mapper> 
