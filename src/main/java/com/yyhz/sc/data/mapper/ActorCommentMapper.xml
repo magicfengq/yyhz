@@ -81,7 +81,7 @@
 
 	<!-- 根据条件信息 -->
 	<select id="selectAvgScore"  resultType="float">
-		select avg(score) 
+		select ifnull(avg(score),0)  
 		from actor_comment
 		<where>
 			status=0 

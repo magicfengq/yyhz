@@ -249,7 +249,7 @@ public class AppAnnounceController extends BaseController {
 						annMap.put("enrollActorCheckState", myEnrollAnnounce.getEnrollActorCheckState());
 					}
 				}
-					
+				annMap.put("isMinePublish", actorId.equals(annInfo.getCreater())?1:0);	
 				dataList.add(annMap);
 			}
 		}

@@ -10,6 +10,7 @@
 		<result property="content" column="content" />
 		<result property="userId" column="userId" />
 		<result property="createDate" column="createDate" />
+		<result property="title" column="title" />
 	</resultMap>
 	<!-- 动态sql -->
 	<sql id="colomnResult">
@@ -29,6 +30,7 @@
 			     <if test="content!=null">content,</if>
 			     <if test="userId!=null">userId,</if>
 			     <if test="createDate!=null">createDate,</if>
+			     <if test="title!=null">title,</if>
 		</trim>
 	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
 			     <if test="id!=null">#{id},</if>
@@ -36,6 +38,7 @@
 			     <if test="content!=null">#{content},</if>
 			     <if test="userId!=null">#{userId},</if>
 			     <if test="createDate!=null">#{createDate},</if>
+			     <if test="title!=null">#{title},</if>
 		</trim>
 	</insert>
 
@@ -47,6 +50,7 @@
 			     <if test="content!=null">content=#{content},</if>
 			     <if test="userId!=null">userId=#{userId},</if>
 			     <if test="createDate!=null">createDate=#{createDate},</if>
+			     <if test="title!=null">title=#{title},</if>
 		</set>
 		where 
 	   		 id=#{id} 

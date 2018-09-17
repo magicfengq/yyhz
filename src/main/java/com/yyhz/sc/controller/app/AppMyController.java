@@ -116,9 +116,9 @@ public class AppMyController extends BaseController {
 		ret.put("pushStatus",actorInfo.getPushStatus());
 		
 		// 计算平均分数
-//		float avgScore = actorCommentService.getAvgScore(id);
-		ret.put("avgScore", -1);
-		
+		//ret.put("avgScore", -1);
+		float avgScore = actorCommentService.getAvgScore(id);
+		ret.put("avgScore", avgScore);
 		// 检索角色信息
 		ActorRole condition = new ActorRole();
 		condition.setActorId(actorInfo.getId());
@@ -314,8 +314,8 @@ public class AppMyController extends BaseController {
 			return;
 		}
 		
-		if(req.getType() == null) {
-			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "参数type为空", null);	
+		if(req.getTitle() == null) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "参数title为空", null);	
 			return;
 		}
 		
