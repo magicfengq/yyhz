@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.yyhz.sc.data.dao.AudioInfoDao">
+
+	<resultMap id="commonResult" type="com.yyhz.sc.data.model.AudioInfo">
+		<result property="id" column="id" />
+		<result property="uuid" column="uuid" />
+		<result property="name" column="name" />
+	</resultMap>
+	<resultMap id="commonResultMap" type="java.util.HashMap">
+		<id property="id" column="id" />
+		<result property="uuid" column="uuid" />
+		<result property="name" column="name" />
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     uuid,
+	     name
+	 ]]>
+	</sql>
+	<sql id="commonWhere">
+		<where>
+			<if test=" id != null and id != ''">
+				and id=#{id} 
+			</if>
+			<if test=" uuid != null and uuid != ''">
+				and uuid=#{uuid} 
+			</if>
+			<if test=" name != null and name != ''">
+				and name=#{name} 
+			</if>
+		</where>
+	</sql>
+	
+	<insert id="insert">
+	   insert into audio_info  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id!=null">id,</if>
+			<if test="uuid!=null">uuid,</if>
+			<if test="name!=null">name,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="id!=null">#{id},</if>
+			<if test="uuid!=null">#{uuid},</if>
+			<if test="name!=null">#{name},</if>
+		</trim>
+	</insert>
+
+	<update id="update">
+	   update audio_info 
+	   <set>
+			<if test="uuid!=null">uuid=#{uuid},</if>
+			<if test="name!=null">name=#{name},</if>
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from audio_info 
+	   <include refid="commonWhere" /> 
+	</delete>
+
+	<select id="selectEntity" resultMap="commonResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from audio_info
+	  <include refid="commonWhere" /> 
+	   limit 1
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="commonResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from audio_info
+		]]>
+		<include refid="commonWhere" /> 
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+		select count(id) from audio_info
+		<include refid="commonWhere" /> 
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="commonResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from audio_info where 
+			   	 id=#{id} 
+		]]>
+		 limit 1
+		
+	</select>
+	
+	<select id="selectEntityMap" resultMap="commonResultMap">
+	   select 
+	<include refid="colomnResult" /> 
+	   from audio_info
+	  <include refid="commonWhere" /> 
+	   limit 1
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAllMap"  resultMap="commonResultMap">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from audio_info
+		]]>
+		<include refid="commonWhere" /> 
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	
+	<!-- 根据主键查询信息 -->
+	<select id="selectByIdMap"  resultMap="commonResultMap">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from audio_info where 
+			   	 id=#{id} 
+		]]>
+		 limit 1
+	</select>
+</mapper> 

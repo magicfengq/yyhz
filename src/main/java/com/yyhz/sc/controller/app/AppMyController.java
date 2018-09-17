@@ -147,7 +147,16 @@ public class AppMyController extends BaseController {
 		
 		int enrollCount = annouceEnrollService.selectCount(enrollCondition);
 		ret.put("applyNumber", enrollCount);
-
+		//我的关注
+		ActorCollect collectCondition = new ActorCollect();
+		collectCondition.setCreater(id);
+		int attentionCount = actorCollectService.selectCount(collectCondition);
+		ret.put("attentionCount", attentionCount);
+		//我的粉丝
+		collectCondition = new ActorCollect();
+		collectCondition.setActorId(id);
+		int funsCount = actorCollectService.selectCount(collectCondition);
+		ret.put("funsCount", funsCount);
 		this.writeJsonObject(response, AppRetCode.NORMAL, AppRetCode.NORMAL_TEXT, ret);	
 
 	}
@@ -1062,5 +1071,70 @@ public class AppMyController extends BaseController {
 		
 
 		this.writeJsonObject(response, AppRetCode.NORMAL, AppRetCode.NORMAL_TEXT, result);
+	}
+	/**
+	 * 
+	 * @Title: getMyAnttentionList
+	 * @Description: 获取关注信息
+	 * @return JSON
+	 * @author CrazyT
+	 * 
+	 */
+	@RequestMapping(value = "getMyFunsList")
+	public void getMyFunsList(HttpServletRequest request, HttpServletResponse response, String id, Integer page, Integer pageSize, String keyword) {
+		
+		if(StringUtils.isBlank(id)) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "用户id为空", null);	
+			return;
+		}
+		
+		if (page == null) {
+			writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少page参数！", null);
+			return;
+		}
+		
+		if (pageSize == null) {
+			writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少pageSize参数！", null);
+			return;
+		}
+
+		// 检索用户信息
+		ActorInfo actorInfo = actorInfoService.selectById(id);
+		if(actorInfo == null || actorInfo.getStatus() == 1) { // 状态 0正常；1已删除
+			this.writeJsonObject(response, AppRetCode.ACCOUNT_NOT_EXIST, AppRetCode.ACCOUNT_NOT_EXIST_TEXT, null);	
+			return;
+		}
+
+		PageInfo<ActorCollect> pageInfo = new PageInfo<ActorCollect>();
+		pageInfo.setPage(page);
+		pageInfo.setPageSize(pageSize);
+
+		
+		ActorCollect condition = new ActorCollect();
+		condition.setActorId(id);
+		condition.setKeyword(keyword);
+		actorCollectService.selectAll(condition, pageInfo, "selectAllFansDetails");
+		Map<String, Object> ret = new HashMap<String, Object>();
+		List<Map<String, Object>> actorCollectList = new ArrayList<Map<String, Object>>();
+		for(ActorCollect item : pageInfo.getRows()) {
+			Map<String, Object> itemMap = new HashMap<String, Object>();
+			itemMap.put("id", item.getCreater());
+			itemMap.put("name", item.getName());
+			itemMap.put("authenticateLevel", item.getAuthenticateLevel());
+			if(StringUtils.isNotEmpty(item.getHeadImgUrl())) {
+				itemMap.put("headImgUrl", Configurations.buildDownloadUrl(item.getHeadImgUrl()));
+			}
+			itemMap.put("roles", StringUtils.split(item.getRoleInfos(), ","));
+			
+			actorCollectList.add(itemMap);
+		}
+		
+		ret.put("rows", actorCollectList);
+		ret.put("page", pageInfo.getPage());
+		ret.put("pageSize", pageInfo.getPageSize());
+		ret.put("total", pageInfo.getTotal());
+
+		
+		this.writeJsonObject(response, AppRetCode.NORMAL, AppRetCode.NORMAL_TEXT, ret);	
 	}
 }

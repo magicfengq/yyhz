@@ -80,7 +80,7 @@ div#rMenu {
 				<tr>
 					<th data-options="field:'title',align:'center',sortable:true" style="width: 15%;">标题</th>
 					<th data-options="field:'content',align:'center',sortable:true" style="width: 20%;">内容</th>
-					<th data-options="field:'type',align:'center',sortable:true,formatter:typeFormater" style="width: 15%;">类型</th>
+					<!-- <th data-options="field:'type',align:'center',sortable:true,formatter:typeFormater" style="width: 15%;">类型</th> -->
 					<th data-options="field:'createDate',align:'center',sortable:false,formatter:timeFormater" style="width: 15%;">创建时间</th>
 					<th data-options="field:'username',align:'center',sortable:true" style="width: 20%;">账号</th>
 					<th data-options="field:'options',align:'center',sortable:true,formatter:formatOptions" style="width: 15%;">操作</th>
@@ -113,10 +113,10 @@ div#rMenu {
 					<label>标题:</label>
 					<input id="titleLabel" name="title" style="width: 200px" class="easyui-textbox" readonly="readonly"/>
 				</div>
-				<div class="fitem">
+				<!--<div class="fitem">
 					<label>类型:</label>
 					<input id="typeLabel" name="type" style="width: 200px" class="easyui-textbox" readonly="readonly"/>
-				</div>
+				</div> -->
 				<div class="fitem">
 					<label>内容:</label>
 					<textarea id="contentLabel" name="content" style="width: 200px;height:50px;resize:none;" class="easyui-textarea" readonly="readonly"></textarea>

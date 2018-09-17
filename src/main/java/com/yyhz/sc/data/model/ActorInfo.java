@@ -20,7 +20,7 @@ public class ActorInfo extends BaseEntity implements Serializable {
 	private java.lang.String password; // 密码
 	private java.lang.String mkey; // 第三方登录key值
 	private java.lang.String imgUuid; // 头像
-	private java.lang.Integer sex; // 性别 1男；2女
+	private java.lang.String sex; // 性别 1男；2女
 	private java.util.Date birthDay; // 生日
 	private java.lang.String city; // 所在地
 	private java.lang.String actCities; // 活动范围(最多5个)
@@ -210,7 +210,7 @@ public class ActorInfo extends BaseEntity implements Serializable {
      *
      * @return sex
      */
-	public java.lang.Integer getSex() {
+	public java.lang.String getSex() {
 		return sex;
 	}
 	
@@ -219,7 +219,7 @@ public class ActorInfo extends BaseEntity implements Serializable {
 	 *
 	 * @param sex
 	 */
-	public void setSex(java.lang.Integer sex) {
+	public void setSex(java.lang.String sex) {
 		this.sex = sex;
 	}
 	

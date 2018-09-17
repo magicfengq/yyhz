@@ -208,4 +208,49 @@
   			#{idList}
  		</foreach>
 	</update>
+	<!-- 批量修改 -->
+	<select id="selectAllFansDetails"  resultMap="colomnResult">
+		select * from
+		<![CDATA[
+			(select
+			ac.id,
+			ac.creater,
+			ac.createTime,
+			ac.actorId,
+			ai.authenticateLevel as authenticateLevel,
+			ai.name as name,
+			ai.city,
+			ai.actCities,
+			spi.urlPath as headImgUrl,
+			group_concat(ri.name) as roleInfos
+			from actor_collect ac
+			join actor_info ai on ac.creater = ai.id
+			left join system_picture_info spi on ai.imgUuid = spi.uuid
+			left join actor_role ar on ar.actorId = ai.id
+			left join role_info ri on ar.roleId = ri.id
+		]]>
+			<where>
+				<if test=" id != null and id != '' ">
+					and ac.id=#{id} 
+				</if>
+				<if test=" creater != null and creater != '' ">
+					and ac.creater=#{creater} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and ac.createTime=#{createTime} 
+				</if>
+				<if test=" actorId != null and actorId != '' ">
+					and ac.actorId=#{actorId} 
+				</if>
+			</where>
+		group by ac.id) t
+		<where>
+			<if test=" keyword != null and keyword != '' ">
+				t.name like concat('%', #{keyword}, '%') 
+				or t.roleInfos like concat('%', #{keyword}, '%')
+				or t.city like concat('%', #{keyword}, '%')
+				or t.actCities like concat('%', #{keyword}, '%')
+			</if>
+		</where>
+	</select>
 </mapper> 
