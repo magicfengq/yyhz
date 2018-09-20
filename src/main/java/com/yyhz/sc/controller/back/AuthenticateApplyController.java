@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.yyhz.easemob.httpclient.apidemo.EasemobMessages;
+import com.yyhz.rong.models.response.ResponseResult;
 import com.yyhz.sc.base.controller.BaseController;
 import com.yyhz.sc.base.page.PageInfo;
 import com.yyhz.sc.data.model.ActorInfo;
@@ -31,6 +32,7 @@ import com.yyhz.sc.data.model.SystemPictureInfo;
 import com.yyhz.sc.services.ActorInfoService;
 import com.yyhz.sc.services.AuthenticateApplyService;
 import com.yyhz.sc.services.SystemPictureInfoService;
+import com.yyhz.utils.RongCloudMethodUtil;
 import com.yyhz.utils.UUIDUtil;
 
 /**
@@ -233,7 +235,7 @@ public class AuthenticateApplyController extends BaseController {
 		
 		//给客户端发送消息
 		if(result > 0){
-			JsonNodeFactory factory = new JsonNodeFactory(false);
+			/*JsonNodeFactory factory = new JsonNodeFactory(false);
 			String from = "admin";
 	        String targetTypeus = "users";
 	        ObjectNode ext = factory.objectNode();
@@ -242,7 +244,12 @@ public class AuthenticateApplyController extends BaseController {
 	        ObjectNode txtmsg = factory.objectNode();
 	        txtmsg.put("msg", "您的认证申请已经审核通过,请进入个人中心查看。");
 	        txtmsg.put("type","txt");
-	        EasemobMessages.sendMessages(targetTypeus, targetusers, txtmsg, from, ext);
+	        EasemobMessages.sendMessages(targetTypeus, targetusers, txtmsg, from, ext);*/
+	        
+	        String[] targetIds = {actorId};
+	        
+	        String content = "您的认证申请已经审核通过,请进入个人中心查看。";
+	        RongCloudMethodUtil.privateMessage("admin", content, targetIds, null);
 		}
 		
 		return getJsonResult(result, "操作成功","操作失败");
@@ -269,7 +276,7 @@ public class AuthenticateApplyController extends BaseController {
 		
 		//给客户端发送消息
 		if(result > 0){
-			JsonNodeFactory factory = new JsonNodeFactory(false);
+			/*JsonNodeFactory factory = new JsonNodeFactory(false);
 			String from = "admin";
 	        String targetTypeus = "users";
 	        ObjectNode ext = factory.objectNode();
@@ -278,7 +285,13 @@ public class AuthenticateApplyController extends BaseController {
 	        ObjectNode txtmsg = factory.objectNode();
 	        txtmsg.put("msg", "您的认证申请已被拒绝,拒绝原因:" + refuseContent + "。您可以重新上传认证资料再次进行申请,给您带来的不便深表歉意。");
 	        txtmsg.put("type","txt");
-	        EasemobMessages.sendMessages(targetTypeus, targetusers, txtmsg, from, ext);
+	        EasemobMessages.sendMessages(targetTypeus, targetusers, txtmsg, from, ext);*/
+	        
+	        String[] targetIds = {actorId};
+	        
+	        String content = "您的认证申请已被拒绝,拒绝原因:" + refuseContent + "。您可以重新上传认证资料再次进行申请,给您带来的不便深表歉意。";
+	        RongCloudMethodUtil.privateMessage("admin", content, targetIds, null);
+	        
 		}
 		
 		return getJsonResult(result, "操作成功","操作失败");

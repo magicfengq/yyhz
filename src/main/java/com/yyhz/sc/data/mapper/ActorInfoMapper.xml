@@ -288,6 +288,7 @@
 		select a.id,a.name,a.mobile,a.sex,a.createTime,a.status,a.registerType,a.level
 		from actor_info a
 		<where>
+				id not in ("show","admin","announce") 
 				<if test=" mobile != null and mobile != '' ">
 					and a.mobile like CONCAT('%','${mobile}','%')
 				</if>
@@ -329,6 +330,7 @@
 			from actor_info
 		]]>
 		<where>
+				id not in ("show","admin","announce") 
 				<if test=" id != null and id != '' ">
 					and id=#{id} 
 				</if>
@@ -432,6 +434,7 @@
 
 		select count(id) from actor_info
 		<where>
+				id not in ("show","admin","announce") 
 				<if test=" id != null and id != '' ">
 					and id=#{id} 
 				</if>

@@ -44,6 +44,7 @@ import com.yyhz.sc.services.ShowPraiseService;
 import com.yyhz.utils.DateUtils;
 import com.yyhz.utils.EasemobUtil;
 import com.yyhz.utils.RelativeDateFormat;
+import com.yyhz.utils.RongCloudMethodUtil;
 import com.yyhz.utils.UUIDUtil;
 import com.yyhz.utils.stream.config.Configurations;
 
@@ -649,9 +650,11 @@ public class AppShowInfoController extends BaseController {
 					ext.put("atid", showInfo.getId());
 					ext.put("showType", showType);
 					ext.put("creater", showInfo.getCreater());
-					Object resp = EasemobUtil.sendShowMessage(showCreaterInfo.getId(), message, ext);
+					//Object resp = EasemobUtil.sendShowMessage(showCreaterInfo.getId(), message, ext);
+					String[] targetIds = {showCreaterInfo.getId()};
+					RongCloudMethodUtil.privateMessage("show",message,  targetIds, null);
 					logger.debug("---------------------- send message resp -----------------------------------");
-					logger.debug(resp.toString());
+					//logger.debug(resp.toString());
 				}
 			} else {
 				ActorInfo commentCreaterInfo = actorInfoService.selectById(creater);
@@ -663,9 +666,11 @@ public class AppShowInfoController extends BaseController {
 					ext.put("atid", showInfo.getId());
 					ext.put("showType", showType);
 					ext.put("creater", showInfo.getCreater());
-					Object resp = EasemobUtil.sendShowMessage(toUserId, message, ext);
+					//Object resp = EasemobUtil.sendShowMessage(toUserId, message, ext);
+					String[] targetIds = {toUserId};
+					RongCloudMethodUtil.privateMessage("show",message,  targetIds, null);
 					logger.debug("---------------------- send message resp -----------------------------------");
-					logger.debug(resp.toString());
+					//logger.debug(resp.toString());
 				}
 			}
 		}else{
@@ -711,9 +716,11 @@ public class AppShowInfoController extends BaseController {
 						ext.put("atid", showInfo.getId());
 						ext.put("showType", showInfo.getType());
 						ext.put("creater", showInfo.getCreater());
-						Object resp = EasemobUtil.sendShowMessage(showInfo.getCreater(), message, ext);
+						//Object resp = EasemobUtil.sendShowMessage(showInfo.getCreater(), message, ext);
+						String[] targetIds = {showInfo.getCreater()};
+						RongCloudMethodUtil.privateMessage("show",message,  targetIds, null);
 						logger.debug("---------------------- send message resp -----------------------------------");
-						logger.debug(resp.toString());
+						//logger.debug(resp.toString());
 					}
 				}
 			}else{

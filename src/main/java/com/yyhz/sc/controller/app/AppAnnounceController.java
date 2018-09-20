@@ -40,6 +40,7 @@ import com.yyhz.sc.services.RoleInfoService;
 import com.yyhz.utils.DateFormatUtil;
 import com.yyhz.utils.DateUtils;
 import com.yyhz.utils.EasemobUtil;
+import com.yyhz.utils.RongCloudMethodUtil;
 import com.yyhz.utils.UUIDUtil;
 import com.yyhz.utils.stream.config.Configurations;
 
@@ -84,7 +85,7 @@ public class AppAnnounceController extends BaseController {
 
 		
 		PublicType condition = new PublicType();
-		if(type > 0) // 1主持/模特；2设备/服装；3策划/创意；4婚礼/派对;其他查询全部结果
+		if(type >= 0) // 1主持/模特；2设备/服装；3策划/创意；4婚礼/派对;其他查询全部结果
 		{
 			condition.setType(type);
 		}
@@ -249,7 +250,8 @@ public class AppAnnounceController extends BaseController {
 						annMap.put("enrollActorCheckState", myEnrollAnnounce.getEnrollActorCheckState());
 					}
 				}
-				annMap.put("isMinePublish", actorId.equals(annInfo.getCreater())?1:0);	
+				annMap.put("creater", annInfo.getCreater());	
+				
 				dataList.add(annMap);
 			}
 		}
@@ -798,14 +800,16 @@ public class AppAnnounceController extends BaseController {
 				// 发送通知消息
 				String message = String.format("“%s”报名了您发布的“%s”通告。[点击查看] ", StringUtils.trimToEmpty(eactorInfo.getName())
 						, StringUtils.trimToEmpty(announceInfo.getTitle()));
-				Map<String, Object> ext = new HashMap<String, Object>();
+				/*Map<String, Object> ext = new HashMap<String, Object>();
 				ext.put("fromType", "annouceNotify");
 				ext.put("atid", announceInfo.getId());
 				ext.put("type", announceInfo.getType());
 				ext.put("publicType", StringUtils.trimToEmpty(announceInfo.getPublicTypeNames()));
-				Object resp = EasemobUtil.sendAnnounceMessage(announceInfo.getCreater(), message, ext);
+				Object resp = EasemobUtil.sendAnnounceMessage(announceInfo.getCreater(), message, ext);*/
+				String[] targetIds = {announceInfo.getCreater()};
+				RongCloudMethodUtil.privateMessage("annouceNotify",message,  targetIds, null);
 				logger.debug("---------------------- send message resp -----------------------------------");
-				logger.debug(resp.toString());
+				//logger.debug(resp.toString());
 				return;				
 			}else {
 				this.writeJsonObject(response, AppRetCode.ERROR, "更新数据库失败！", null);
@@ -827,15 +831,16 @@ public class AppAnnounceController extends BaseController {
 				String message = String.format("“%s”报名了您发布的“%s”通告。[点击查看]", StringUtils.trimToEmpty(eactorInfo.getName())
 						, StringUtils.trimToEmpty(announceInfo.getTitle()));
 				
-				Map<String, Object> ext = new HashMap<String, Object>();
+				/*Map<String, Object> ext = new HashMap<String, Object>();
 				ext.put("fromType", "annouceNotify");
 				ext.put("atid", announceInfo.getId());
 				ext.put("type", announceInfo.getType());
 				ext.put("publicType", StringUtils.trimToEmpty(announceInfo.getPublicTypeNames()));
-				Object resp = EasemobUtil.sendAnnounceMessage(announceInfo.getCreater(), message, ext);
+				Object resp = EasemobUtil.sendAnnounceMessage(announceInfo.getCreater(), message, ext);*/
 				logger.debug("---------------------- send message resp -----------------------------------");
-				logger.debug(resp.toString());
-
+				//logger.debug(resp.toString());
+				String[] targetIds = {announceInfo.getCreater()};
+				RongCloudMethodUtil.privateMessage("annouceNotify",message,  targetIds, null);
 				return;				
 			}else {
 				this.writeJsonObject(response, AppRetCode.ERROR, "插入数据库失败！", null);

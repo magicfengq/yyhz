@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.yyhz.constant.AppRetCode;
+import com.yyhz.rong.models.Result;
 import com.yyhz.sc.base.controller.BaseController;
 import com.yyhz.sc.data.model.ActorInfo;
 import com.yyhz.sc.data.model.ActorRole;
@@ -27,6 +28,7 @@ import com.yyhz.sc.services.ActorRoleService;
 import com.yyhz.sc.services.SystemPictureInfoService;
 import com.yyhz.utils.DateUtils;
 import com.yyhz.utils.EasemobUtil;
+import com.yyhz.utils.RongCloudMethodUtil;
 import com.yyhz.utils.UUIDUtil;
 import com.yyhz.utils.stream.config.Configurations;
 
@@ -90,16 +92,15 @@ public class AppRegistController extends BaseController{
 						actorInfoService.update(condition);
 						
 						retInfo = getMyInfo(member.getId());
-
+						
 						/*
 						 * 注册环信
 						 */
-						if (member != null
+						/*if (member != null
 								&& (member.getEasemobStatusCode() == null || !member
 										.getEasemobStatusCode().equals("200"))) {
-							ActorInfo umember = new ActorInfo();
+							/*ActorInfo umember = new ActorInfo();
 							umember.setId(member.getId());
-
 							ObjectNode objectNode = EasemobUtil.register(
 									member.getId(), "123456");
 							
@@ -117,7 +118,8 @@ public class AppRegistController extends BaseController{
 								}
 							}
 							actorInfoService.update(umember);
-						}
+						}*/
+						//RongCloudMethodUtil.updateUserInfo(member.getId(), reqObj.getMobile(), member.getHeadImgUrl());
 						
 					}
 				} else {
@@ -177,14 +179,19 @@ public class AppRegistController extends BaseController{
 					/*
 					 * 环信注册
 					 */
-					
-					ObjectNode objectNode = EasemobUtil.register(memberId, "123456");
+					/*ObjectNode objectNode = EasemobUtil.register(memberId, "123456");
 					String nodeResult = objectNode.get("statusCode").toString();
 					ActorInfo umember = new ActorInfo();
 					umember.setId(memberId);
 					umember.setEasemobStatusCode(nodeResult);
+					actorInfoService.update(umember);*/
+					//融云注册
+					String token = RongCloudMethodUtil.AddUserInfo(memberId, reqObj.getMobile(), "");
+					ActorInfo umember = new ActorInfo();
+					umember.setId(memberId);
+					umember.setEasemobStatusCode(token);
 					actorInfoService.update(umember);
-																		
+					
 					result = AppRetCode.NORMAL;
 					msg = AppRetCode.NORMAL_TEXT;
 				}else
@@ -414,6 +421,7 @@ public class AppRegistController extends BaseController{
 			ret.put("headImgUrl","");						
 		}
 		ret.put("pushStatus",actorInfo.getPushStatus() == null ? 0 : actorInfo.getPushStatus());
+		ret.put("easemobStatusCode",actorInfo.getEasemobStatusCode());
 	
 		// 检索角色信息
 		ActorRole condition = new ActorRole();

@@ -392,9 +392,9 @@ public class AppCardController extends BaseController {
 				cardMap.put("createrHeadUrl", StringUtils.isBlank(cardInfo.getCreaterHeadUrl()) ? "" : Configurations.buildDownloadUrl(cardInfo.getCreaterHeadUrl()));
 				
 				String[] urls = StringUtils.split(cardInfo.getCardImgUrls(), ",");
-				Arrays.sort(urls);
 				List<String> imgUrls = new ArrayList<String>();
 				if(urls != null) {
+					Arrays.sort(urls);
 					for(String url : urls) {
 						imgUrls.add(Configurations.buildDownloadUrl(url));
 					}

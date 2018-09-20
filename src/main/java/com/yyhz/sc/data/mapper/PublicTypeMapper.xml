@@ -85,8 +85,11 @@
 				<if test=" id != null and id != '' ">
 					and id=#{id} 
 				</if>
-				<if test=" type != null ">
+				<if test=" type != null and type != 0 ">
 					and type=#{type} 
+				</if>
+				<if test=" type == 0 ">
+					and ( type = 1 or type = 2) 
 				</if>
 				<if test=" name != null and name != '' ">
 					and name like CONCAT('%',#{name},'%')

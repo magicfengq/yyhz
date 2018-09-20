@@ -20,12 +20,14 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.yyhz.easemob.httpclient.apidemo.EasemobMessages;
+import com.yyhz.rong.models.response.ResponseResult;
 import com.yyhz.sc.base.controller.BaseController;
 import com.yyhz.sc.base.page.PageInfo;
 import com.yyhz.sc.data.model.ActorInfo;
 import com.yyhz.sc.data.model.MessageInfo;
 import com.yyhz.sc.services.ActorInfoService;
 import com.yyhz.sc.services.MessageInfoService;
+import com.yyhz.utils.RongCloudMethodUtil;
 import com.yyhz.utils.UUIDUtil;
 
 /**
@@ -172,7 +174,7 @@ public class MessageInfoController extends BaseController {
 			}
 			
 			//发送消息
-			JsonNodeFactory factory = new JsonNodeFactory(false);
+			/*JsonNodeFactory factory = new JsonNodeFactory(false);
 			String from = "admin";
 	        String targetTypeus = "users";
 	        ObjectNode ext = factory.objectNode();
@@ -186,6 +188,18 @@ public class MessageInfoController extends BaseController {
 	        ObjectNode node = EasemobMessages.sendMessages(targetTypeus, targetusers, txtmsg, from, ext);
 	        JsonNode jsonNode = node.get("statusCode");
 	        if(jsonNode.asInt() == 200){
+	        	info.setStatus("1");
+	        	info.setSendTime(new Date());
+	        	messageInfoService.update(info);
+	        }*/
+	        String[] targetIds = new String[actorlist.size()];
+	        int count=0;
+	        for(ActorInfo actorInfo : actorlist){
+	        	targetIds[count] = actorInfo.getId();
+	        	count++;
+	        }
+	        ResponseResult privateResult = RongCloudMethodUtil.privateMessage("admin", info.getContent(), targetIds, null);
+	        if(privateResult.code == 200){
 	        	info.setStatus("1");
 	        	info.setSendTime(new Date());
 	        	messageInfoService.update(info);

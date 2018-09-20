@@ -63,12 +63,12 @@
 				<ul class="ul-wrap">
 					<li class="list listing"><input
 						class="left input list_size botom pad_left" type="text"
-						placeholder="用户名.." name="userId" id="userId" value="lengyin"><span><img
+						placeholder="用户名.." name="userId" id="userId" value="root"><span><img
 							src="images/img/lian.png"> </span>
 					</li>
 					<li class="list listing"><input
 						class="left input list_size botom pad_left" type="password"
-						placeholder="密码.." name="userPwd" id="userPwd" value="lengyin"><span><img
+						placeholder="密码.." name="userPwd" id="userPwd" value="123456"><span><img
 							src="images/img/yaoshi.png"> </span>
 					</li>
 					<li>
