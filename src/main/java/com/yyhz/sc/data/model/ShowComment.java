@@ -21,6 +21,7 @@ public class ShowComment extends BaseEntity implements Serializable {
 	private java.lang.String content; // 评论内容
 	private java.lang.Integer status; // 状态 0正常；1已删除；注意删除的时候要更新show_info表的评论数-1
 	private java.lang.String operater; // 操作人；用户后台删除评论
+	private java.lang.Integer praiseNum;//点赞数
 	
 	private List<String> showIdList;
 	private Long commentNum;
@@ -209,5 +210,13 @@ public class ShowComment extends BaseEntity implements Serializable {
 		sb.append('}');
         return sb.toString();
     }
+
+	public java.lang.Integer getPraiseNum() {
+		return praiseNum;
+	}
+
+	public void setPraiseNum(java.lang.Integer praiseNum) {
+		this.praiseNum = praiseNum;
+	}
     
 }

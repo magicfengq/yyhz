@@ -16,7 +16,6 @@ import com.yyhz.sc.base.controller.BaseController;
 import com.yyhz.sc.base.page.PageInfo;
 import com.yyhz.sc.data.model.AudioInfo;
 import com.yyhz.sc.services.AudioInfoService;
-import com.yyhz.utils.DateUtils;
 import com.yyhz.utils.UUIDUtil;
 
 /**
@@ -41,7 +40,7 @@ public class AudioInfoController extends BaseController {
 	@RequestMapping(value = "/back/audioInfoList")
 	public String audioInfoList(HttpServletRequest request,
 			HttpServletResponse response) {
-		return "back/audio_info_list";
+		return "back/audio/audio_info_list";
 	}
 
 	/**
@@ -62,7 +61,7 @@ public class AudioInfoController extends BaseController {
 		PageInfo pageInfo = new PageInfo();
 		pageInfo.setPage(page);
 		pageInfo.setPageSize(rows);
-		service.selectAll(info, pageInfo);
+		service.selectAll(info, pageInfo,"selectAllSummary");
 		return JSONObject.toJSON(pageInfo);
 	}
 
@@ -125,11 +124,19 @@ public class AudioInfoController extends BaseController {
 			return getJsonResult(result,"操作成功", "操作失败,ID为空！");
 		}
 		try {
-			result = service.delete(info);
+			info.setStatus(1);
+			result = service.update(info);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 
 		return getJsonResult(result,"操作成功", "操作失败！");
+	}
+	@RequestMapping(value = "/back/audioInfoDetail")
+	public String audioInfoDetail(HttpServletRequest request,
+			HttpServletResponse response,String id) {
+		AudioInfo info = service.selectById(id);
+		
+		return "back/audio/audio_info_detail";
 	}
 }

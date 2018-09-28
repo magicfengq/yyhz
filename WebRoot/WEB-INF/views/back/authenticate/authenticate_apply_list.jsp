@@ -232,7 +232,8 @@ div#rMenu {
 				<tr>
 					<th data-options="field:'mobile',align:'center',sortable:true,formatter:formatMobile" style="width: 15%;">账号</th>
 					<th data-options="field:'realName',align:'center',sortable:true" style="width: 10%;">姓名</th>
-					<th data-options="field:'userCurrentLevel',align:'center',sortable:true,formatter:formatLevel" style="width: 25%;">申请等级</th>
+					<th data-options="field:'idcard',align:'center',sortable:true" style="width: 10%;">身份证号</th>
+					<th data-options="field:'userCurrentLevel',align:'center',sortable:true,formatter:formatLevel" style="width: 15%;">申请等级</th>
 					<th data-options="field:'type',align:'center',sortable:true,formatter:formatRoleName" style="width: 10%;">角色</th>					
 					<th data-options="field:'createTime',align:'center',sortable:true,formatter:formatCreateTime" style="width: 15%;">注册时间</th>
 					<th data-options="field:'checkStatus',align:'center',sortable:true,formatter:formatCheckStatus" style="width: 10%;">状态</th>

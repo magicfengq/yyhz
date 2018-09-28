@@ -1,5 +1,8 @@
 package com.yyhz.sc.services.impl;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +37,14 @@ public class ShowInfoServiceImpl extends BaseServiceImpl<ShowInfo> implements Sh
 	public ShowInfo selectById(@VideoEntity String id) {
 		return super.selectById(id);
 	}
-	
+
+
+
+	@Override
+	public List<ShowInfo> selectTurnList(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return showInfoDao.selectTurnList(param);
+	}
 	
 	
 }

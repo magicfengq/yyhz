@@ -58,14 +58,8 @@
 </div>
 <div class="fitem">
 	<label>性别:</label>
-	<c:set var="sex"/>
-	<c:choose>
-		<c:when test="${actorInfo.sex eq 1}"><c:set var="sex" value="男" /></c:when>
-		<c:when test="${actorInfo.sex eq 2}"><c:set var="sex" value="女" /></c:when>
-		<c:when test="${actorInfo.sex eq 0}"><c:set var="sex" value="无限制" /></c:when>
-		<c:otherwise></c:otherwise>
-	</c:choose>
-	<input id="sexLabel" name="sex" style="width: 200px" class="easyui-textbox" readonly="readonly" value="${sex }"/>
+	
+	<input id="sexLabel" name="sex" style="width: 200px" class="easyui-textbox" readonly="readonly" value="${actorInfo.sex }"/>
 </div>
 <div class="fitem">
 	<label>出生日期:</label>

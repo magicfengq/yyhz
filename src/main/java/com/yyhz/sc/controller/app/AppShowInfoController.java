@@ -27,8 +27,10 @@ import com.yyhz.sc.base.page.PageInfo;
 import com.yyhz.sc.data.model.ActorCollect;
 import com.yyhz.sc.data.model.ActorInfo;
 import com.yyhz.sc.data.model.ActorRole;
+import com.yyhz.sc.data.model.AudioInfo;
 import com.yyhz.sc.data.model.RoleInfo;
 import com.yyhz.sc.data.model.ShowComment;
+import com.yyhz.sc.data.model.ShowCommentPraise;
 import com.yyhz.sc.data.model.ShowInfo;
 import com.yyhz.sc.data.model.ShowInfoPictures;
 import com.yyhz.sc.data.model.ShowPraise;
@@ -36,13 +38,14 @@ import com.yyhz.sc.data.model.SystemPictureInfo;
 import com.yyhz.sc.services.ActorCollectService;
 import com.yyhz.sc.services.ActorInfoService;
 import com.yyhz.sc.services.ActorRoleService;
+import com.yyhz.sc.services.AudioInfoService;
 import com.yyhz.sc.services.RoleInfoService;
+import com.yyhz.sc.services.ShowCommentPraiseService;
 import com.yyhz.sc.services.ShowCommentService;
 import com.yyhz.sc.services.ShowInfoPicturesService;
 import com.yyhz.sc.services.ShowInfoService;
 import com.yyhz.sc.services.ShowPraiseService;
 import com.yyhz.utils.DateUtils;
-import com.yyhz.utils.EasemobUtil;
 import com.yyhz.utils.RelativeDateFormat;
 import com.yyhz.utils.RongCloudMethodUtil;
 import com.yyhz.utils.UUIDUtil;
@@ -74,7 +77,13 @@ public class AppShowInfoController extends BaseController {
 	private ShowPraiseService showPraiseService;
 	
 	@Resource
+	private ShowCommentPraiseService showCommentPraiseService;
+	
+	@Resource
 	private RoleInfoService roleInfoService;
+	
+	@Resource
+	private AudioInfoService audioInfoService;
 	
 	/**
 	 * 发布秀一秀
@@ -382,7 +391,7 @@ public class AppShowInfoController extends BaseController {
 	public String getShowShare(HttpServletRequest request, HttpServletResponse response,String showId,String actorId, ModelMap model) {
 		Map<String, Object> ret = new HashMap<String, Object>();
 		Object showDetail = this.getShowDetail(request, response, showId, actorId).get("data");
-		Object showComment = this.getShowCommentList(request, response, showId, 1, 10).get("data");
+		Object showComment = this.getShowCommentList(request, response, showId, actorId,1, 10).get("data");
 		Object showPraise = this.getShowPraiseList(request, response, showId, 1, 10).get("data");
 		
 		ret.put("showDetail", showDetail);
@@ -511,7 +520,7 @@ public class AppShowInfoController extends BaseController {
 	
 	@RequestMapping(value = "api/getShowCommentList")
 	@ResponseBody
-	public Map<String,Object> getShowCommentList(HttpServletRequest request, HttpServletResponse response,String showId,
+	public Map<String,Object> getShowCommentList(HttpServletRequest request, HttpServletResponse response,String showId,String actorId,
 			Integer page,Integer pageSize){
 		
 		Map<String,Object> resultMap = new HashMap<String,Object>();
@@ -589,6 +598,14 @@ public class AppShowInfoController extends BaseController {
 			}
 			dataMap.put("commentDetail", showComment.getContent());
 			dataMap.put("commentTime", DateUtils.getDateTimeMinFormat(showComment.getCreateTime()));
+			ShowCommentPraise param = new ShowCommentPraise();
+			param.setCommentId(showComment.getId());
+			dataMap.put("praiseNum", showCommentPraiseService.selectCount(param));
+			
+			param = new ShowCommentPraise();
+			param.setCommentId(showComment.getId());
+			param.setCreater(actorId);
+			dataMap.put("isPraise", showCommentPraiseService.selectCount(param));
 			dataList.add(dataMap);
 		}
 		
@@ -883,6 +900,382 @@ public class AppShowInfoController extends BaseController {
 		resultMap.put("data", new HashMap<String,Object>());
 		resultMap.put("result", 1);
 		resultMap.put("msg", "操作成功!");
+		return resultMap;
+	}
+	
+	/**
+	 * 秀一秀详情
+	 * @param request
+	 * @param response
+	 * @param showId
+	 * @return
+	 */
+	@RequestMapping(value = "api/getShowDetailNew")
+	@ResponseBody
+	public Map<String,Object> getShowDetailNew(HttpServletRequest request, HttpServletResponse response,String showId,String actorId,String orderstr,String rowCount) {
+		
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		List<Map<String, Object>> dataMapList = new ArrayList<Map<String,Object>>();
+		//通过showId得出当前所在顺序号
+				
+		Map<String,Object> param = new HashMap<String,Object>();
+		param.put("showId", showId);
+		param.put("orderstr", orderstr);
+		param.put("rowCount", rowCount);
+		List<ShowInfo> list = showInfoService.selectTurnList(param);
+		for(ShowInfo temp:list){
+			ShowInfo showInfo = showInfoService.selectById(temp.getId());
+			if(showInfo == null){
+				return buildEmptyDataForDetail();
+			}
+			
+			//关联用户
+			ActorInfo actorInfo = actorInfoService.selectById(showInfo.getCreater());
+			Map<String,Object> dataMap = new HashMap<String,Object>();
+			dataMap.put("id", showInfo.getId());
+			dataMap.put("mediaType", showInfo.getType());
+			dataMap.put("shareNumber", showInfo.getShareNum());
+			dataMap.put("userId", showInfo.getCreater());
+			
+			SystemPictureInfo pictureInfo = actorInfo.getSystemPictureInfo();
+			if(pictureInfo != null){
+				String urlPath = actorInfo.getSystemPictureInfo().getUrlPath();
+				dataMap.put("headImageUrl", StringUtils.isBlank(urlPath) ? "" : Configurations.buildDownloadUrl(urlPath));
+			}else{
+				dataMap.put("headImageUrl", "");
+			}
+			dataMap.put("name", actorInfo.getName() == null ? "" : actorInfo.getName());
+			dataMap.put("authenticateLevel", String.valueOf(actorInfo.getAuthenticateLevel()));
+			dataMap.put("showDetail", showInfo.getContent());
+			
+			//图片
+			Map<String,Object> picParams = new HashMap<String,Object>();
+			picParams.put("showId", showInfo.getId());
+			List<ShowInfoPictures> picList = showInfoPicturesService.selectAll(picParams);
+			List<Map<String,Object>> imageList = new ArrayList<Map<String,Object>>();
+			if(picList != null && !picList.isEmpty()){
+				List<String> imgUrls = new ArrayList<String>(); 
+				for(ShowInfoPictures showInfoPictures : picList){
+					String imgUrl = showInfoPictures.getSystemPictureInfo().getUrlPath();
+					if(StringUtils.isNotBlank(imgUrl)) {
+						imgUrls.add(imgUrl);				
+					}
+				}
+				
+				Collections.sort(imgUrls);
+				for(String url : imgUrls) {
+					Map<String,Object> imageMap = new HashMap<String,Object>();
+					imageMap.put("imageUrl", Configurations.buildDownloadUrl(url));
+					imageList.add(imageMap);
+				}
+			}
+			dataMap.put("imageList", imageList);
+			SystemPictureInfo systemVideoInfo =  showInfo.getSystemVideoInfo();
+			if(systemVideoInfo != null){
+				String videoUrlPath = systemVideoInfo.getUrlPath();
+				dataMap.put("videoUrl", StringUtils.isBlank(videoUrlPath) ? "" : Configurations.buildDownloadUrl(videoUrlPath));
+			}else{
+				dataMap.put("videoUrl", "");
+			}
+			SystemPictureInfo systemVideoPreviewInfo = showInfo.getSystemVideoPreviewInfo();
+			if(systemVideoPreviewInfo != null){
+				String videoPreviewUrlPath = systemVideoPreviewInfo.getUrlPath();
+				dataMap.put("videoPreviewUrl", StringUtils.isBlank(videoPreviewUrlPath) ? "" : Configurations.buildDownloadUrl(videoPreviewUrlPath));
+			}else{
+				dataMap.put("videoPreviewUrl", "");
+			}
+			
+			dataMap.put("location", showInfo.getCity());
+			dataMap.put("publishTime", RelativeDateFormat.format(showInfo.getCreateTime()));
+			
+			//关联评论
+			Map<String,Object> commentParams = new HashMap<String,Object>();
+			commentParams.put("showId", showInfo.getId());
+			List<ShowComment> showsCommentNum = showCommentService.selectShowCommentNum(commentParams);
+			if(showsCommentNum != null && !showsCommentNum.isEmpty()){
+				ShowComment showComment = showsCommentNum.get(0);
+				dataMap.put("commentNumber", showComment.getCommentNum());
+			}else{
+				dataMap.put("commentNumber", 0L);
+			}
+			
+			//关联点赞
+			Map<String,Object> praiseParams = new HashMap<String,Object>();
+			praiseParams.put("showId", showInfo.getId());
+			List<ShowPraise> praiseCommentNum = showPraiseService.selectShowPraiseNum(commentParams);
+			if(praiseCommentNum != null && !praiseCommentNum.isEmpty()){
+				ShowPraise showPraise = praiseCommentNum.get(0);
+				dataMap.put("praiseNumber", showPraise.getPraiseNum());
+			}else{
+				dataMap.put("praiseNumber", 0L);
+			}
+			
+			//当前用户是否对该详情点赞
+			Map<String,Object> isPraseParams = new HashMap<String,Object>();
+			isPraseParams.put("showId", showInfo.getId());
+			isPraseParams.put("creater", actorId);
+			List<ShowPraise> praiseList = showPraiseService.selectAll(isPraseParams);
+			if(praiseList == null || praiseList.isEmpty()){
+				dataMap.put("isPraise", "0");
+			}else{
+				dataMap.put("isPraise", "1");
+			}
+			
+			ActorCollect actorparam = new ActorCollect();
+			actorparam.setActorId(showInfo.getCreater());
+			actorparam.setCreater(actorId);
+			
+			dataMap.put("isAtenttion",actorCollectService.selectCount(actorparam) );
+			
+			dataMapList.add(dataMap);
+		}
+		
+		
+		
+		resultMap.put("data", dataMapList);
+		resultMap.put("result", 1);
+		resultMap.put("msg", "操作成功!");
+		return resultMap;
+	}
+	/**
+	 * 秀一秀详情
+	 * @param request
+	 * @param response
+	 * @param showId
+	 * @return
+	 */
+	@RequestMapping(value = "api/getShowDetailBoth")
+	@ResponseBody
+	public Map<String,Object> getShowDetailBoth(HttpServletRequest request, HttpServletResponse response,String showId,String actorId,String ascCount,String descCount) {
+		
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		List<Map<String, Object>> dataMapList = new ArrayList<Map<String,Object>>();
+		//通过showId得出当前所在顺序号
+		
+			Map<String,Object> param = new HashMap<String,Object>();
+			param.put("showId", showId);
+			param.put("orderstr", "asc");
+			param.put("rowCount", ascCount);
+			List<ShowInfo> list = showInfoService.selectTurnList(param);
+			int upCount= list.size();
+			list.add(showInfoService.selectById(showId));
+			param.put("showId", showId);
+			param.put("orderstr", "desc");
+			param.put("rowCount", descCount);
+			List<ShowInfo> list2 = showInfoService.selectTurnList(param);
+			list.addAll(list2);
+			int rownum = 0;
+			for(ShowInfo temp:list){
+				ShowInfo showInfo = showInfoService.selectById(temp.getId());
+				if(showInfo == null){
+					return buildEmptyDataForDetail();
+				}
+				
+				//关联用户
+				ActorInfo actorInfo = actorInfoService.selectById(showInfo.getCreater());
+				Map<String,Object> dataMap = new HashMap<String,Object>();
+				dataMap.put("id", showInfo.getId());
+				dataMap.put("mediaType", showInfo.getType());
+				dataMap.put("shareNumber", showInfo.getShareNum());
+				dataMap.put("userId", showInfo.getCreater());
+				
+				if(rownum<upCount){
+					dataMap.put("flag", "asc");
+				}else if(rownum==upCount){
+					dataMap.put("flag", "current");
+				}else{
+					dataMap.put("flag", "desc");
+				}
+				rownum++;
+				
+				SystemPictureInfo pictureInfo = actorInfo.getSystemPictureInfo();
+				if(pictureInfo != null){
+					String urlPath = actorInfo.getSystemPictureInfo().getUrlPath();
+					dataMap.put("headImageUrl", StringUtils.isBlank(urlPath) ? "" : Configurations.buildDownloadUrl(urlPath));
+				}else{
+					dataMap.put("headImageUrl", "");
+				}
+				dataMap.put("name", actorInfo.getName() == null ? "" : actorInfo.getName());
+				dataMap.put("authenticateLevel", String.valueOf(actorInfo.getAuthenticateLevel()));
+				dataMap.put("showDetail", showInfo.getContent());
+				
+				//图片
+				Map<String,Object> picParams = new HashMap<String,Object>();
+				picParams.put("showId", showInfo.getId());
+				List<ShowInfoPictures> picList = showInfoPicturesService.selectAll(picParams);
+				List<Map<String,Object>> imageList = new ArrayList<Map<String,Object>>();
+				if(picList != null && !picList.isEmpty()){
+					List<String> imgUrls = new ArrayList<String>(); 
+					for(ShowInfoPictures showInfoPictures : picList){
+						String imgUrl = showInfoPictures.getSystemPictureInfo().getUrlPath();
+						if(StringUtils.isNotBlank(imgUrl)) {
+							imgUrls.add(imgUrl);				
+						}
+					}
+					
+					Collections.sort(imgUrls);
+					for(String url : imgUrls) {
+						Map<String,Object> imageMap = new HashMap<String,Object>();
+						imageMap.put("imageUrl", Configurations.buildDownloadUrl(url));
+						imageList.add(imageMap);
+					}
+				}
+				dataMap.put("imageList", imageList);
+				SystemPictureInfo systemVideoInfo =  showInfo.getSystemVideoInfo();
+				if(systemVideoInfo != null){
+					String videoUrlPath = systemVideoInfo.getUrlPath();
+					dataMap.put("videoUrl", StringUtils.isBlank(videoUrlPath) ? "" : Configurations.buildDownloadUrl(videoUrlPath));
+				}else{
+					dataMap.put("videoUrl", "");
+				}
+				SystemPictureInfo systemVideoPreviewInfo = showInfo.getSystemVideoPreviewInfo();
+				if(systemVideoPreviewInfo != null){
+					String videoPreviewUrlPath = systemVideoPreviewInfo.getUrlPath();
+					dataMap.put("videoPreviewUrl", StringUtils.isBlank(videoPreviewUrlPath) ? "" : Configurations.buildDownloadUrl(videoPreviewUrlPath));
+				}else{
+					dataMap.put("videoPreviewUrl", "");
+				}
+				
+				dataMap.put("location", showInfo.getCity());
+				dataMap.put("publishTime", RelativeDateFormat.format(showInfo.getCreateTime()));
+				
+				//关联评论
+				Map<String,Object> commentParams = new HashMap<String,Object>();
+				commentParams.put("showId", showInfo.getId());
+				List<ShowComment> showsCommentNum = showCommentService.selectShowCommentNum(commentParams);
+				if(showsCommentNum != null && !showsCommentNum.isEmpty()){
+					ShowComment showComment = showsCommentNum.get(0);
+					dataMap.put("commentNumber", showComment.getCommentNum());
+				}else{
+					dataMap.put("commentNumber", 0L);
+				}
+				
+				//关联点赞
+				Map<String,Object> praiseParams = new HashMap<String,Object>();
+				praiseParams.put("showId", showInfo.getId());
+				List<ShowPraise> praiseCommentNum = showPraiseService.selectShowPraiseNum(commentParams);
+				if(praiseCommentNum != null && !praiseCommentNum.isEmpty()){
+					ShowPraise showPraise = praiseCommentNum.get(0);
+					dataMap.put("praiseNumber", showPraise.getPraiseNum());
+				}else{
+					dataMap.put("praiseNumber", 0L);
+				}
+				
+				//当前用户是否对该详情点赞
+				Map<String,Object> isPraseParams = new HashMap<String,Object>();
+				isPraseParams.put("showId", showInfo.getId());
+				isPraseParams.put("creater", actorId);
+				List<ShowPraise> praiseList = showPraiseService.selectAll(isPraseParams);
+				if(praiseList == null || praiseList.isEmpty()){
+					dataMap.put("isPraise", "0");
+				}else{
+					dataMap.put("isPraise", "1");
+				}
+				ActorCollect actorparam = new ActorCollect();
+				actorparam.setActorId(showInfo.getCreater());
+				actorparam.setCreater(actorId);
+				
+				dataMap.put("isAtenttion",actorCollectService.selectCount(actorparam) );
+				dataMapList.add(dataMap);
+			}
+			
+		
+
+		
+		
+		resultMap.put("data", dataMapList);
+		resultMap.put("result", 1);
+		resultMap.put("msg", "操作成功!");
+		return resultMap;
+	}
+	/**
+	 * 点赞/取消点赞
+	 * @param request
+	 * @param response
+	 * @param info
+	 * @return
+	 */
+	@RequestMapping(value = "api/praiseShowComment")
+	@ResponseBody
+	public Map<String,Object> praiseShow(HttpServletRequest request, HttpServletResponse response,ShowCommentPraise info) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<ShowCommentPraise> list = showCommentPraiseService.selectAll(info);
+		int retCount = 0;
+		Map<String,Object> dataMap = new HashMap<String,Object>();
+		if(list == null || list.isEmpty()){
+			info.setId(UUIDUtil.getUUID());
+			info.setCreateTime(new Date());
+			retCount = showCommentPraiseService.insert(info);
+			if(retCount > 0){
+				dataMap.put("nowState", "1");
+				result.put("data", dataMap);
+				result.put("msg", "点赞成功!");
+				result.put("result", 1);
+				
+				/*// 发送点赞通知消息
+				ShowInfo showInfo = showInfoService.selectById(info.getShowId());
+				if(showInfo != null) {
+					ActorInfo praiseCreaterInfo = actorInfoService.selectById(info.getCreater());
+					if(praiseCreaterInfo != null && !StringUtils.equalsIgnoreCase(info.getCreater(), showInfo.getCreater()) ) {
+						String message = String.format("“%s”点赞了您发布的秀。[点击查看]", StringUtils.trimToEmpty(praiseCreaterInfo.getName()));
+						Map<String, Object> ext = new HashMap<String, Object>();
+						ext.put("fromType", "showNotify");
+						ext.put("atid", showInfo.getId());
+						ext.put("showType", showInfo.getType());
+						ext.put("creater", showInfo.getCreater());
+						//Object resp = EasemobUtil.sendShowMessage(showInfo.getCreater(), message, ext);
+						String[] targetIds = {showInfo.getCreater()};
+						RongCloudMethodUtil.privateMessage("show",message,  targetIds, null);
+						logger.debug("---------------------- send message resp -----------------------------------");
+						//logger.debug(resp.toString());
+					}
+				}*/
+			}else{
+				dataMap.put("nowState", "0");
+				result.put("data", dataMap);
+				result.put("msg", "点赞失败!");
+				result.put("result", 0);
+			}
+		}else{
+			for(ShowCommentPraise showCommentPraise : list){
+				retCount += showCommentPraiseService.delete(showCommentPraise);
+			}
+			if(retCount > 0){
+				dataMap.put("nowState", "0");
+				result.put("data", dataMap);
+				result.put("msg", "取消点赞成功!");
+				result.put("result", 1);
+			}else{
+				dataMap.put("nowState", "1");
+				result.put("data", dataMap);
+				result.put("msg", "取消点赞失败!");
+				result.put("result", 0);
+			}
+		}
+		return result;
+	}
+	@RequestMapping(value = "api/getAudioInfoList")
+	@ResponseBody
+	public Map<String,Object> getAudioInfoList(HttpServletRequest request, HttpServletResponse response,String name,
+			Integer page,Integer pageSize){
+		
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		PageInfo<AudioInfo> pageInfo = new PageInfo<AudioInfo>();
+		pageInfo.setPage(page);
+		pageInfo.setPageSize(pageSize);
+		AudioInfo info = new AudioInfo();
+		info.setName(name);
+		audioInfoService.selectAll(info, pageInfo,"selectAllSummary");
+		
+		/*Map<String,Object> rowsMap = new HashMap<String,Object>();
+		rowsMap.put("rows", pageInfo.getRows());
+		rowsMap.put("total", pageInfo.getTotal());
+		rowsMap.put("page", page);
+		rowsMap.put("pageSize", pageSize);*/
+		resultMap.put("msg", "操作成功!");
+		resultMap.put("result", 1);
+		//resultMap.put("data", rowsMap);
+		resultMap.put("data", pageInfo);
 		return resultMap;
 	}
 }

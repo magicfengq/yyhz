@@ -1,5 +1,8 @@
 package com.yyhz.sc.data.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.yyhz.sc.base.BaseDao;
 import com.yyhz.sc.data.model.ShowInfo;
 /**
@@ -8,4 +11,6 @@ import com.yyhz.sc.data.model.ShowInfo;
  */
 public interface ShowInfoDao extends BaseDao<ShowInfo>{
 	public String sqlNameSpace=ShowInfoDao.class.getName();
+
+	List<ShowInfo> selectTurnList(Map<String, Object> param);
 }

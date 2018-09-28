@@ -220,17 +220,14 @@ public class AuthenticateApplyController extends BaseController {
 		authenticateApply.setCheckUser(getSessionUser(request).getId());
 		authenticateApply.setCheckTime(new Date());
 		authenticateApply.setCheckStatus(1);
-		authenticateApply.setUserCurrentLevel(info.getUserCurrentLevel());
+		//authenticateApply.setUserCurrentLevel(info.getUserCurrentLevel());
 		int result = authenticateApplyService.update(authenticateApply);
 		
 		//修改用户信息
 		String actorId = info.getActorId();
 		ActorInfo actorInfo = new ActorInfo();
 		actorInfo.setId(actorId);
-		actorInfo.setAuthenticateLevel(info.getUserCurrentLevel());
-		actorInfo.setLevel(info.getUserCurrentLevel());
-		actorInfo.setRealName(authenticateApply.getRealName());
-		actorInfo.setIdcard(authenticateApply.getIdcard());		
+		actorInfo.setLevel(2);	
 		result = actorInfoService.update(actorInfo);
 		
 		//给客户端发送消息
@@ -264,15 +261,15 @@ public class AuthenticateApplyController extends BaseController {
 		authenticateApply.setCheckUser(getSessionUser(request).getId());
 		authenticateApply.setCheckTime(new Date());
 		authenticateApply.setCheckStatus(2);
-		authenticateApply.setUserCurrentLevel(0);
+		//authenticateApply.setUserCurrentLevel(0);
 		int result = authenticateApplyService.update(authenticateApply);
 		
 		//修改用户信息
-		ActorInfo actorInfo = new ActorInfo();
+		/*ActorInfo actorInfo = new ActorInfo();
 		actorInfo.setId(actorId);
 		actorInfo.setAuthenticateLevel(0);
 		actorInfo.setLevel(0);	
-		result = actorInfoService.update(actorInfo);
+		result = actorInfoService.update(actorInfo);*/
 		
 		//给客户端发送消息
 		if(result > 0){

@@ -13,6 +13,7 @@
 		<result property="content" column="content" />
 		<result property="status" column="status" />
 		<result property="operater" column="operater" />
+		<result property="praiseNum" column="praiseNum" />
 	</resultMap>
 	<!-- 动态sql -->
 	<sql id="colomnResult">
@@ -24,7 +25,8 @@
 	     toUserId,
 	     content,
 	     status,
-	     operater
+	     operater,
+	     praiseNum
 	 ]]>
 	</sql>
 	<insert id="insert">
@@ -38,6 +40,7 @@
 			     <if test="content!=null">content,</if>
 			     <if test="status!=null">status,</if>
 			     <if test="operater!=null">operater,</if>
+			     <if test="praiseNum!=null">praiseNum,</if>
 		</trim>
 	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
 			     <if test="id!=null">#{id},</if>
@@ -48,6 +51,7 @@
 			     <if test="content!=null">#{content},</if>
 			     <if test="status!=null">#{status},</if>
 			     <if test="operater!=null">#{operater},</if>
+			     <if test="praiseNum!=null">#{praiseNum},</if>
 		</trim>
 	</insert>
 
@@ -62,6 +66,7 @@
 			     <if test="content!=null">content=#{content},</if>
 			     <if test="status!=null">status=#{status},</if>
 			     <if test="operater!=null">operater=#{operater},</if>
+			     <if test="praiseNum!=null">praiseNum=#{praiseNum},</if>
 		</set>
 		where 
 	   		 id=#{id} 

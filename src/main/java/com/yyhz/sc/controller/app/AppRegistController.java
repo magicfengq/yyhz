@@ -461,4 +461,72 @@ public class AppRegistController extends BaseController{
 		
 		return ret;
 	}
+	/**
+	 * 
+	 * @Title: faceLogin
+	 * @Description: 刷脸注册接口
+	 * @param idCard 身份证号
+	 * @param realName 姓名
+	 * @return JSON
+	 * @author CrazyT
+	 * 
+	 */
+	@RequestMapping(value = "faceLogin")
+	public void faceLogin(HttpServletRequest request, HttpServletResponse response, ActorInfo reqObj) {
+			
+		int result = -1;
+		String msg = "";
+		Map<String, Object> retInfo = null;
+		try {
+			if (StringUtils.isEmpty(reqObj.getIdcard())) {
+				writeJsonObject(response, 300, "身份证号为空", null);
+				return;
+			}
+			if (StringUtils.isEmpty(reqObj.getRealName())) {
+				writeJsonObject(response, 300, "姓名为空", null);
+				return;
+			}
+
+			// 判断账号是否已经存在
+			ActorInfo condition = new ActorInfo();
+			condition.setIdcard(reqObj.getIdcard());
+			ActorInfo member = actorInfoService.selectEntity(condition);
+			if (member == null) {
+				String memberId = UUIDUtil.getUUID();
+				condition.setId(memberId);
+				//condition.setPassword(reqObj.getPassword());
+				condition.setCreateTime(new Date());
+				//condition.setMobile(reqObj.getMobile());
+				condition.setIdcard(reqObj.getIdcard());
+				condition.setRealName(reqObj.getRealName());
+				condition.setStatus(0); // 有效状态
+				condition.setRegisterType(0); // 普通注册
+				result = actorInfoService.insert(condition);
+				
+				if(result > 0)
+				{
+					//融云注册
+					String token = RongCloudMethodUtil.AddUserInfo(memberId, "", "");
+					ActorInfo umember = new ActorInfo();
+					umember.setId(memberId);
+					umember.setEasemobStatusCode(token);
+					actorInfoService.update(umember);
+					retInfo = getMyInfo(memberId);
+					result = AppRetCode.NORMAL;
+					msg = AppRetCode.NORMAL_TEXT;
+				}else
+				{
+					result = AppRetCode.CREATE_ACCOUNT_FAILED;
+					msg = AppRetCode.CREATE_ACCOUNT_FAILED_TEXT;
+				}
+				
+			} else {
+				retInfo = getMyInfo(member.getId());
+			}
+			writeJsonObject(response, result, msg, retInfo);
+		} catch (Exception e) {
+			e.printStackTrace();
+			writeJsonObject(response, AppRetCode.SERVER_EXCEPTION, AppRetCode.SERVER_EXCEPTION_TEXT, null);
+		}
+	}
 }

@@ -17,6 +17,8 @@ public class AudioInfo extends BaseEntity implements Serializable {
 	private java.lang.String id; // id
 	private java.lang.String uuid; // uuid
 	private java.lang.String name; // name
+	private java.lang.Integer status; // name
+	private String audioUrl;
 	/**
      * 获取id属性
      *
@@ -67,5 +69,21 @@ public class AudioInfo extends BaseEntity implements Serializable {
 	 */
 	public void setName(java.lang.String name) {
 		this.name = name;
+	}
+
+	public String getAudioUrl() {
+		return audioUrl;
+	}
+
+	public void setAudioUrl(String audioUrl) {
+		this.audioUrl = audioUrl;
+	}
+
+	public java.lang.Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(java.lang.Integer status) {
+		this.status = status;
 	}
 }

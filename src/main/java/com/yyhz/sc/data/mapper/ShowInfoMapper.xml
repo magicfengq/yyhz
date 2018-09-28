@@ -365,4 +365,20 @@
   			#{idList}
  		</foreach>
 	</update>
+	
+	<select id="selectTurnList" resultMap="colomnResult">
+        SELECT t.id 
+		FROM (SELECT @rowNo1 := @rowNo1 + 1 AS RowNo,a.id 
+				FROM `show_info` a,( SELECT @rowNo1 := 0 ) b 
+				WHERE a.type = 1 
+				ORDER BY a.createTime ${orderstr} ) t 
+		WHERE t.RowNo > (select k.RowNo 
+		        		from (SELECT  @rowNo:=@rowNo+1 as RowNo ,m.id
+		        				FROM `show_info`m , (select @rowNo:=0) n 
+		        				where m.type = 1 order by m.createTime ${orderstr}) k 
+		        		where k.id = #{showId})
+		limit ${rowCount}
+	
+	
+    </select>
 </mapper> 

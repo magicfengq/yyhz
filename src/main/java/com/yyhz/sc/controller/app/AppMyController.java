@@ -1143,4 +1143,176 @@ public class AppMyController extends BaseController {
 		
 		this.writeJsonObject(response, AppRetCode.NORMAL, AppRetCode.NORMAL_TEXT, ret);	
 	}
+	/**
+	 * 
+	 * @Title: getMyAuthentication
+	 * @Description: 获取认证信息
+	 * @return JSON
+	 * @author CrazyT
+	 * 
+	 */
+	@RequestMapping(value = "getMyAuthenticationNew")
+	public void getMyAuthenticationNew(HttpServletRequest request, HttpServletResponse response, String id) {
+		
+		if(StringUtils.isBlank(id)) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "用户id为空", null);	
+			return;
+		}
+		
+		// 检索用户信息
+		ActorInfo actorInfo = actorInfoService.selectById(id);
+		if(actorInfo == null || actorInfo.getStatus() == 1) { // 状态 0正常；1已删除
+			this.writeJsonObject(response, AppRetCode.ACCOUNT_NOT_EXIST, AppRetCode.ACCOUNT_NOT_EXIST_TEXT, null);	
+			return;
+		}
+
+		Map<String, Object> ret = new HashMap<String, Object>();
+		ret.put("id", actorInfo.getId());
+		ret.put("realName",actorInfo.getRealName());
+		ret.put("idcard",actorInfo.getIdcard());
+		ret.put("mobile",actorInfo.getMobile());
+		ret.put("level",actorInfo.getLevel());
+		if(StringUtils.isEmpty(actorInfo.getMobile())){			
+			ret.put("type","0");
+		}else{
+			ret.put("type","1");
+		}
+		
+		AuthenticateApply condition = new AuthenticateApply();
+		condition.setActorId(id);
+		List<AuthenticateApply> authList = authenticateApplyService.selectAll(condition, "selectAllWithUrl");
+		int checkStatus = 3;
+		if(authList != null && authList.size() > 0) {
+			AuthenticateApply auth = authList.get(0);
+			
+			if(StringUtils.isNotBlank(auth.getPhoto3())){
+				ret.put("photo3",Configurations.buildDownloadUrl(auth.getPhoto3()));			
+			}
+			checkStatus = auth.getCheckStatus();	
+		}
+		ret.put("checkStatus",checkStatus);	
+
+		this.writeJsonObject(response, AppRetCode.NORMAL, AppRetCode.NORMAL_TEXT, ret);	
+	}
+	/**
+	 * 
+	 * @Title: realPersonAuthentication
+	 * @Description: 实人认证
+	 * @return JSON
+	 * @author CrazyT
+	 * 
+	 */
+	@RequestMapping(value = "realPersonAuthentication")
+	public void realPersonAuthentication(HttpServletRequest request, HttpServletResponse response, ActorInfo req) {
+		
+		if(StringUtils.isBlank(req.getId())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "用户id为空", null);	
+			return;
+		}
+		if(StringUtils.isBlank(req.getRealName())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "真实姓名为空", null);	
+			return;
+		}
+		if(StringUtils.isBlank(req.getIdcard())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "身份证为空", null);	
+			return;
+		}
+		if(StringUtils.isBlank(req.getMobile())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "电话号为空", null);	
+			return;
+		}
+		/*if(StringUtils.isBlank(req.getPassword())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "密码为空", null);	
+			return;
+		}*/
+		req.setLevel(1);//实名认证
+		// 检索用户信息
+		int result = actorInfoService.update(req);
+		
+		if(result > 0) {
+			this.writeJsonObject(response, AppRetCode.NORMAL, AppRetCode.NORMAL_TEXT, null);	
+		}else {
+			this.writeJsonObject(response, AppRetCode.ERROR, "服务器错误。", null);	
+		}
+	}
+	/**
+	 * 
+	 * @Title: companyAuthentication
+	 * @Description: 企业认证
+	 * @return JSON
+	 * @author CrazyT
+	 * 
+	 */
+	@RequestMapping(value = "companyAuthentication")
+	public void companyAuthentication(HttpServletRequest request, HttpServletResponse response, ActorInfo req,
+			@RequestParam(required = false) MultipartFile imageFile) {
+			
+		if(StringUtils.isBlank(req.getId())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "用户id为空", null);	
+			return;
+		}
+		if(StringUtils.isBlank(req.getRealName())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "真实姓名为空", null);	
+			return;
+		}
+		if(StringUtils.isBlank(req.getIdcard())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "身份证为空", null);	
+			return;
+		}
+		if(StringUtils.isBlank(req.getMobile())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "电话号为空", null);	
+			return;
+		}
+		if(imageFile == null) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "营业执照图片为空", null);	
+			return;
+		}
+		
+		// 检索用户信息
+		ActorInfo actorInfo = actorInfoService.selectById(req.getId());
+		if(actorInfo == null || actorInfo.getStatus() == 1) { // 状态 0正常；1已删除
+			this.writeJsonObject(response, AppRetCode.ACCOUNT_NOT_EXIST, AppRetCode.ACCOUNT_NOT_EXIST_TEXT, null);	
+			return;
+		}
+		//上传执照图片
+		String uuid = "";
+		SystemPictureInfo pInfo = this.uploadFile2("authentication", imageFile);
+		if(pInfo != null) {
+			uuid=pInfo.getUuid();
+		}
+		//查询是否已经申请过
+		AuthenticateApply param = new AuthenticateApply();
+		param.setActorId(req.getId());
+		
+		AuthenticateApply applyInfo = authenticateApplyService.selectEntity(param);
+		int ret = 0;
+		if(applyInfo == null) {
+			applyInfo = new AuthenticateApply();
+			applyInfo.setId(UUIDUtil.getUUID());
+			applyInfo.setPhoto3(uuid);
+			applyInfo.setUserCurrentLevel(2);
+			applyInfo.setApplyTime(new Date());
+			applyInfo.setRealName(req.getRealName());
+			applyInfo.setIdcard(req.getIdcard());
+			applyInfo.setMobile(req.getMobile());
+			applyInfo.setCheckStatus(0);
+			//插入
+			ret = authenticateApplyService.insert(applyInfo);
+		}else {
+			applyInfo.setPhoto3(uuid);
+			applyInfo.setApplyTime(new Date());
+			applyInfo.setRealName(req.getRealName());
+			applyInfo.setIdcard(req.getIdcard());
+			applyInfo.setMobile(req.getMobile());
+			applyInfo.setCheckStatus(0);
+			//更新
+			ret = authenticateApplyService.update(applyInfo);
+		}
+
+		if(ret > 0) {
+			this.writeJsonObject(response, AppRetCode.NORMAL, AppRetCode.NORMAL_TEXT, null);	
+		}else {
+			this.writeJsonObject(response, AppRetCode.ERROR, "服务器错误。", null);	
+		}
+	}
 }
