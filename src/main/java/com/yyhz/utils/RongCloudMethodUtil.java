@@ -103,7 +103,7 @@ public class RongCloudMethodUtil {
 	 *            空-安卓 非空：苹果
 	 */
 	public static ResponseResult privateMessage(String senderId,String content, String[] targetIds, String pushData) {
-		TxtMessage txtMessage = new TxtMessage("hello", "helloExtra");
+		TxtMessage txtMessage = new TxtMessage(content, "");
 		RongCloud rongCloud = RongCloud.getInstance(appkey, appSecret);
 		Private Private = rongCloud.message.msgPrivate;
 		/**
@@ -117,7 +117,7 @@ public class RongCloudMethodUtil {
                 .setObjectName(txtMessage.getType())
                 .setContent(txtMessage)
                 .setPushContent("")
-                .setPushData("{\"pushData\":\"hello\"}")
+                .setPushData(pushData)
                 .setCount("4")
                 .setVerifyBlacklist(0)
                 .setIsPersisted(0)

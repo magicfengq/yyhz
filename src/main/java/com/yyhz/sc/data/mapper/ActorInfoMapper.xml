@@ -36,6 +36,7 @@
 		<result property="lat" column="lat" />
 		<result property="headImgUrl" column="headImgUrl" />
 		<result property="introduction" column="introduction" />
+		<result property="areaCode" column="areaCode" />
 	</resultMap>
 	<resultMap id="actorInfoDetailsResult" type="com.yyhz.sc.data.model.ActorInfo" extends="colomnResult">
 		<association property="systemPictureInfo" resultMap="com.yyhz.sc.data.dao.SystemPictureInfoDao.commonResult" columnPrefix="spi_"/>
@@ -73,7 +74,8 @@
 	     commentNum,
 	     lon,
 	     lat,
-	     introduction
+	     introduction,
+	     areaCode
 	 ]]>
 	</sql>
 	<insert id="insert">
@@ -109,6 +111,8 @@
 			     <if test="lon!=null">lon,</if>
 			     <if test="lat!=null">lat,</if>
 			     <if test="introduction!=null">introduction,</if>
+			     <if test="areaCode!=null">areaCode,</if>
+			     
 		</trim>
 	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
 			     <if test="id!=null">#{id},</if>
@@ -141,6 +145,7 @@
 			     <if test="lon!=null">#{lon},</if>
 			     <if test="lat!=null">#{lat},</if>
 			     <if test="introduction!=null">#{introduction},</if>
+			     <if test="areaCode!=null">#{areaCode},</if>
 		</trim>
 	</insert>
 
@@ -285,7 +290,7 @@
 	</select>
 	
 	<select id="selectActorInfoForPage"  resultMap="colomnResult">
-		select a.id,a.name,a.mobile,a.sex,a.createTime,a.status,a.registerType,a.level
+		select a.id,a.name,a.mobile,a.sex,a.createTime,a.status,a.registerType,a.level,a.areaCode
 		from actor_info a
 		<where>
 				id not in ("show","admin","announce") 

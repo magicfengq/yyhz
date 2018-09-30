@@ -44,6 +44,8 @@ import com.yyhz.utils.RongCloudMethodUtil;
 import com.yyhz.utils.UUIDUtil;
 import com.yyhz.utils.stream.config.Configurations;
 
+import net.sf.json.JSONObject;
+
 @Controller
 @RequestMapping(value = "api")
 public class AppAnnounceController extends BaseController {
@@ -800,14 +802,15 @@ public class AppAnnounceController extends BaseController {
 				// 发送通知消息
 				String message = String.format("“%s”报名了您发布的“%s”通告。[点击查看] ", StringUtils.trimToEmpty(eactorInfo.getName())
 						, StringUtils.trimToEmpty(announceInfo.getTitle()));
-				/*Map<String, Object> ext = new HashMap<String, Object>();
+				Map<String, Object> ext = new HashMap<String, Object>();
 				ext.put("fromType", "annouceNotify");
 				ext.put("atid", announceInfo.getId());
 				ext.put("type", announceInfo.getType());
 				ext.put("publicType", StringUtils.trimToEmpty(announceInfo.getPublicTypeNames()));
-				Object resp = EasemobUtil.sendAnnounceMessage(announceInfo.getCreater(), message, ext);*/
+				//Object resp = EasemobUtil.sendAnnounceMessage(announceInfo.getCreater(), message, ext);
 				String[] targetIds = {announceInfo.getCreater()};
-				RongCloudMethodUtil.privateMessage("annouceNotify",message,  targetIds, null);
+				JSONObject json = JSONObject.fromObject(ext);
+				RongCloudMethodUtil.privateMessage("annouceNotify",message,  targetIds, json.toString());
 				logger.debug("---------------------- send message resp -----------------------------------");
 				//logger.debug(resp.toString());
 				return;				
@@ -831,16 +834,17 @@ public class AppAnnounceController extends BaseController {
 				String message = String.format("“%s”报名了您发布的“%s”通告。[点击查看]", StringUtils.trimToEmpty(eactorInfo.getName())
 						, StringUtils.trimToEmpty(announceInfo.getTitle()));
 				
-				/*Map<String, Object> ext = new HashMap<String, Object>();
+				Map<String, Object> ext = new HashMap<String, Object>();
 				ext.put("fromType", "annouceNotify");
 				ext.put("atid", announceInfo.getId());
 				ext.put("type", announceInfo.getType());
 				ext.put("publicType", StringUtils.trimToEmpty(announceInfo.getPublicTypeNames()));
-				Object resp = EasemobUtil.sendAnnounceMessage(announceInfo.getCreater(), message, ext);*/
+				//Object resp = EasemobUtil.sendAnnounceMessage(announceInfo.getCreater(), message, ext);
 				logger.debug("---------------------- send message resp -----------------------------------");
 				//logger.debug(resp.toString());
 				String[] targetIds = {announceInfo.getCreater()};
-				RongCloudMethodUtil.privateMessage("annouceNotify",message,  targetIds, null);
+				JSONObject json = JSONObject.fromObject(ext);
+				RongCloudMethodUtil.privateMessage("annouceNotify",message,  targetIds, json.toString());
 				return;				
 			}else {
 				this.writeJsonObject(response, AppRetCode.ERROR, "插入数据库失败！", null);

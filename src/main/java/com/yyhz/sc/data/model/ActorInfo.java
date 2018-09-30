@@ -55,7 +55,7 @@ public class ActorInfo extends BaseEntity implements Serializable {
 	private List<String> actorIdList;
 	private String authenticateLevelName;
 
-	
+	private String areaCode;
 	public java.lang.String getIntroduction() {
 		return introduction;
 	}
@@ -677,5 +677,13 @@ public class ActorInfo extends BaseEntity implements Serializable {
 		sb.append('}');
         return sb.toString();
     }
+
+	public String getAreaCode() {
+		return areaCode;
+	}
+
+	public void setAreaCode(String areaCode) {
+		this.areaCode = areaCode;
+	}
     
 }

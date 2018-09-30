@@ -30,6 +30,8 @@ import com.yyhz.sc.services.MessageInfoService;
 import com.yyhz.utils.RongCloudMethodUtil;
 import com.yyhz.utils.UUIDUtil;
 
+import net.sf.json.JSONObject;
+
 /**
  * 
 * @ClassName: MessageInfoController 
@@ -174,7 +176,7 @@ public class MessageInfoController extends BaseController {
 			}
 			
 			//发送消息
-			/*JsonNodeFactory factory = new JsonNodeFactory(false);
+			JsonNodeFactory factory = new JsonNodeFactory(false);
 			String from = "admin";
 	        String targetTypeus = "users";
 	        ObjectNode ext = factory.objectNode();
@@ -185,20 +187,21 @@ public class MessageInfoController extends BaseController {
 	        ObjectNode txtmsg = factory.objectNode();
 	        txtmsg.put("msg", info.getContent());
 	        txtmsg.put("type","txt");
-	        ObjectNode node = EasemobMessages.sendMessages(targetTypeus, targetusers, txtmsg, from, ext);
-	        JsonNode jsonNode = node.get("statusCode");
-	        if(jsonNode.asInt() == 200){
-	        	info.setStatus("1");
-	        	info.setSendTime(new Date());
-	        	messageInfoService.update(info);
-	        }*/
+	        //ObjectNode node = EasemobMessages.sendMessages(targetTypeus, targetusers, txtmsg, from, ext);
+	        //JsonNode jsonNode = node.get("statusCode");
+	        //if(jsonNode.asInt() == 200){
+	        //	info.setStatus("1");
+	        //	info.setSendTime(new Date());
+	        //	messageInfoService.update(info);
+	        //}
 	        String[] targetIds = new String[actorlist.size()];
 	        int count=0;
 	        for(ActorInfo actorInfo : actorlist){
 	        	targetIds[count] = actorInfo.getId();
 	        	count++;
 	        }
-	        ResponseResult privateResult = RongCloudMethodUtil.privateMessage("admin", info.getContent(), targetIds, null);
+	        JSONObject json = JSONObject.fromObject(ext);
+	        ResponseResult privateResult = RongCloudMethodUtil.privateMessage("admin", info.getContent(), targetIds, json.toString());
 	        if(privateResult.code == 200){
 	        	info.setStatus("1");
 	        	info.setSendTime(new Date());

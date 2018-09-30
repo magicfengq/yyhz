@@ -151,6 +151,7 @@ div#rMenu {
 					<th data-options="field:'status',align:'center',sortable:true,formatter:formatStatus" style="width: 5%;">状态</th>
 					<th data-options="field:'roleName',align:'center',sortable:true" style="width: 10%;">角色</th>
 					<th data-options="field:'createTime',align:'center',sortable:true" style="width: 15%;">注册时间</th>
+					<th data-options="field:'areaCode',align:'center',sortable:true" style="width: 10%;">注册地</th>
 					<th data-options="field:'options',align:'center',sortable:true,formatter:formatOptions" style="width: 10%;">操作</th>
 				</tr>
 			</thead>

@@ -7,25 +7,28 @@
 	<resultMap id="commonResult" type="com.yyhz.sc.data.model.AudioInfo">
 		<result property="id" column="id" />
 		<result property="uuid" column="uuid" />
-		<result property="name" column="name" />
+		<result property="audioName" column="audioName" />
 		<result property="status" column="status" />
 		<result property="createTime" column="createTime" />
+		<result property="downloadUrl" column="downloadUrl" />
 	</resultMap>
 	<resultMap id="commonResultMap" type="java.util.HashMap">
 		<id property="id" column="id" />
 		<result property="uuid" column="uuid" />
-		<result property="name" column="name" />
+		<result property="audioName" column="audioName" />
 		<result property="status" column="status" />
 		<result property="createTime" column="createTime" />
+		<result property="downloadUrl" column="downloadUrl" />
 	</resultMap>
 	<!-- 动态sql -->
 	<sql id="colomnResult">
 		<![CDATA[
 	     id,
 	     uuid,
-	     name,
+	     audioName,
 	     status,
-	     createTime
+	     createTime,
+	     downloadUrl
 	 ]]>
 	</sql>
 	<sql id="commonWhere">
@@ -36,12 +39,13 @@
 			<if test=" uuid != null and uuid != ''">
 				and uuid=#{uuid} 
 			</if>
-			<if test=" name != null and name != ''">
-				and name=#{name} 
+			<if test=" audioName != null and audioName != ''">
+				and audioName=#{audioName} 
 			</if>
-			<if test=" status != null and status != ''">
-				and status=#{status} 
+			<if test=" downloadUrl != null and downloadUrl != ''">
+				and downloadUrl=#{downloadUrl} 
 			</if>
+			and status=0
 		</where>
 	</sql>
 	
@@ -50,16 +54,18 @@
 	   <trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id!=null">id,</if>
 			<if test="uuid!=null">uuid,</if>
-			<if test="name!=null">name,</if>
+			<if test="audioName!=null">audioName,</if>
 			<if test="status!=null">status,</if>
 			<if test="createTime!=null">createTime,</if>
+			<if test="downloadUrl">downloadUrl,</if>
 		</trim>
 	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
 			<if test="id!=null">#{id},</if>
 			<if test="uuid!=null">#{uuid},</if>
-			<if test="name!=null">#{name},</if>
+			<if test="audioName!=null">#{audioName},</if>
 			<if test="status!=null">#{status},</if>
 			<if test="createTime!=null">#{createTime},</if>
+			<if test="downloadUrl!=null">#{downloadUrl},</if>
 		</trim>
 	</insert>
 
@@ -67,7 +73,7 @@
 	   update audio_info 
 	   <set>
 			<if test="uuid!=null">uuid=#{uuid},</if>
-			<if test="name!=null">name=#{name},</if>
+			<if test="audioName!=null">audioName=#{audioName},</if>
 			<if test="status!=null">status=#{status},</if>
 		</set>
 		where 
@@ -147,24 +153,5 @@
 		]]>
 		 limit 1
 	</select>
-	<!-- 根据主键查询信息 -->
-	<select id="selectAllSummary"  resultMap="commonResult">
-		select
-		 si.id as id,
-	     si.name as name,
-	     si.uuid as uuid,
-	     spi.urlPath as audioUrl
-		 from audio_info si
-		 left join system_picture_info spi on si.uuid = spi.uuid
-		 
-		<where>
-			 si.status=0
-			
-			<if test=" name != null and name != '' ">
-				and si.name=#{name} 
-			</if>
-		</where>
-		
-		order by si.createTime desc
-	</select>
+	
 </mapper> 

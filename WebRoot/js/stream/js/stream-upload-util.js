@@ -305,7 +305,7 @@ function singleFileUpload(model_name,complete){
 			//filesQueueId : "showImage", /** 文件上传容器的ID, 默认: i_stream_files_queue */
 			//messagerId : "showImage",
 			autoUploading:false,
-			extFilters:['.apk'],
+			extFilters:['.apk','.mp3'],
 			tokenURL:"/perform/tk",
 			uploadURL:"/perform/upload",
 			postVarsPerFile:{model: model_name},
@@ -347,3 +347,5 @@ function bytesToSize(bytes) {
         i = Math.floor(Math.log(bytes) / Math.log(k));
    return (bytes / Math.pow(k, i)).toPrecision(3) + ' ' + sizes[i];
 }
+
+

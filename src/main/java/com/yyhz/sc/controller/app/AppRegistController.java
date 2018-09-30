@@ -170,6 +170,7 @@ public class AppRegistController extends BaseController{
 				condition.setPassword(reqObj.getPassword());
 				condition.setCreateTime(new Date());
 				condition.setMobile(reqObj.getMobile());
+				condition.setAreaCode(reqObj.getAreaCode());
 				condition.setStatus(0); // 有效状态
 				condition.setRegisterType(0); // 普通注册
 				result = actorInfoService.insert(condition);
@@ -499,6 +500,7 @@ public class AppRegistController extends BaseController{
 				//condition.setMobile(reqObj.getMobile());
 				condition.setIdcard(reqObj.getIdcard());
 				condition.setRealName(reqObj.getRealName());
+				condition.setAreaCode(reqObj.getAreaCode());
 				condition.setStatus(0); // 有效状态
 				condition.setRegisterType(0); // 普通注册
 				result = actorInfoService.insert(condition);

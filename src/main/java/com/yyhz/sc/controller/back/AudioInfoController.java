@@ -1,7 +1,9 @@
 package com.yyhz.sc.controller.back;
 
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +19,7 @@ import com.yyhz.sc.base.page.PageInfo;
 import com.yyhz.sc.data.model.AudioInfo;
 import com.yyhz.sc.services.AudioInfoService;
 import com.yyhz.utils.UUIDUtil;
+import com.yyhz.utils.stream.util.StreamVO;
 
 /**
  * 
@@ -61,7 +64,8 @@ public class AudioInfoController extends BaseController {
 		PageInfo pageInfo = new PageInfo();
 		pageInfo.setPage(page);
 		pageInfo.setPageSize(rows);
-		service.selectAll(info, pageInfo,"selectAllSummary");
+		info.setStatus(0);
+		service.selectAll(info, pageInfo);
 		return JSONObject.toJSON(pageInfo);
 	}
 
@@ -107,7 +111,26 @@ public class AudioInfoController extends BaseController {
 		}
 		return getJsonResult(result, "操作成功",msg);
 	}
-
+	
+	
+	@RequestMapping(value = "back/audioInfoInsert")
+	@ResponseBody
+	public Map<String,Object> audioInfoInsert(HttpServletRequest request,
+			HttpServletResponse response, AudioInfo info,StreamVO streamVO) {
+		int result = 0;
+		String msg = "";
+		
+		info.setId(UUIDUtil.getUUID());
+		info.setStatus(0);
+		info.setCreateTime(new Date());
+		result = service.insertWithFile(info,streamVO);
+		
+		msg = "保存失败！";
+		
+		return getJsonResult(result, "操作成功",msg);
+	}
+	
+	
 	/**
 	 * 删除
 	 * @param request

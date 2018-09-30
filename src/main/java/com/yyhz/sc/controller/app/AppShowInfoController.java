@@ -51,6 +51,8 @@ import com.yyhz.utils.RongCloudMethodUtil;
 import com.yyhz.utils.UUIDUtil;
 import com.yyhz.utils.stream.config.Configurations;
 
+import net.sf.json.JSONObject;
+
 @Controller
 public class AppShowInfoController extends BaseController {
 	private final Logger logger = LoggerFactory.getLogger(AppShowInfoController.class);
@@ -669,7 +671,8 @@ public class AppShowInfoController extends BaseController {
 					ext.put("creater", showInfo.getCreater());
 					//Object resp = EasemobUtil.sendShowMessage(showCreaterInfo.getId(), message, ext);
 					String[] targetIds = {showCreaterInfo.getId()};
-					RongCloudMethodUtil.privateMessage("show",message,  targetIds, null);
+					JSONObject json = JSONObject.fromObject(ext);
+					RongCloudMethodUtil.privateMessage("show",message,  targetIds, json.toString());
 					logger.debug("---------------------- send message resp -----------------------------------");
 					//logger.debug(resp.toString());
 				}
@@ -685,7 +688,9 @@ public class AppShowInfoController extends BaseController {
 					ext.put("creater", showInfo.getCreater());
 					//Object resp = EasemobUtil.sendShowMessage(toUserId, message, ext);
 					String[] targetIds = {toUserId};
-					RongCloudMethodUtil.privateMessage("show",message,  targetIds, null);
+					JSONObject json = JSONObject.fromObject(ext);
+					
+					RongCloudMethodUtil.privateMessage("show",message,  targetIds, json.toString());
 					logger.debug("---------------------- send message resp -----------------------------------");
 					//logger.debug(resp.toString());
 				}
@@ -735,7 +740,8 @@ public class AppShowInfoController extends BaseController {
 						ext.put("creater", showInfo.getCreater());
 						//Object resp = EasemobUtil.sendShowMessage(showInfo.getCreater(), message, ext);
 						String[] targetIds = {showInfo.getCreater()};
-						RongCloudMethodUtil.privateMessage("show",message,  targetIds, null);
+						JSONObject json = JSONObject.fromObject(ext);
+						RongCloudMethodUtil.privateMessage("show",message,  targetIds, json.toString());
 						logger.debug("---------------------- send message resp -----------------------------------");
 						//logger.debug(resp.toString());
 					}
@@ -1264,18 +1270,20 @@ public class AppShowInfoController extends BaseController {
 		pageInfo.setPage(page);
 		pageInfo.setPageSize(pageSize);
 		AudioInfo info = new AudioInfo();
-		info.setName(name);
-		audioInfoService.selectAll(info, pageInfo,"selectAllSummary");
-		
-		/*Map<String,Object> rowsMap = new HashMap<String,Object>();
+		info.setAudioName(name);
+		audioInfoService.selectAll(info, pageInfo);
+		for(AudioInfo temp:pageInfo.getRows()){
+			temp.setDownloadUrl(Configurations.buildDownloadUrl(temp.getDownloadUrl()));
+		}
+		Map<String,Object> rowsMap = new HashMap<String,Object>();
 		rowsMap.put("rows", pageInfo.getRows());
 		rowsMap.put("total", pageInfo.getTotal());
 		rowsMap.put("page", page);
-		rowsMap.put("pageSize", pageSize);*/
+		rowsMap.put("pageSize", pageSize);
 		resultMap.put("msg", "操作成功!");
 		resultMap.put("result", 1);
-		//resultMap.put("data", rowsMap);
-		resultMap.put("data", pageInfo);
+		resultMap.put("data", rowsMap);
+		//resultMap.put("data", pageInfo);
 		return resultMap;
 	}
 }

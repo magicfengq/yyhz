@@ -46,6 +46,8 @@ import com.yyhz.utils.RongCloudMethodUtil;
 import com.yyhz.utils.UUIDUtil;
 import com.yyhz.utils.stream.config.Configurations;
 
+import net.sf.json.JSONObject;
+
 @RequestMapping(value = "api")
 @Controller
 public class AppMyController extends BaseController {
@@ -768,19 +770,21 @@ public class AppMyController extends BaseController {
 			
 			String message = String.format("您报名的“%s”通告%s。[点击查看]", StringUtils.trimToEmpty(announceInfo.getTitle()), checkMessage);
 			
-			/*Map<String, Object> ext = new HashMap<String, Object>();
+			Map<String, Object> ext = new HashMap<String, Object>();
 			ext.put("fromType", "annouceNotify");
 			ext.put("atid", announceInfo.getId());
 			ext.put("type", announceInfo.getType());
 			ext.put("publicType", StringUtils.trimToEmpty(announceInfo.getPublicTypeNames()));
 
-			Object resp = EasemobUtil.sendAnnounceMessage(enroll.getActorId(), message, ext);
-			*/
+			//Object resp = EasemobUtil.sendAnnounceMessage(enroll.getActorId(), message, ext);
+			
 			logger.debug("---------------------- send message resp -----------------------------------");
 			//logger.debug(resp.toString());
 			
 			String[] targetIds = {announceInfo.getCreater()};
-			RongCloudMethodUtil.privateMessage("announce",message,  targetIds, null);
+
+			JSONObject json = JSONObject.fromObject(ext);
+			RongCloudMethodUtil.privateMessage("announce",message,  targetIds, json.toString());
 
 		}else {
 			this.writeJsonObject(response, AppRetCode.ERROR, "服务器错误！", null);
@@ -891,15 +895,17 @@ public class AppMyController extends BaseController {
 				message = String.format("“%s”对您报名参与的“%s”通告进行了评价。[点击查看] ", createrName, StringUtils.trimToEmpty(annInfo.getTitle()));
 			}
 			
-			/*Map<String, Object> ext = new HashMap<String, Object>();
+			Map<String, Object> ext = new HashMap<String, Object>();
 			ext.put("fromType", "annouceCommentNotify");
 			ext.put("actorId", req.getActorId());
 			ext.put("type", req.getType());
-			Object resp = EasemobUtil.sendAnnounceMessage(req.getActorId(), message, ext);*/
+			//Object resp = EasemobUtil.sendAnnounceMessage(req.getActorId(), message, ext);
 			logger.debug("---------------------- send message resp -----------------------------------");
 			//logger.debug(resp.toString());
 			String[] targetIds = {req.getActorId()};
-			RongCloudMethodUtil.privateMessage("announce",message,  targetIds, null);
+
+			JSONObject json = JSONObject.fromObject(ext);
+			RongCloudMethodUtil.privateMessage("announce",message,  targetIds, json.toString());
 
 		}else {
 			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "插入评价失败", null);			

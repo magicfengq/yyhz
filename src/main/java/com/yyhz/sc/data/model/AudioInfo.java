@@ -1,6 +1,7 @@
 package com.yyhz.sc.data.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import com.yyhz.sc.base.entity.BaseEntity;
 
@@ -16,9 +17,10 @@ import com.yyhz.sc.base.entity.BaseEntity;
 public class AudioInfo extends BaseEntity implements Serializable {
 	private java.lang.String id; // id
 	private java.lang.String uuid; // uuid
-	private java.lang.String name; // name
+	private java.lang.String audioName; // name
 	private java.lang.Integer status; // name
-	private String audioUrl;
+	private java.lang.String downloadUrl;
+	private Date createTime; // 创建时间
 	/**
      * 获取id属性
      *
@@ -53,30 +55,13 @@ public class AudioInfo extends BaseEntity implements Serializable {
 	public void setUuid(java.lang.String uuid) {
 		this.uuid = uuid;
 	}
-	/**
-     * 获取name属性
-     *
-     * @return name
-     */
-	public java.lang.String getName() {
-		return name;
-	}
 	
-	/**
-	 * 设置name属性
-	 *
-	 * @param name
-	 */
-	public void setName(java.lang.String name) {
-		this.name = name;
+	public String getDownloadUrl() {
+		return downloadUrl;
 	}
 
-	public String getAudioUrl() {
-		return audioUrl;
-	}
-
-	public void setAudioUrl(String audioUrl) {
-		this.audioUrl = audioUrl;
+	public void setDownloadUrl(String downloadUrl) {
+		this.downloadUrl = downloadUrl;
 	}
 
 	public java.lang.Integer getStatus() {
@@ -85,5 +70,22 @@ public class AudioInfo extends BaseEntity implements Serializable {
 
 	public void setStatus(java.lang.Integer status) {
 		this.status = status;
+	}
+
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public java.lang.String getAudioName() {
+		return audioName;
+	}
+
+	public void setAudioName(java.lang.String audioName) {
+		this.audioName = audioName;
 	}
 }
