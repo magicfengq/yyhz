@@ -103,13 +103,7 @@ public class AudioInfo extends BaseEntity implements Serializable {
 		this.duration = duration;
 	}
 
-	public java.lang.String getSingername() {
-		return singerName;
-	}
-
-	public void setSingername(java.lang.String singerName) {
-		this.singerName = singerName;
-	}
+	
 
 	public java.lang.String getSoneName() {
 		return soneName;
@@ -125,5 +119,13 @@ public class AudioInfo extends BaseEntity implements Serializable {
 
 	public void setFilePath(java.lang.String filePath) {
 		this.filePath = filePath;
+	}
+
+	public java.lang.String getSingerName() {
+		return singerName;
+	}
+
+	public void setSingerName(java.lang.String singerName) {
+		this.singerName = singerName;
 	}
 }
