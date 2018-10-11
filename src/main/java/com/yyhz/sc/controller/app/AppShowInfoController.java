@@ -1273,7 +1273,8 @@ public class AppShowInfoController extends BaseController {
 		info.setAudioName(name);
 		audioInfoService.selectAll(info, pageInfo);
 		for(AudioInfo temp:pageInfo.getRows()){
-			temp.setDownloadUrl(Configurations.buildDownloadUrl(temp.getDownloadUrl()));
+			temp.setFilePath(Configurations.buildDownloadUrl(temp.getDownloadUrl()));
+			temp.setSoneName(temp.getAudioName());
 		}
 		Map<String,Object> rowsMap = new HashMap<String,Object>();
 		rowsMap.put("rows", pageInfo.getRows());

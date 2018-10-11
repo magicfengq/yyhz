@@ -108,6 +108,8 @@ div#rMenu {
 			<thead>
 				<tr>
 					<th data-options="field:'audioName',align:'center',sortable:true" style="width: 15%;">音频名称</th>
+					<th data-options="field:'singerName',align:'center',sortable:true" style="width: 15%;">演唱者</th>
+					<th data-options="field:'duration',align:'center',sortable:true" style="width: 15%;">时长(毫秒)</th>
 					<th data-options="field:'createTime',align:'center',sortable:true" style="width: 20%;">创建时间</th>
 					
 				</tr>
@@ -124,6 +126,14 @@ div#rMenu {
 					<input id="audioNameLabel" name="audioName" style="width: 200px" class="easyui-textbox" data-options="required:true,validType:'length[1,100]'"/>
 					<input type="hidden" id="idLabel" name="id" />
 					<input type="hidden" id="operType" name="operType" />
+				</div>
+				<div class="fitem">
+					<label style="width: 70px;"><font color="red">*</font>演唱者:</label>
+					<input id="singernameLabel" name="singerName" style="width: 200px" class="easyui-textbox" data-options="required:true,validType:'length[1,100]'"/>
+				</div>
+				<div class="fitem">
+					<label style="width: 70px;"><font color="red">*</font>时长(毫秒):</label>
+					<input id="durationLabel" name="duration" style="width: 200px" class="easyui-textbox" data-options="required:true,validType:'length[1,100]'"/>
 				</div>
 				<div class="fitem">
 					<label style="width: 70px;"><font color="red">*</font>音频文件:</label>
@@ -147,6 +157,14 @@ div#rMenu {
 				<div class="fitem">
 					<label style="width: 70px;"><font color="red">*</font>音频名称:</label>
 					<input id="nameLabel" name="audioName" style="width: 200px" class="easyui-textbox" readonly="true"/>
+				</div>
+				<div class="fitem">
+					<label style="width: 70px;"><font color="red">*</font>演唱者:</label>
+					<input id="singernameLabel" name="singerName" style="width: 200px" class="easyui-textbox" readonly="true"/>
+				</div>
+				<div class="fitem">
+					<label style="width: 70px;"><font color="red">*</font>时长(毫秒):</label>
+					<input id="durationLabel" name="duration" style="width: 200px" class="easyui-textbox" readonly="true"/>
 				</div>
 				<div class="fitem">
 					<audio id="audioUrl" name="audio" src="" controls="controls" width="30px"></audio>

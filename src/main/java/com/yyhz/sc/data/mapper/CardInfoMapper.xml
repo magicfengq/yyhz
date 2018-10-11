@@ -159,6 +159,7 @@
 			<if test="type!=null">
 				and type=#{type} 
 			</if>
+			and status=0
 	   	</where>   
 	</select>
 

@@ -273,7 +273,7 @@ public class AppIndexController extends BaseController {
 		if(type > 0) {
 			condition.setType(type);			
 		}
-		
+		condition.setStatus(0); // 状态 0正常；1已删除；
 		List<CardInfo> cardList = cardInfoService.selectAll(condition, "selectCityList");
 		Map<String, Object> ret = new HashMap<String, Object>();
 		List<Map<String, Object>> cityList = new ArrayList<Map<String, Object>>();
