@@ -178,7 +178,7 @@ div#rMenu {
 <script type="text/javascript" src="js/stream/js/stream-upload-util.js"></script>
 <script type="text/javascript">
 	var index;
-	var stream = singleFileUpload('version',function(file){
+	var stream = singleFileUpload('audio',function(file){
 		var inputs = ''; 
 	    for(var prop in file){
 		  var value = file[prop];
