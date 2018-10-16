@@ -9,7 +9,7 @@
 <META HTTP-EQUIV="pragma" CONTENT="no-cache">
 <META HTTP-EQUIV="cache-control" CONTENT="no-cache">
 <META HTTP-EQUIV="cache-control" CONTENT="no-store">
-<title>演艺互助管理系统</title>
+<title>名角APP管理系统</title>
 <%@ include file="/WEB-INF/views/common/style.jsp"%>
 <script type="text/javascript">
 	var tabPanels = [];

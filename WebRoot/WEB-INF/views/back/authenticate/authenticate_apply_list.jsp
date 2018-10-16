@@ -74,7 +74,7 @@
 		return '<a href="javascript:void(0);" onclick="toView(\'' + row.id + '\');">查看</a>&nbsp;' + 
 		       '<a href="javascript:void(0);" onclick="showPassDialog(\'' + row.id + '\',\'' + row.actorId + '\',' + row.checkStatus + ');">通过</a>&nbsp;' + 
 		       '<a href="javascript:void(0);" onclick="showRefuseDialog(\'' + row.id + '\',\'' + row.actorId + '\',' + row.checkStatus + ');">拒绝</a>&nbsp;';
-	}
+	}				
 	
 	function toView(id){
 		window.parent.addTabPanel('认证申请详情','system/authenticateApplyDetail.do?id=' +id);
@@ -91,7 +91,7 @@
 	function showPassDialog(id,actorId,checkStatus){
 		$('#passFm').form('clear');
 		$('#refuseFm').form('clear');
-		$('#userCurrentLevelLabel').combobox('select', 1);
+		//$('#userCurrentLevelLabel').combobox('select', 1);
     	$('#passDlg').dialog('open').dialog('setTitle', '审核通过');
     	$('#idLabel').val(id);
     	$('#checkStatusLabel').val(checkStatus);
@@ -125,7 +125,7 @@
     function pass(){
     	$.ajax({
 			url:"system/authenticateAuditPass.do",
-			data:{userCurrentLevel:$('#userCurrentLevelLabel').combobox('getValue'),id:$('#idLabel').val(),actorId:$('#actorIdLabel').val()},		
+			data:{id:$('#idLabel').val(),actorId:$('#actorIdLabel').val()},		
 			type:'POST',
 			dataType:'json',
 			success:function(data){
@@ -257,18 +257,18 @@ div#rMenu {
 		data-options="iconCls:'icon-save',resizable:true,modal:true"
 		style="padding:10px 20px;" closed="true"
 		buttons="#dlg-buttons">
-		<div class="ftitle">请选择用户的认证级别</div>
+		<div class="ftitle">请确认是否通过？</div>
 		<form id="passFm" name="passFm" method="post">
 			<input type="hidden" name="id" id="idLabel"/>
 			<input type="hidden" name="actorId" id="actorIdLabel"/>
 			<input type="hidden" name="checkStatus" id="checkStatusLabel"/>
-			<div class="fitem">
+			<!--<div class="fitem">
 				<label><font color="red">*</font>认证级别:</label>
 				<select id="userCurrentLevelLabel" name="userCurrentLevel" class="easyui-combobox" style="width:100px;" 
 							data-options="panelHeight:'auto',editable:false">
 							<option value="1" selected="selected">实名认证</option>
-							<option value="2">资历认证</option>
-						</select>
+							 <option value="2">资历认证</option> 
+						</select>-->
 			</div>
 		</form>
 	</div>
