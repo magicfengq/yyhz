@@ -91,7 +91,7 @@
 			</tr>
 		</table>
 	</div>
-	<div data-options="region:'west',split:true" title="演艺互助后台管理系统"
+	<div data-options="region:'west',split:true" title="名角APP后台管理系统"
 		style="width: 200px; overflow: auto;">
 		<ul id="tree" class="ztree"></ul>
 	</div>
@@ -101,7 +101,7 @@
 			cellpadding="0">
 			<tr>
 				<td align="center" style="vertical-align: middle;">Copyright &copy; 2017 
-					<a href="javascript:void(0);" target="_blank">演艺互助</a> All Rights Reserved
+					<a href="javascript:void(0);" target="_blank">名角APP</a> All Rights Reserved
 				</td>
 			</tr>
 		</table>

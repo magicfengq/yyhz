@@ -13,8 +13,8 @@ import com.yyhz.sc.base.entity.BaseEntity;
  @SuppressWarnings("serial")
 public class CardInfo extends BaseEntity implements Serializable {
 	private java.lang.String id; // 主键
-	private java.lang.Integer type; // 1主持/模特；2设备/服装；3策划/创意；4婚礼/派对
-	private java.lang.String cardName; // 主持/模特名称；设备/服装主题;
+	private java.lang.Integer type; // 1艺人；2租借；3策划/创意；4婚礼/派对
+	private java.lang.String cardName; // 艺人名称；租借主题;
 	private java.lang.Integer sex; // 性别：1男 2女
 	private java.lang.String cardRoleId; // 角色类型id；关联card_role表(没有使用)
 	private java.lang.String detailRole; // 具体角色，直接填内容
@@ -22,7 +22,7 @@ public class CardInfo extends BaseEntity implements Serializable {
 	private java.util.Date birthDate; // 出生日期
 	private java.lang.String city; // 所在城市
 	private java.lang.String actCities; // 活动范围；租售范围；(多个地点用','分隔)
-	private java.lang.Double price; // 主持/模特每场费用(单位：元)；设备服装造价；
+	private java.lang.Double price; // 艺人每场费用(单位：元)；租借造价；
 	private java.lang.String height; // 身高
 	private java.lang.String weight; // 体重
 	private java.lang.String shoesSize; // 鞋码
@@ -148,7 +148,7 @@ public class CardInfo extends BaseEntity implements Serializable {
 	}
 	
 	/**
-     * 获取1主持/模特；2设备/服装；3策划/创意；4婚礼/派对属性
+     * 获取1艺人；2租借；3策划/创意；4婚礼/派对属性
      *
      * @return type
      */
@@ -157,7 +157,7 @@ public class CardInfo extends BaseEntity implements Serializable {
 	}
 	
 	/**
-	 * 设置1主持/模特；2设备/服装；3策划/创意；4婚礼/派对属性
+	 * 设置1艺人；2租借；3策划/创意；4婚礼/派对属性
 	 *
 	 * @param type
 	 */
@@ -166,7 +166,7 @@ public class CardInfo extends BaseEntity implements Serializable {
 	}
 	
 	/**
-     * 获取主持/模特名称；设备/服装主题;属性
+     * 获取艺人名称；租借主题;属性
      *
      * @return name
      */
@@ -175,7 +175,7 @@ public class CardInfo extends BaseEntity implements Serializable {
 	}
 	
 	/**
-	 * 设置主持/模特名称；设备/服装主题;属性
+	 * 设置艺人名称；租借主题;属性
 	 *
 	 * @param name
 	 */
@@ -310,7 +310,7 @@ public class CardInfo extends BaseEntity implements Serializable {
 	}
 	
 	/**
-     * 获取主持/模特每场费用(单位：元)；设备服装造价；属性
+     * 获取艺人每场费用(单位：元)；租借造价；属性
      *
      * @return price
      */
@@ -319,7 +319,7 @@ public class CardInfo extends BaseEntity implements Serializable {
 	}
 	
 	/**
-	 * 设置主持/模特每场费用(单位：元)；设备服装造价；属性
+	 * 设置艺人每场费用(单位：元)；租借造价；属性
 	 *
 	 * @param price
 	 */

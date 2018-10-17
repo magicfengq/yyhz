@@ -265,7 +265,7 @@ public class AppIndexController extends BaseController {
 	public void getCardCityList(HttpServletRequest request, HttpServletResponse response, Integer type) {
 		
 		if(type == null || type < 0) {
-			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "type参数错误。0全部；1主持/模特；2设备/服装；3策划/创意；4婚礼/派对", null);
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "type参数错误。0全部；1艺人；2租借；3策划/创意；4婚礼/派对", null);
 			return;
 		}
 
@@ -315,7 +315,7 @@ public class AppIndexController extends BaseController {
 	public void getAnnouncementCityList(HttpServletRequest request, HttpServletResponse response, Integer type) {
 		
 		if(type == null || type < 0) {
-			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "type参数错误。0全部；1主持/模特；2设备/服装；3策划/创意；4婚礼/派对", null);
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "type参数错误。0全部；1艺人；2租借；3策划/创意；4婚礼/派对", null);
 			return;
 		}
 

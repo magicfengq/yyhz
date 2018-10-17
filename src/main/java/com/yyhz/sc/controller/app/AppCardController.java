@@ -91,7 +91,7 @@ public class AppCardController extends BaseController {
 			reqInfo.setBirthDate(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getBirthDateStr()), DateUtils.DATE_DEFAULT_FORMAT));
 		}
 		
-		reqInfo.setType(1); // 1主持/模特；2设备/服装；3策划/创意；4婚礼/派对
+		reqInfo.setType(1); // 1艺人；2租借；3策划/创意；4婚礼/派对
 		
 		if(actorInfoService.selectById(reqInfo.getCreater()) == null) {
 			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "创建者不存在，请检查creater参数", null);
@@ -154,7 +154,7 @@ public class AppCardController extends BaseController {
 			return;
 		}	
 
-		reqInfo.setType(2); // 1主持/模特；2设备/服装；3策划/创意；4婚礼/派对
+		reqInfo.setType(2); // 1艺人；2租借；3策划/创意；4婚礼/派对
 		
 		if(actorInfoService.selectById(reqInfo.getCreater()) == null) {
 			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "创建者不存在，请检查creater参数", null);
@@ -207,7 +207,7 @@ public class AppCardController extends BaseController {
 			return;
 		}	
 		
-		reqInfo.setType(3); // 1主持/模特；2设备/服装；3策划/创意；4婚礼/派对
+		reqInfo.setType(3); // 1艺人；2租借；3策划/创意；4婚礼/派对
 		
 		if(actorInfoService.selectById(reqInfo.getCreater()) == null) {
 			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "创建者不存在，请检查creater参数", null);
@@ -260,7 +260,7 @@ public class AppCardController extends BaseController {
 			return;
 		}	
 		
-		reqInfo.setType(4); // 1主持/模特；2设备/服装；3策划/创意；4婚礼/派对
+		reqInfo.setType(4); // 1艺人；2租借；3策划/创意；4婚礼/派对
 		
 		if(actorInfoService.selectById(reqInfo.getCreater()) == null) {
 			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "创建者不存在，请检查creater参数", null);
@@ -316,7 +316,7 @@ public class AppCardController extends BaseController {
 		CardInfo condition = new CardInfo();
 		condition.setStatus(0); // 状态 0正常；1已删除；
 		
-		if(req.getType() != null && req.getType() > 0) // 1主持/模特；2设备/服装；3策划/创意；4婚礼/派对;其他查询全部结果
+		if(req.getType() != null && req.getType() > 0) // 1艺人；2租借；3策划/创意；4婚礼/派对;其他查询全部结果
 		{
 			condition.setType(req.getType());
 		}
@@ -441,11 +441,11 @@ public class AppCardController extends BaseController {
 		
 		CardInfo condition = new CardInfo();
 		
-		// 1主持/模特；2设备/服装；3策划/创意；4婚礼/派对;其他查询全部结果
-		if(StringUtils.contains("主持/模特", keyword)) {
+		// 1艺人；2租借；3策划/创意；4婚礼/派对;其他查询全部结果
+		if(StringUtils.contains("艺人", keyword)) {
 			condition.setType(1);
 		}
-		if(StringUtils.contains("设备/服装", keyword)) {
+		if(StringUtils.contains("租借", keyword)) {
 			condition.setType(2);
 		}
 

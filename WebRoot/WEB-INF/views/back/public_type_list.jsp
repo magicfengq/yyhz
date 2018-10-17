@@ -34,9 +34,9 @@
 	
 	function formatType(value,row){
 		if(row.type == 1){
-			return '主持/模特';
+			return '艺人';
 		}else if(row.type == 2){
-			return '设备/服装';
+			return '租借';
 		}else if(row.type == 3){
 			return '策划/创意';
 		}else if(row.type == 4){
@@ -205,7 +205,7 @@ div#rMenu {
 	</div>
 	<div id="type-tabs" class="easyui-tabs" style="width:700px;height:'auto'">
 		
-		<div title="主持/模特" style="padding: 10px;width:100%;height:100%;">
+		<div title="艺人" style="padding: 10px;width:100%;height:100%;">
 			<table id="dg1" class="easyui-datagrid" style="width:100%;height:100%"
 				data-options="url:'system/publicTypeAjaxPage.do?type=1', iconCls:'icon-save', 
 				rownumbers:true, pagination:true, singleSelect:true,idField:'id',onLoadSuccess:renderUI">
@@ -219,7 +219,7 @@ div#rMenu {
 				</thead>
 			</table>
 		</div>
-		<div title="设备/服装" style="padding: 10px;width:100%;height:100%;">
+		<div title="租借" style="padding: 10px;width:100%;height:100%;">
 			<table id="dg2" class="easyui-datagrid" style="width:100%;height:100%"
 				data-options="url:'system/publicTypeAjaxPage.do?type=2', iconCls:'icon-save', 
 				rownumbers:true, pagination:true, singleSelect:true,idField:'id',onLoadSuccess:renderUI">
@@ -234,7 +234,7 @@ div#rMenu {
 			</table>
 		</div>
 			
-		<div title="策划/创意" style="padding: 10px;width:100%;height:100%;">
+		<!-- <div title="策划/创意" style="padding: 10px;width:100%;height:100%;">
 			<table id="dg3" class="easyui-datagrid" style="width:100%;height:100%"
 				data-options="url:'system/publicTypeAjaxPage.do?type=3', iconCls:'icon-save', 
 				rownumbers:true, pagination:true, singleSelect:true,idField:'id',onLoadSuccess:renderUI">
@@ -262,7 +262,7 @@ div#rMenu {
 					</tr>
 				</thead>
 			</table>
-		</div>
+		</div> -->
 		<div title="秀一秀" style="padding: 10px;width:100%;height:100%;">
 			<table id="dg5" class="easyui-datagrid" style="width:100%;height:100%"
 				data-options="url:'system/publicTypeAjaxPage.do?type=5', iconCls:'icon-save', 
@@ -277,7 +277,7 @@ div#rMenu {
 				</thead>
 			</table>
 		</div>
-		<div title="场地" style="padding: 10px;width:100%;height:100%;">
+		<!-- <div title="场地" style="padding: 10px;width:100%;height:100%;">
 			<table id="dg6" class="easyui-datagrid" style="width:100%;height:100%"
 				data-options="url:'system/publicTypeAjaxPage.do?type=6', iconCls:'icon-save', 
 				rownumbers:true, pagination:true, singleSelect:true,idField:'id',onLoadSuccess:renderUI">
@@ -290,7 +290,7 @@ div#rMenu {
 					</tr>
 				</thead>
 			</table>
-		</div>
+		</div> -->
 	</div>
 		<div id="dlg" class="easyui-dialog"
 		data-options="iconCls:'icon-save',resizable:true,modal:true"
@@ -303,8 +303,8 @@ div#rMenu {
 				<select readOnly="readOnly" id="typeLabel" name="type" class="easyui-combobox" style="width:100px;" 
 					data-options="panelHeight:'auto',editable:false"
 					>
-					<option value="1" selected="selected">主持/模特</option>
-					<option value="2" selected="selected">设备/服装</option>
+					<option value="1" selected="selected">艺人</option>
+					<option value="2" selected="selected">租借</option>
 					<option value="3" selected="selected">策划/创意</option>
 					<option value="4" selected="selected">婚礼/派对</option>
 					<option value="5" selected="selected">秀一秀</option>
@@ -336,8 +336,8 @@ div#rMenu {
 							<select id="typeInput" class="easyui-combobox" style="width:100px;" 
 								data-options="panelHeight:'auto',editable:false">
 								<option value="" selected="selected">全部</option>
-								<option value="1">主持/模特</option>
-								<option value="2">设备/服装</option>
+								<option value="1">艺人</option>
+								<option value="2">租借</option>
 								<option value="3">策划/创意</option>
 								<option value="4">婚礼/派对</option>
 								<option value="5">秀一秀</option>
@@ -377,8 +377,8 @@ div#rMenu {
 					<select id="typeLabel" name="type" class="easyui-combobox" style="width:100px;" 
 						data-options="panelHeight:'auto',editable:false"
 						>
-						<option value="1" selected="selected">主持/模特</option>
-						<option value="2" selected="selected">设备/服装</option>
+						<option value="1" selected="selected">艺人</option>
+						<option value="2" selected="selected">租借</option>
 						<option value="3" selected="selected">策划/创意</option>
 						<option value="4" selected="selected">婚礼/派对</option>
 						<option value="5" selected="selected">秀一秀</option>

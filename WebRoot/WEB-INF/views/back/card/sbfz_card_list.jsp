@@ -12,7 +12,7 @@
 <head>
 <base href="<%=basePath%>">
 
-<title>设备服装卡片列表</title>
+<title>租借卡片列表</title>
 
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
@@ -121,7 +121,7 @@ div#rMenu {
 				+ row.id + '\');">删除</a>';
 	}
 	function cardTypeFormater(value,row){
-		return "设备/服装";
+		return "租借";
 	}
 	function timeFormater(value,row){
 		if (value == undefined) {
@@ -167,7 +167,7 @@ div#rMenu {
 		});
 	}
 	function edit(id){
-		window.parent.addTabPanel('设备/服装','back/cardListDetail.do?type=2&id=' +id);
+		window.parent.addTabPanel('租借','back/cardListDetail.do?type=2&id=' +id);
 	}
 	function del(id) {
 		$.messager.confirm('提示', '你确定要删除吗?', function(r) {

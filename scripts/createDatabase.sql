@@ -168,12 +168,12 @@ CREATE TABLE IF NOT EXISTS `annouce_enroll` (
 DROP TABLE IF EXISTS `announce_info`;
 CREATE TABLE IF NOT EXISTS `announce_info` (
   `id` varchar(32) NOT NULL,
-  `type` int(2) NOT NULL COMMENT '1主持/模特；2设备/服装；3策划/创意；4婚礼/派对',
+  `type` int(2) NOT NULL COMMENT '1艺人；2租借；3策划/创意；4婚礼/派对',
   `publicType` varchar(32) DEFAULT NULL COMMENT '通告类型/发布类型',
   `title` varchar(500) NOT NULL COMMENT '通告标题',
   `name` varchar(500) DEFAULT NULL COMMENT '艺人类型；需要装备；策划项目；定制内容；',
   `showTime` datetime NOT NULL COMMENT '活动时间；使用时间；项目时间；定制时间；',
-  `entranceTime` datetime DEFAULT NULL COMMENT '主持模特的进场时间',
+  `entranceTime` datetime DEFAULT NULL COMMENT '艺人的进场时间',
   `note` varchar(500) DEFAULT NULL COMMENT '注意事项',
   `city` varchar(100) DEFAULT NULL COMMENT '活动城市；使用城市；所在城市',
   `address` varchar(500) DEFAULT NULL COMMENT '活动详址',
@@ -187,7 +187,7 @@ CREATE TABLE IF NOT EXISTS `announce_info` (
   `createTime` datetime NOT NULL COMMENT '创建时间',
   `enrollNum` int(11) DEFAULT '0' COMMENT '报名人数',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='通告信息表；有主持/模特；设备/服装；策划/创意；婚礼/派对四种';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='通告信息表；有艺人；租借；策划/创意；婚礼/派对四种';
 
 -- 正在导出表  yyhz.announce_info 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `announce_info` DISABLE KEYS */;
@@ -251,8 +251,8 @@ CREATE TABLE IF NOT EXISTS `card_announce_public_type` (
 DROP TABLE IF EXISTS `card_info`;
 CREATE TABLE IF NOT EXISTS `card_info` (
   `id` varchar(32) NOT NULL COMMENT '主键',
-  `type` int(2) NOT NULL COMMENT '1主持/模特；2设备/服装；3策划/创意；4婚礼/派对',
-  `cardName` varchar(200) DEFAULT NULL COMMENT '主持/模特名称；设备/服装主题;',
+  `type` int(2) NOT NULL COMMENT '1艺人；2租借；3策划/创意；4婚礼/派对',
+  `cardName` varchar(200) DEFAULT NULL COMMENT '艺人名称；租借主题;',
   `sex` int(2) DEFAULT NULL COMMENT '性别：0不限制 1男 2女',
   `cardRoleId` varchar(32) DEFAULT NULL COMMENT '角色类型id；关联role_info表',
   `detailRole` varchar(200) DEFAULT NULL COMMENT '具体角色，直接填内容',
@@ -260,7 +260,7 @@ CREATE TABLE IF NOT EXISTS `card_info` (
   `birthDate` datetime DEFAULT NULL COMMENT '出生日期',
   `city` varchar(100) DEFAULT NULL COMMENT '所在城市',
   `actCities` varchar(200) DEFAULT NULL COMMENT '活动范围；租售范围；(多个地点用'',''分隔)',
-  `price` double DEFAULT NULL COMMENT '主持/模特每场费用(单位：元)；设备服装造价；',
+  `price` double DEFAULT NULL COMMENT '艺人每场费用(单位：元)；租借造价；',
   `height` varchar(10) DEFAULT NULL COMMENT '身高',
   `weight` varchar(10) DEFAULT NULL COMMENT '体重',
   `shoesSize` varchar(20) DEFAULT NULL COMMENT '鞋码',
@@ -273,7 +273,7 @@ CREATE TABLE IF NOT EXISTS `card_info` (
   `createTime` datetime DEFAULT NULL COMMENT '创建时间',
   `status` int(2) DEFAULT '0' COMMENT '状态 0正常；1已删除；',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='卡片详情页，根据type分为1主持/模特；2设备/服装；3策划/创意；4婚礼/派对';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='卡片详情页，根据type分为1艺人；2租借；3策划/创意；4婚礼/派对';
 
 -- 正在导出表  yyhz.card_info 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `card_info` DISABLE KEYS */;
@@ -384,7 +384,7 @@ CREATE TABLE IF NOT EXISTS `message_info` (
 DROP TABLE IF EXISTS `public_type`;
 CREATE TABLE IF NOT EXISTS `public_type` (
   `id` varchar(32) NOT NULL DEFAULT '' COMMENT '主键',
-  `type` int(2) NOT NULL DEFAULT '1' COMMENT '角色类型 1主持/模特；2设备/服装；3策划/创意；4婚礼/派对；5秀一秀；6场地类型',
+  `type` int(2) NOT NULL DEFAULT '1' COMMENT '角色类型 1艺人；2租借；3策划/创意；4婚礼/派对；5秀一秀；6场地类型',
   `name` varchar(30) NOT NULL COMMENT '类型名称',
   `status` int(2) NOT NULL DEFAULT '0' COMMENT '0正常；1已删除',
   PRIMARY KEY (`id`)
@@ -4146,14 +4146,14 @@ INSERT INTO `system_menu_info` (`id`, `name`, `pid`, `menuUrl`, `level`, `orderL
 	('0e687ba4ae0e4eb8b047f1f13d40d14e', '婚礼/派对', '0', '', NULL, 25, ''),
 	('1043649e361d4851a984f717847898af', '安卓版本管理', 'fcb957d4594545de993ebbcb8c2bdb0c', 'system/versionInfoList.do?type=1', NULL, 1, ''),
 	('1934fade33b64bfe8ac5d4abe9d4e806', '审核列表', '28d27c94628e45a191b67746e85b32b1', 'system/authenticateApplyList.do', NULL, 1, ''),
-	('1f4522d2856d4930affc758db5aa8c4d', '设备/服装卡片列表', '9fc02582269c41ca8820c022ccc2895c', 'back/sbfzCardList.do', NULL, 1, ''),
+	('1f4522d2856d4930affc758db5aa8c4d', '租借卡片列表', '9fc02582269c41ca8820c022ccc2895c', 'back/sbfzCardList.do', NULL, 1, ''),
 	('28d27c94628e45a191b67746e85b32b1', '认证审核', '0', '', NULL, 20, 'fa-desktop'),
 	('36377c258b5e4d3090fd74a00cf4f083', '秀一秀管理', 'ec2c51a132cb47d9a2447403af5ebbee', 'system/showInfoList.do', NULL, 1, ''),
 	('3712df45a93c404685d3e7854feb6298', '系统管理', '0', ' ', 1, 16, 'fa-desktop'),
 	('40e2120db418464da3f6481766fdea86', '系统用户管理', '3712df45a93c404685d3e7854feb6298', 'system/systemUserList.do', NULL, 3, ''),
-	('4bafb4275f064c878a1e1a7ae33a70f0', '主持/模特-通告列表', 'f7b8750afb8848c6a176dc14a9b52d9d', 'back/zcmtAnnounceList.do', NULL, 2, ''),
+	('4bafb4275f064c878a1e1a7ae33a70f0', '艺人-通告列表', 'f7b8750afb8848c6a176dc14a9b52d9d', 'back/zcmtAnnounceList.do', NULL, 2, ''),
 	('5516f98c65c446e1b2f423fa813b1ab9', '注册协议', '96598125686a499ebf18d437a5f95717', 'back/serviceInfoEdit.do?type=1', NULL, 2, ''),
-	('61aeb81dce6c4d65adb5c0a89304a415', '主持/模特-卡片列表', 'f7b8750afb8848c6a176dc14a9b52d9d', 'back/zcmtCardList.do', NULL, 1, ''),
+	('61aeb81dce6c4d65adb5c0a89304a415', '艺人-卡片列表', 'f7b8750afb8848c6a176dc14a9b52d9d', 'back/zcmtCardList.do', NULL, 1, ''),
 	('6be05a0bc0834b588689979b0bef2aa0', '推荐列表', 'd3a2767c23804676818709165c499c34', 'back/siteRefereeList.do', NULL, 2, ''),
 	('6dc5047c66724cf68d67e4ef5a2bee1f', '分享内容', '96598125686a499ebf18d437a5f95717', 'back/serviceInfoEdit.do?type=4', NULL, 5, ''),
 	('70f01dc954934d96a03f8ab5d0f35606', '消息管理', 'ae5db75b1649415ab73f0c0f0248d93d', 'system/messageInfoList.do', NULL, 1, ''),
@@ -4165,20 +4165,20 @@ INSERT INTO `system_menu_info` (`id`, `name`, `pid`, `menuUrl`, `level`, `orderL
 	('91e5be1c328e4709ac8811b7cca42106', '场地列表', 'd3a2767c23804676818709165c499c34', 'back/siteList.do', NULL, 1, ''),
 	('95aad58f5bfa4954bce9c0e1901282c7', '发布类型管理', '04056751ce534f4085452796d653a7a6', 'system/publicTypeList.do', NULL, 2, ''),
 	('96598125686a499ebf18d437a5f95717', '后台管理', '0', '', NULL, 27, ''),
-	('9fc02582269c41ca8820c022ccc2895c', '设备/服装', '0', '', NULL, 23, ''),
+	('9fc02582269c41ca8820c022ccc2895c', '租借', '0', '', NULL, 23, ''),
 	('aa2b665798c749d8887f203f18ae4452', '系统角色管理', '3712df45a93c404685d3e7854feb6298', 'system/systemRoleList.do', NULL, 2, '角色信息'),
 	('ad94945d0cb54ef5ac98d4f6b6bcbca7', '使用帮助', '96598125686a499ebf18d437a5f95717', 'back/serviceInfoEdit.do?type=2', NULL, 3, ''),
 	('ae5db75b1649415ab73f0c0f0248d93d', '消息管理', '0', '', NULL, 28, ''),
 	('c2c70b1b40e7468bb742512230b5f673', '婚礼/派对-卡片列表', '0e687ba4ae0e4eb8b047f1f13d40d14e', 'back/hlpdCardList.do', NULL, 1, ''),
 	('c75d7f116dba4662bf23c7144ed56ad2', '首页轮播图管理', '0', '', NULL, 1, ''),
 	('c76297a72d0c412fbe1d0bc757ba9139', '意见反馈', '0', '', NULL, 17, 'fa-desktop'),
-	('d3464f17c57c4cf1bd2330c827d35911', '设备/服装-通告列表', '9fc02582269c41ca8820c022ccc2895c', 'back/sbfzAnnounceList.do', NULL, 2, ''),
+	('d3464f17c57c4cf1bd2330c827d35911', '租借-通告列表', '9fc02582269c41ca8820c022ccc2895c', 'back/sbfzAnnounceList.do', NULL, 2, ''),
 	('d3a2767c23804676818709165c499c34', '场地管理', '0', '', NULL, 21, ''),
 	('e3a46633131e4aa1b06bad4668499385', '苹果版本管理', 'fcb957d4594545de993ebbcb8c2bdb0c', 'system/versionInfoList.do?type=2', NULL, 2, ''),
 	('e49d6788247a43e28b6c95c06f217eb8', '关于我们', '96598125686a499ebf18d437a5f95717', 'back/serviceInfoEdit.do?type=0', NULL, 1, ''),
 	('e66e520f4184495790ef43afc784d89b', '反馈列表', 'c76297a72d0c412fbe1d0bc757ba9139', 'back/feedbackList.do', NULL, 2, ''),
 	('ec2c51a132cb47d9a2447403af5ebbee', '秀一秀', '0', '', NULL, 26, ''),
-	('f7b8750afb8848c6a176dc14a9b52d9d', '主持/模特', '0', '', NULL, 22, 'fa-desktop'),
+	('f7b8750afb8848c6a176dc14a9b52d9d', '艺人', '0', '', NULL, 22, 'fa-desktop'),
 	('f82ec0a1146a457f98094af140f2c5e5', '演绎/庆典-通告列表', '75a89677552c4b0892c586a7dd1a6825', 'back/chcyAnnounceList.do', NULL, 2, ''),
 	('fcb957d4594545de993ebbcb8c2bdb0c', '版本管理', '0', '', NULL, 29, '');
 /*!40000 ALTER TABLE `system_menu_info` ENABLE KEYS */;
@@ -4209,14 +4209,14 @@ INSERT INTO `system_menu_info_copy` (`id`, `name`, `pid`, `menuUrl`, `level`, `o
 	('1043649e361d4851a984f717847898af', '安卓版本管理', 'fcb957d4594545de993ebbcb8c2bdb0c', 'system/versionInfoList.do?type=1', NULL, 1, ''),
 	('18015711bce6493db9cdf3bc3c2a6b42', '系统菜单管理', '3712df45a93c404685d3e7854feb6298', 'system/systemMenuList.do', 2, 1, ' '),
 	('1934fade33b64bfe8ac5d4abe9d4e806', '审核列表', '28d27c94628e45a191b67746e85b32b1', 'system/authenticateApplyList.do', NULL, 1, ''),
-	('1f4522d2856d4930affc758db5aa8c4d', '设备/服装卡片列表', '9fc02582269c41ca8820c022ccc2895c', 'back/sbfzCardList.do', NULL, 1, ''),
+	('1f4522d2856d4930affc758db5aa8c4d', '租借卡片列表', '9fc02582269c41ca8820c022ccc2895c', 'back/sbfzCardList.do', NULL, 1, ''),
 	('28d27c94628e45a191b67746e85b32b1', '认证审核', '0', '', NULL, 20, 'fa-desktop'),
 	('36377c258b5e4d3090fd74a00cf4f083', '秀一秀管理', 'ec2c51a132cb47d9a2447403af5ebbee', 'system/showInfoList.do', NULL, 1, ''),
 	('3712df45a93c404685d3e7854feb6298', '系统管理', '0', ' ', 1, 16, 'fa-desktop'),
 	('40e2120db418464da3f6481766fdea86', '系统用户管理', '3712df45a93c404685d3e7854feb6298', 'system/systemUserList.do', NULL, 3, ''),
-	('4bafb4275f064c878a1e1a7ae33a70f0', '主持/模特-通告列表', 'f7b8750afb8848c6a176dc14a9b52d9d', 'back/zcmtAnnounceList.do', NULL, 2, ''),
+	('4bafb4275f064c878a1e1a7ae33a70f0', '艺人-通告列表', 'f7b8750afb8848c6a176dc14a9b52d9d', 'back/zcmtAnnounceList.do', NULL, 2, ''),
 	('5516f98c65c446e1b2f423fa813b1ab9', '注册协议', '96598125686a499ebf18d437a5f95717', 'back/serviceInfoEdit.do?type=1', NULL, 2, ''),
-	('61aeb81dce6c4d65adb5c0a89304a415', '主持/模特-卡片列表', 'f7b8750afb8848c6a176dc14a9b52d9d', 'back/zcmtCardList.do', NULL, 1, ''),
+	('61aeb81dce6c4d65adb5c0a89304a415', '艺人-卡片列表', 'f7b8750afb8848c6a176dc14a9b52d9d', 'back/zcmtCardList.do', NULL, 1, ''),
 	('6be05a0bc0834b588689979b0bef2aa0', '推荐列表', 'd3a2767c23804676818709165c499c34', 'back/siteRefereeList.do', NULL, 2, ''),
 	('6dc5047c66724cf68d67e4ef5a2bee1f', '分享内容', '96598125686a499ebf18d437a5f95717', 'back/serviceInfoEdit.do?type=4', NULL, 5, ''),
 	('70f01dc954934d96a03f8ab5d0f35606', '消息管理', 'ae5db75b1649415ab73f0c0f0248d93d', 'system/messageInfoList.do', NULL, 1, ''),
@@ -4228,20 +4228,20 @@ INSERT INTO `system_menu_info_copy` (`id`, `name`, `pid`, `menuUrl`, `level`, `o
 	('91e5be1c328e4709ac8811b7cca42106', '场地列表', 'd3a2767c23804676818709165c499c34', 'back/siteList.do', NULL, 1, ''),
 	('95aad58f5bfa4954bce9c0e1901282c7', '发布类型管理', '04056751ce534f4085452796d653a7a6', 'system/publicTypeList.do', NULL, 2, ''),
 	('96598125686a499ebf18d437a5f95717', '后台管理', '0', '', NULL, 27, ''),
-	('9fc02582269c41ca8820c022ccc2895c', '设备/服装', '0', '', NULL, 23, ''),
+	('9fc02582269c41ca8820c022ccc2895c', '租借', '0', '', NULL, 23, ''),
 	('aa2b665798c749d8887f203f18ae4452', '系统角色管理', '3712df45a93c404685d3e7854feb6298', 'system/systemRoleList.do', NULL, 2, '角色信息'),
 	('ad94945d0cb54ef5ac98d4f6b6bcbca7', '使用帮助', '96598125686a499ebf18d437a5f95717', 'back/serviceInfoEdit.do?type=2', NULL, 3, ''),
 	('ae5db75b1649415ab73f0c0f0248d93d', '消息管理', '0', '', NULL, 28, ''),
 	('c2c70b1b40e7468bb742512230b5f673', '婚礼/派对-卡片列表', '0e687ba4ae0e4eb8b047f1f13d40d14e', 'back/hlpdCardList.do', NULL, 1, ''),
 	('c75d7f116dba4662bf23c7144ed56ad2', '首页轮播图管理', '0', '', NULL, 1, ''),
 	('c76297a72d0c412fbe1d0bc757ba9139', '意见反馈', '0', '', NULL, 17, 'fa-desktop'),
-	('d3464f17c57c4cf1bd2330c827d35911', '设备/服装-通告列表', '9fc02582269c41ca8820c022ccc2895c', 'back/sbfzAnnounceList.do', NULL, 2, ''),
+	('d3464f17c57c4cf1bd2330c827d35911', '租借-通告列表', '9fc02582269c41ca8820c022ccc2895c', 'back/sbfzAnnounceList.do', NULL, 2, ''),
 	('d3a2767c23804676818709165c499c34', '场地管理', '0', '', NULL, 21, ''),
 	('e3a46633131e4aa1b06bad4668499385', '苹果版本管理', 'fcb957d4594545de993ebbcb8c2bdb0c', 'system/versionInfoList.do?type=2', NULL, 2, ''),
 	('e49d6788247a43e28b6c95c06f217eb8', '关于我们', '96598125686a499ebf18d437a5f95717', 'back/serviceInfoEdit.do?type=0', NULL, 1, ''),
 	('e66e520f4184495790ef43afc784d89b', '反馈列表', 'c76297a72d0c412fbe1d0bc757ba9139', 'back/feedbackList.do', NULL, 2, ''),
 	('ec2c51a132cb47d9a2447403af5ebbee', '秀一秀', '0', '', NULL, 26, ''),
-	('f7b8750afb8848c6a176dc14a9b52d9d', '主持/模特', '0', '', NULL, 22, 'fa-desktop'),
+	('f7b8750afb8848c6a176dc14a9b52d9d', '艺人', '0', '', NULL, 22, 'fa-desktop'),
 	('f82ec0a1146a457f98094af140f2c5e5', '演绎/庆典-通告列表', '75a89677552c4b0892c586a7dd1a6825', 'back/chcyAnnounceList.do', NULL, 2, ''),
 	('fcb957d4594545de993ebbcb8c2bdb0c', '版本管理', '0', '', NULL, 29, '');
 /*!40000 ALTER TABLE `system_menu_info_copy` ENABLE KEYS */;

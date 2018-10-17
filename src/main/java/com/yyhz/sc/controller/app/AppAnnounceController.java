@@ -72,14 +72,14 @@ public class AppAnnounceController extends BaseController {
 	 * 
 	 * @Title: getPublicType
 	 * @Description: 获取通告卡片发布类型
-	 * @param type 查询类别 // 1主持/模特；2设备/服装；3策划/创意；4婚礼/派对;其他返回全部结果
+	 * @param type 查询类别 // 1艺人；2租借；3策划/创意；4婚礼/派对;其他返回全部结果
 	 * @return JSON
 	 * @author CrazyT
 	 * 
 	 */
 	@RequestMapping(value = "getPublicType")
 	public void getPublicType(HttpServletRequest request, HttpServletResponse response, Integer type) {
-		if(type == null) // 1主持/模特；2设备/服装；3策划/创意；4婚礼/派对;其他查询全部结果
+		if(type == null) // 1艺人；2租借；3策划/创意；4婚礼/派对;其他查询全部结果
 		{
 			writeJsonObject(response, AppRetCode.PARAM_ERROR, "参数type错误！", null);
 			return;
@@ -87,7 +87,7 @@ public class AppAnnounceController extends BaseController {
 
 		
 		PublicType condition = new PublicType();
-		if(type >= 0) // 1主持/模特；2设备/服装；3策划/创意；4婚礼/派对;其他查询全部结果
+		if(type >= 0) // 1艺人；2租借；3策划/创意；4婚礼/派对;其他查询全部结果
 		{
 			condition.setType(type);
 		}
@@ -121,7 +121,7 @@ public class AppAnnounceController extends BaseController {
 	 * 
 	 * @Title: getAnnouncementList
 	 * @Description: 获取通告列表
-	 * @param type 通告类别// 1主持/模特；2设备/服装；3策划/创意；4婚礼/派对;其他返回全部结果
+	 * @param type 通告类别// 1艺人；2租借；3策划/创意；4婚礼/派对;其他返回全部结果
 	 * @param page 分页查询的页码
 	 * @param pageSize 每页记录数
 	 * @return JSON
@@ -151,7 +151,7 @@ public class AppAnnounceController extends BaseController {
 		condition.setStatus(0); // 状态 0正常；1已删除；
 //		condition.setEnrollStatus(0);// 报名状态 0正常；1已关闭；
 		
-		if(req.getType() != null && req.getType() > 0) // 1主持/模特；2设备/服装；3策划/创意；4婚礼/派对;其他查询全部结果
+		if(req.getType() != null && req.getType() > 0) // 1艺人；2租借；3策划/创意；4婚礼/派对;其他查询全部结果
 		{
 			condition.setType(req.getType());
 		}
@@ -264,7 +264,7 @@ public class AppAnnounceController extends BaseController {
 	/**
 	 * 
 	 * @Title: addHostAnnouncement
-	 * @Description: 添加(主持/模特)通告
+	 * @Description: 添加(艺人)通告
 	 * @return JSON
 	 * @author CrazyT
 	 * 
@@ -310,7 +310,7 @@ public class AppAnnounceController extends BaseController {
 			reqInfo.setEntranceTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getEntranceTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
 		}
 		
-		reqInfo.setType(1); // 1主持/模特；2设备/服装；3策划/创意；4婚礼/派对
+		reqInfo.setType(1); // 1艺人；2租借；3策划/创意；4婚礼/派对
 		
 		if(actorInfoService.selectById(reqInfo.getCreater()) == null) {
 			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "创建者不存在，请检查creater参数", null);
@@ -386,7 +386,7 @@ public class AppAnnounceController extends BaseController {
 			reqInfo.setEntranceTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getEntranceTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
 		}
 
-		reqInfo.setType(2); // 1主持/模特；2设备/服装；3策划/创意；4婚礼/派对
+		reqInfo.setType(2); // 1艺人；2租借；3策划/创意；4婚礼/派对
 		
 		if(actorInfoService.selectById(reqInfo.getCreater()) == null) {
 			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "创建者不存在，请检查creater参数", null);
@@ -463,7 +463,7 @@ public class AppAnnounceController extends BaseController {
 			reqInfo.setEntranceTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getEntranceTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
 		}
 
-		reqInfo.setType(3); // 1主持/模特；2设备/服装；3策划/创意；4婚礼/派对
+		reqInfo.setType(3); // 1艺人；2租借；3策划/创意；4婚礼/派对
 		
 		if(actorInfoService.selectById(reqInfo.getCreater()) == null) {
 			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "创建者不存在，请检查creater参数", null);
@@ -545,7 +545,7 @@ public class AppAnnounceController extends BaseController {
 			reqInfo.setEntranceTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getEntranceTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
 		}
 
-		reqInfo.setType(4); // 1主持/模特；2设备/服装；3策划/创意；4婚礼/派对
+		reqInfo.setType(4); // 1艺人；2租借；3策划/创意；4婚礼/派对
 		
 		if(actorInfoService.selectById(reqInfo.getCreater()) == null) {
 			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "创建者不存在，请检查creater参数", null);

@@ -12,7 +12,7 @@
 <head>
 <base href="<%=basePath%>">
 
-<title>主持模特卡片列表</title>
+<title>艺人卡片列表</title>
 
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
@@ -142,7 +142,7 @@ div#rMenu {
 		}
 	}
 	function cardTypeFormater(value, row) {
-		return "主持/模特";
+		return "艺人";
 	}
 	function timeFormater(value, row) {
 		if (value == undefined) {
@@ -191,7 +191,7 @@ div#rMenu {
 		});
 	}
 	function edit(id){
-		window.parent.addTabPanel('主持/模特','back/cardListDetail.do?type=1&id=' +id);
+		window.parent.addTabPanel('艺人','back/cardListDetail.do?type=1&id=' +id);
 	}
 	function del(id) {
 		$.messager.confirm('提示', '你确定要删除吗?', function(r) {

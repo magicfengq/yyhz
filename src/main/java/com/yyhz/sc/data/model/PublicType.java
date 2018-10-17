@@ -12,7 +12,7 @@ import com.yyhz.sc.base.entity.BaseEntity;
  @SuppressWarnings("serial")
 public class PublicType extends BaseEntity implements Serializable {
 	private java.lang.String id; // 主键
-	private java.lang.Integer type; // 角色类型 1主持/模特；2设备/服装；3策划/创意；4婚礼/派对
+	private java.lang.Integer type; // 角色类型 1艺人；2租借；3策划/创意；4婚礼/派对
 	private java.lang.String name; // 类型名称
 	private java.lang.Integer status; // 0正常；1已删除
 	/**
@@ -34,7 +34,7 @@ public class PublicType extends BaseEntity implements Serializable {
 	}
 	
 	/**
-     * 获取角色类型 1主持/模特；2设备/服装；3策划/创意；4婚礼/派对属性
+     * 获取角色类型 1艺人；2租借；3策划/创意；4婚礼/派对属性
      *
      * @return type
      */
@@ -43,7 +43,7 @@ public class PublicType extends BaseEntity implements Serializable {
 	}
 	
 	/**
-	 * 设置角色类型 1主持/模特；2设备/服装；3策划/创意；4婚礼/派对属性
+	 * 设置角色类型 1艺人；2租借；3策划/创意；4婚礼/派对属性
 	 *
 	 * @param type
 	 */

@@ -496,7 +496,7 @@ public class AppWebController extends BaseController {
 		
 		model.addAttribute("cardDetail", ret);
 		
-		switch(cardInfo.getType()){ //1主持/模特；2设备/服装；3策划/创意；4婚礼/派对
+		switch(cardInfo.getType()){ //1艺人；2租借；3策划/创意；4婚礼/派对
 		case 1:
 			return "webview/card_detail_host";
 		case 2:
@@ -974,7 +974,7 @@ public class AppWebController extends BaseController {
 		model.addAttribute("announceInfo", ret);
 		
 //		this.writeJsonObject(response, 0, "", ret);
-		switch(announceInfo.getType()){ //1主持/模特；2设备/服装；3策划/创意；4婚礼/派对
+		switch(announceInfo.getType()){ //1艺人；2租借；3策划/创意；4婚礼/派对
 		case 1:
 			return "webview/announce_share_host";
 		case 2:

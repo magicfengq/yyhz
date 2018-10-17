@@ -970,7 +970,7 @@ public class AppMyController extends BaseController {
 				annMap.put("sex", annInfo.getSex());
 				annMap.put("price", annInfo.getPrice());
 				annMap.put("title", annInfo.getTitle());
-				if(annInfo.getType() != null && annInfo.getType() == 1) { // 主持/模特 使用艺人类型
+				if(annInfo.getType() != null && annInfo.getType() == 1) { // 艺人 使用艺人类型
 					annMap.put("publicType", annInfo.getName());					
 				}else {
 					annMap.put("publicType", annInfo.getPublicTypeNames());					
@@ -1295,6 +1295,7 @@ public class AppMyController extends BaseController {
 		if(applyInfo == null) {
 			applyInfo = new AuthenticateApply();
 			applyInfo.setId(UUIDUtil.getUUID());
+			applyInfo.setActorId(req.getId());
 			applyInfo.setPhoto3(uuid);
 			applyInfo.setUserCurrentLevel(2);
 			applyInfo.setApplyTime(new Date());

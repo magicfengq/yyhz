@@ -12,7 +12,7 @@
 <head>
 <base href="<%=basePath%>">
 
-<title>主持模特通告列表</title>
+<title>艺人通告列表</title>
 
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
@@ -122,7 +122,7 @@ div#rMenu {
 				+ row.id + '\');">删除</a>';
 	}
 	function cardTypeFormater(value, row) {
-		return "主持/模特";
+		return "艺人";
 	}
 	function timeFormater(value, row) {
 		if (value == undefined) {
@@ -169,7 +169,7 @@ div#rMenu {
 		});
 	}
 	function edit(id){
-		window.parent.addTabPanel('通告：主持/模特','back/announceDetail.do?type=1&id=' +id);
+		window.parent.addTabPanel('通告：艺人','back/announceDetail.do?type=1&id=' +id);
 	}
 	function del(id) {
 		$.messager.confirm('提示', '你确定要删除吗?', function(r) {

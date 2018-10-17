@@ -111,9 +111,9 @@
 	}
 	function formatAnnounceType(value,row){
 		if(row.type == 1){
-			return '主持/模特';
+			return '艺人';
 		}else if(row.type == 2){
-			return '设备/服装';
+			return '租借';
 		}else if(row.type == 3){
 			return '策划/创意';
 		}else if(row.type == 4){

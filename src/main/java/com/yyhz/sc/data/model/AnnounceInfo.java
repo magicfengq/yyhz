@@ -14,12 +14,12 @@ import com.yyhz.sc.base.entity.BaseEntity;
  @SuppressWarnings("serial")
 public class AnnounceInfo extends BaseEntity implements Serializable {
 	private java.lang.String id; // 
-	private java.lang.Integer type; // 1主持/模特；2设备/服装；3策划/创意；4婚礼/派对
+	private java.lang.Integer type; // 1艺人；2租借；3策划/创意；4婚礼/派对
 	private java.lang.String publicType; // 通告类型/发布类型
 	private java.lang.String title; // 通告标题
 	private java.lang.String name; // 艺人类型；需要装备；策划项目；定制内容；
 	private java.util.Date showTime; // 活动时间；使用时间；项目时间；定制时间；
-	private java.util.Date entranceTime; // 主持模特的进场时间
+	private java.util.Date entranceTime; // 艺人的进场时间
 	private java.lang.String city; // 活动城市；使用城市；所在城市
 	private java.lang.String address; // 活动详址
 	private java.lang.Integer sex; // 性别要求 1男；2女；
@@ -34,7 +34,7 @@ public class AnnounceInfo extends BaseEntity implements Serializable {
 	private java.lang.Integer enrollNum; // 报名人数
 	
 	private String showTimeStr; // 活动时间字符串
-	private String entranceTimeStr; // 主持模特的进场时间字符串
+	private String entranceTimeStr; // 艺人的进场时间字符串
 	private String keyword; // 搜索时候使用的关键字
 	private Float avgScore; // 创建人的平均分数
 	private String headImgUrl; // 创建人头像url
@@ -166,7 +166,7 @@ public class AnnounceInfo extends BaseEntity implements Serializable {
 	}
 	
 	/**
-     * 获取1主持/模特；2设备/服装；3策划/创意；4婚礼/派对属性
+     * 获取1艺人；2租借；3策划/创意；4婚礼/派对属性
      *
      * @return type
      */
@@ -175,7 +175,7 @@ public class AnnounceInfo extends BaseEntity implements Serializable {
 	}
 	
 	/**
-	 * 设置1主持/模特；2设备/服装；3策划/创意；4婚礼/派对属性
+	 * 设置1艺人；2租借；3策划/创意；4婚礼/派对属性
 	 *
 	 * @param type
 	 */
@@ -256,7 +256,7 @@ public class AnnounceInfo extends BaseEntity implements Serializable {
 	}
 	
 	/**
-     * 获取主持模特的进场时间属性
+     * 获取艺人的进场时间属性
      *
      * @return entranceTime
      */
@@ -265,7 +265,7 @@ public class AnnounceInfo extends BaseEntity implements Serializable {
 	}
 	
 	/**
-	 * 设置主持模特的进场时间属性
+	 * 设置艺人的进场时间属性
 	 *
 	 * @param entranceTime
 	 */
