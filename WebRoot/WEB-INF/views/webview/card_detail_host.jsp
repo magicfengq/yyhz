@@ -20,6 +20,7 @@
 <title>${cardDetail['cardInfo']['publicTypeName']}-卡片详情</title>
 <link rel="stylesheet" type="text/css" href="resource/webview/css/public.css" />
 <link rel="stylesheet" type="text/css" href="resource/webview/css/style.css" />
+<link rel="stylesheet" type="text/css" href="css/app/style.css"/>
 <link rel="stylesheet" type="text/css" href="resource/webview/font-awesome-4.6.3/css/font-awesome.min.css" />
 <!--点击图片放大strat-->
 <link rel="stylesheet" type="text/css" href="resource/webview/css/mui.min.css"/>
@@ -27,6 +28,13 @@
 <!--点击图片放大end-->
 </head>
 <body>
+	<div class="downloadDiv" onclick="downloadApp()">
+		<img class="logo" src="resource/icon/20170704104736.png"></img>
+		<span class="appname">中华名角</span>
+		<span class="appinfo">打开查看更多内容</span>
+		<span class="downloadButton">免费下载</span>
+	</div>
+	<div class="wrapper-padding-bottom-60">
 	<div class="myCenter_header">
 		<c:choose>
 			<c:when test="${not empty cardDetail['actorInfo']['headImgUrl']}">
@@ -148,6 +156,7 @@
 				</li>
 			</ul>
 		</div>
+	</div>
 	</div>
 	<script src="resource/webview/js/jquery.min.js"></script>
 	<script src="resource/webview/js/common.js"></script>

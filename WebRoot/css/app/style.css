@@ -17,3 +17,41 @@
 .q_detail{padding: 10px;
           color: #000000;
           }
+.wrapper-padding-bottom-60{
+	padding-bottom: 60px;
+}
+.downloadDiv{
+	height: 60px;
+    display: flex;
+    align-items: Center;
+    background-color: #EAEAEA;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+.logo{
+    width: 45px;
+    margin-left: 5%;
+	}
+.appname{
+	font-size: 15px;
+    font-weight: bold;
+    margin-left: 2%;
+    }
+.appinfo{
+	margin-left: 5%;
+	}
+.downloadButton{    
+	height: 30px;
+    margin-left: 8%;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    border-radius: 8px;
+    width: 90px;
+    color: #EAEAEA;
+    background-color: #DA251D;
+    text-align: center;
+    line-height: 29px;
+    }
+          

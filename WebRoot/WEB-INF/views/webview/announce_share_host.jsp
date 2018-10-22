@@ -19,6 +19,7 @@
 			<title>${announceInfo['publicType']}-通告详情</title>
 			<link rel="stylesheet" type="text/css" href="resource/webview/css/public.css"/>
 			<link rel="stylesheet" type="text/css" href="resource/webview/css/style.css"/>
+			<link rel="stylesheet" type="text/css" href="css/app/style.css"/>
 			<link rel="stylesheet" type="text/css" href="resource/webview/font-awesome-4.6.3/css/font-awesome.min.css"/>
 			<link rel="stylesheet" type="text/css" href="resource/webview/css/swiper.min.css"/>
 			<!--点击图片放大strat-->
@@ -66,6 +67,13 @@
 			</style>
 		</head>
 		<body>
+			<div class="downloadDiv" onclick="downloadApp()">
+				<img class="logo" src="resource/icon/20170704104736.png"></img>
+				<span class="appname">中华名角</span>
+				<span class="appinfo">打开查看更多内容</span>
+				<span class="downloadButton">免费下载</span>
+			</div>
+			<div class="wrapper-padding-bottom-60">
 			<div class="myCenter_header">
 				<c:choose>
 					<c:when test="${not empty announceInfo['headImgUrl']}">
@@ -180,6 +188,7 @@
 					<!--<div class="handel_content" style="position: fixed;bottom: 0;left: 0;margin-top: 44px;">
 					<a class="call" style="width: 100%;">我要报名</a>
 				</div>-->
+			</div>
 			</div>
 		<script src="resource/webview/js/jquery.min.js"></script>
 		<script src="resource/webview/js/common.js"></script>

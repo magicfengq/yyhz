@@ -195,3 +195,6 @@ $(".attention").on("touchend",function(){
 //			break;
 //	}
 //});
+function downloadApp(){
+	window.open("https://fir.im/n217","_self");
+}

@@ -19,6 +19,7 @@
 		<title>秀一秀</title>
 		<link rel="stylesheet" type="text/css" href="resource/webview/css/public.css"/>
 		<link rel="stylesheet" type="text/css" href="resource/webview/css/style.css"/>
+		<link rel="stylesheet" type="text/css" href="css/app/style.css"/>
 		<link rel="stylesheet" type="text/css" href="resource/webview/font-awesome-4.6.3/css/font-awesome.min.css"/>
 		<!--点击图片放大strat-->
 		<link rel="stylesheet" type="text/css" href="resource/webview/css/mui.min.css"/>
@@ -42,7 +43,14 @@
 		</style>
 	</head>
 	<body>
-		<div class="wrapper">
+		<div class="downloadDiv" onclick="downloadApp()">
+			<img class="logo" src="resource/icon/20170704104736.png"></img>
+			<span class="appname">中华名角</span>
+			<span class="appinfo">打开查看更多内容</span>
+			<span class="downloadButton">免费下载</span>
+		</div>
+		<div class="wrapper-padding-bottom-60">
+			
 			<div class="top-panel">
 				<div class="show-title flex">
 					<div class="img-container" style="width: 42px;height: 42px;">
@@ -55,11 +63,11 @@
 				</div>
 				
 				<div class="show-content">
-					<p>${showInfo['showDetail']['showDetail']}</p>
-					<div class="item-pic-box clearfix">
+					<p style="margin-top: 20px;margin-left: 0px;">${showInfo['showDetail']['showDetail']}</p>
+					<div class="clearfix">
 						<c:if test="${showInfo['showDetail']['mediaType'] eq '0'}">
 							<c:forEach var="show" items="${showInfo['showDetail']['imageList']}">
-								<div class="item-pic-container fl" style="width: 75px;height: 75px;">
+								<div class="item-pic-container fl" style="width: 100%">
 									<img src="${show['imageUrl']}" data-preview-src="" data-preview-group="1" width="100%"/>
 								</div>
 							</c:forEach>
@@ -67,68 +75,12 @@
 						<c:if test="${showInfo['showDetail']['mediaType'] eq '1'}">
 							<video class="video video-js vjs-default-skin vjs-big-play-centered" poster="${showInfo['showDetail']['videoPreviewUrl']}" preload="metadata" controls="controls"  width="100%" style="" height="100%" data-setup="{}" style="background:transparent url('resource/webview/img/head_bg.png') 50% 50% no-repeat;" src="${showInfo['showDetail']['videoUrl']}"/>
 						</c:if>
+						
+						
 					</div>
 				</div>
 			</div>
-			<div class="bottom-panel">
-				<div class="mui-content">
-					<div id="slider" class="mui-slider">
-						<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-							<div class="mui-scroll title-box flex">
-								<a class="mui-control-item mui-active tl" href="#item1mobile">
-									评论：${showInfo['showDetail']['commentNumber']}
-								</a>
-								<a class="mui-control-item tr" href="#item2mobile">
-									点赞：${showInfo['showDetail']['praiseNumber']}
-								</a>
-							</div>
-						</div>
-						<div class="mui-slider-group tabs_box" style="">
-							<!--评论start-->
-							<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
-								<div class="mui-scroll-wrapper">
-									<div class="mui-scroll">
-										<ul class="mui-table-view">
-											<c:forEach var="comment" items="${showInfo['showComment']['rows']}">
-												<li class="mui-table-view-cell">
-													<div class="title-info flex">
-														<div class="img-container" style="width: 30px;height: 30px;">
-															<img src="${comment['headImageUrl']}" width="100%"/>
-														</div>
-														<h2>${comment['name']}</h2>
-													</div>
-													<div class="title-content">
-														<p class="content">${comment['commentDetail']}</p>
-														<p class="time">${comment['commentTime']}</p>
-														<span></span>
-													</div>
-												</li>
-											</c:forEach>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<!--评论end-->
-							<!--点赞start-->
-							<div id="item2mobile" class="mui-slider-item mui-control-content">
-								<div id="scroll1" class="comment-box">
-									<ul class="like-img-list clearfix">
-										<c:forEach var="praise" items="${showInfo['showPraise']['rows']}">
-											<li>
-												<div class="img_c_container" style="width: 30px;height: 30px;">
-													<img src="${praise['headImageUrl']}" width="100%"/>
-												</div>
-											</li>
-										</c:forEach>
-									</ul>
-								</div>	
-							</div>
-							<!--点赞end-->
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+		</div>	
 		<script src="resource/webview/js/jquery.min.js"></script>
 		<script src="resource/webview/js/common.js"></script>
 		<!--点击图片放大strat-->
@@ -179,43 +131,6 @@
 					});
 				});
 				
-				function loadComment(ul, caller) {
-					page = Math.min(page + 1, pages + 1);
-			    	$.ajax({ url:'api/getShowCommentList.do',//从该处获取数据
-			    		type:'post',
-			    		dataType:'json',
-			    		data:{'page':page, 'pageSize':pageSize, 'showId':id},
-				   	    success:function(ret){
-				   	    	if(ret.result == 1) {
-					   	    	var data = ret.data;
-					   	    	pages = data.pages;
-					   	    	total = data.total;
-					   	    	pageSize = data.pageSize;
-	   	    	
-					   	    	for(var index in data.rows) {
-					   	    		var commment = data.rows[index];
-						   	        var html = '<li class="mui-table-view-cell">';
-									html += '<div class="title-info flex">';
-									html += '<div class="img-container" style="width: 30px;height: 30px;">';
-									html += '<img src="' + commment.headImageUrl + '" width="100%"/>';
-									html += '</div>';
-									html += '<h2>' + commment.name + '</h2>';
-									html += '</div>';
-									html += '<div class="title-content">';
-									html += '<p class="content">' + commment.commentDetail + '</p>';
-									html += '<p class="time">' + commment.commentTime + '</p>';
-									html += 'span></span>';
-									html += '</div>';
-									html += '</li>';
-
-									ul.innerHTML += html;
-					   	    	}
-					   	    						   	    	
-					   	     	caller.endPullUpToRefresh();
-				   	    	}
-				   	    }
-			    	});
-				};
 			});
 		})(mui);
 

@@ -393,12 +393,8 @@ public class AppShowInfoController extends BaseController {
 	public String getShowShare(HttpServletRequest request, HttpServletResponse response,String showId,String actorId, ModelMap model) {
 		Map<String, Object> ret = new HashMap<String, Object>();
 		Object showDetail = this.getShowDetail(request, response, showId, actorId).get("data");
-		Object showComment = this.getShowCommentList(request, response, showId, actorId,1, 10).get("data");
-		Object showPraise = this.getShowPraiseList(request, response, showId, 1, 10).get("data");
 		
 		ret.put("showDetail", showDetail);
-		ret.put("showComment", showComment);
-		ret.put("showPraise", showPraise);
 		
 		model.addAttribute("showInfo", ret);
 		
