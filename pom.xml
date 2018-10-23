@@ -218,5 +218,10 @@
 		    <version>2.4</version>
 		    <classifier>jdk15</classifier>
 		</dependency>
+		<dependency>
+			<groupId>alipay-sdk-java20180122110032</groupId>
+			<artifactId>alipay-sdk-java20180122110032</artifactId>
+			<version>1.0</version>
+		</dependency>
 	</dependencies>
 </project>

@@ -26,7 +26,7 @@ import com.yyhz.sc.data.model.SystemUserInfo;
  */
 public class SystemFilter implements Filter {
 
-	private String[] strs = { "login", "getAuthImg", "welcome", "initSystemMenuTree", "rest/" };
+	private String[] strs = { "login", "getAuthImg", "welcome", "initSystemMenuTree", "rest/" ,"alipay/"};
 
 	@Override
 	public void destroy() {

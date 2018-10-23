@@ -63,7 +63,9 @@
 				</div>
 				
 				<div class="show-content">
-					<p style="margin-top: 20px;margin-left: 0px;">${showInfo['showDetail']['showDetail']}</p>
+					<p style="margin-top:10px;margin-left:10px;margin-right:10px;margin-bottom:10px;line-height: 20px;">
+						${showInfo['showDetail']['showDetail']}
+					</p>
 					<div class="clearfix">
 						<c:if test="${showInfo['showDetail']['mediaType'] eq '0'}">
 							<c:forEach var="show" items="${showInfo['showDetail']['imageList']}">
