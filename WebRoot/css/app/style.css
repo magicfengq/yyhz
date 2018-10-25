@@ -21,30 +21,39 @@
 	padding-bottom: 60px;
 }
 .downloadDiv{
-	height: 60px;
-    display: flex;
-    align-items: Center;
-    background-color: #EAEAEA;
+	
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
 }
+.layoutDiv{
+	height: 60px;
+    display: flex;
+    align-items: Center;
+    background-color: #EAEAEA;
+}
+.logoDiv{
+	height: 60px;
+    display: flex;
+    align-items: Center;
+    background-color: #EAEAEA;
+}
 .logo{
     width: 45px;
-    margin-left: 5%;
+    margin-left: 15px;
 	}
 .appname{
 	font-size: 15px;
     font-weight: bold;
-    margin-left: 2%;
+    margin-left: 15px;
     }
 .appinfo{
 	margin-left: 5%;
 	}
 .downloadButton{    
 	height: 30px;
-    margin-left: 8%;
+    margin-left: 135px;
     -moz-border-radius: 15px;
     -webkit-border-radius: 15px;
     border-radius: 8px;

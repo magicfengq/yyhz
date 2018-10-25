@@ -44,10 +44,13 @@
 	</head>
 	<body>
 		<div class="downloadDiv" onclick="downloadApp()">
-			<img class="logo" src="resource/icon/20170704104736.png"></img>
-			<span class="appname">中华名角</span>
-			<span class="appinfo">打开查看更多内容</span>
-			<span class="downloadButton">免费下载</span>
+			<div class="layoutDiv">
+				<div class="logoDiv">
+					<img class="logo" src="resource/icon/20170704104736.png"></img>
+					<span class="appname">中华名角</span>
+				</div>
+				<span class="downloadButton">免费下载</span>
+			</div>
 		</div>
 		<div class="wrapper-padding-bottom-60">
 			
