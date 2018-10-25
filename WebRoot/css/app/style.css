@@ -32,6 +32,7 @@
     display: flex;
     align-items: Center;
     background-color: #EAEAEA;
+    justify-content: space-around;
 }
 .logoDiv{
 	height: 60px;
@@ -41,7 +42,6 @@
 }
 .logo{
     width: 45px;
-    margin-left: 15px;
 	}
 .appname{
 	font-size: 15px;
@@ -53,7 +53,6 @@
 	}
 .downloadButton{    
 	height: 30px;
-    margin-left: 135px;
     -moz-border-radius: 15px;
     -webkit-border-radius: 15px;
     border-radius: 8px;
