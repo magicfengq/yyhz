@@ -1231,9 +1231,14 @@ public class AppMyController extends BaseController {
 			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "密码为空", null);	
 			return;
 		}*/
-		req.setLevel(1);//实名认证
 		// 检索用户信息
-		int result = actorInfoService.update(req);
+		ActorInfo param = new ActorInfo();
+		param.setId(req.getId());
+		param.setRealName(req.getRealName());
+		param.setIdcard(req.getIdcard());
+		param.setMobile(req.getMobile());
+		param.setLevel(1);//实名认证
+		int result = actorInfoService.update(param);
 		
 		if(result > 0) {
 			this.writeJsonObject(response, AppRetCode.NORMAL, AppRetCode.NORMAL_TEXT, null);	
