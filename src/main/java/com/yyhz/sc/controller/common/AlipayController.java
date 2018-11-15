@@ -1,4 +1,4 @@
-package com.alipay.controller;
+package com.yyhz.sc.controller.common;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -24,7 +24,8 @@ import com.alipay.api.response.ZhimaCreditScoreGetResponse;
 import com.alipay.api.response.ZhimaCustomerCertificationCertifyResponse;
 import com.alipay.api.response.ZhimaCustomerCertificationInitializeResponse;
 import com.alipay.api.response.ZhimaCustomerCertificationQueryResponse;
-import com.alipay.config.AlipayConfig;
+import com.yyhz.constant.AlipayConfig;
+import com.yyhz.sc.base.controller.BaseController;
 
 
 
@@ -37,8 +38,7 @@ import com.alipay.config.AlipayConfig;
 */  
     
 @Controller
-@RequestMapping("/alipay")
-public class AlipayController{
+public class AlipayController extends BaseController{
 	
 	/**
 	 * @desc: 人脸识别 开始认证  返回一个url 给手机端 用于打开支付宝客户端
@@ -49,7 +49,7 @@ public class AlipayController{
 	 * @return
 	 * @throws AlipayApiException Object
 	 */
-	@RequestMapping("/getAuthentication")
+	@RequestMapping(value = "alipay/getAuthentication")
 	@ResponseBody
 	public Object start(@RequestParam String name,@RequestParam String idCard) throws AlipayApiException {
 		//first step
@@ -120,7 +120,7 @@ public class AlipayController{
 	/**
 	 * 人脸识别回调H5  点击返回到应用, 弃用!
 	 */
-	@RequestMapping("/returnZmFace")
+	@RequestMapping(value = "alipay/returnZmFace")
 	public String returnUrl(HttpServletRequest request) throws AlipayApiException{
 		String BizNo =request.getParameter("BizNo");
 		System.out.println(BizNo);
@@ -141,7 +141,7 @@ public class AlipayController{
 	 * @return
 	 * @throws AlipayApiException String
 	 */
-	@RequestMapping("getZmScore")
+	@RequestMapping(value = "alipay/getZmScore")
 	public String returnPage(@RequestParam String auth_code,HttpServletRequest request) throws AlipayApiException{
 		//获取芝麻分
 		String  ZmScore = getZhima(auth_code);	
