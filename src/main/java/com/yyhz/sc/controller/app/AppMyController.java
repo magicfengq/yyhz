@@ -109,7 +109,7 @@ public class AppMyController extends BaseController {
 		ret.put("shoesSize",actorInfo.getShoesSize());
 		ret.put("size",actorInfo.getSize());
 		ret.put("authenticateLevel",actorInfo.getAuthenticateLevel());
-		ret.put("level",actorInfo.getLevel());
+		//ret.put("level",actorInfo.getLevel());
 		ret.put("introduction", actorInfo.getIntroduction());
 		if(actorInfo.getHeadImgUrl() != null) {
 			ret.put("headImgUrl",Configurations.buildDownloadUrl(actorInfo.getHeadImgUrl()));			
@@ -231,7 +231,7 @@ public class AppMyController extends BaseController {
 			result.put("shoesSize",StringUtils.trimToEmpty(actorInfo.getShoesSize()));
 			result.put("size",StringUtils.trimToEmpty(actorInfo.getSize()));
 			result.put("authenticateLevel",actorInfo.getAuthenticateLevel());
-			result.put("level", actorInfo.getLevel() == null ? "" : actorInfo.getLevel());
+			//result.put("level", actorInfo.getLevel() == null ? "" : actorInfo.getLevel());
 			result.put("introduction",actorInfo.getIntroduction());
 			if(actorInfo.getHeadImgUrl() != null) {
 				result.put("headImgUrl",Configurations.buildDownloadUrl(actorInfo.getHeadImgUrl()));			
@@ -1289,7 +1289,7 @@ public class AppMyController extends BaseController {
 		}
 		//上传执照图片
 		String uuid = "";
-		if(imageFile != null) {
+		if(imageFile!=null){			
 			SystemPictureInfo pInfo = this.uploadFile2("authentication", imageFile);
 			if(pInfo != null) {
 				uuid=pInfo.getUuid();
@@ -1305,7 +1305,7 @@ public class AppMyController extends BaseController {
 			applyInfo = new AuthenticateApply();
 			applyInfo.setId(UUIDUtil.getUUID());
 			applyInfo.setActorId(req.getId());
-			if(StringUtils.isNotBlank(uuid)) applyInfo.setPhoto3(uuid);
+			applyInfo.setPhoto3(uuid);
 			applyInfo.setUserCurrentLevel(2);
 			applyInfo.setApplyTime(new Date());
 			applyInfo.setRealName(req.getRealName());
@@ -1315,7 +1315,9 @@ public class AppMyController extends BaseController {
 			//插入
 			ret = authenticateApplyService.insert(applyInfo);
 		}else {
-			if(StringUtils.isNotBlank(uuid)) applyInfo.setPhoto3(uuid);			
+			if(imageFile!=null){
+				applyInfo.setPhoto3(uuid);
+			} 			
 			applyInfo.setApplyTime(new Date());
 			applyInfo.setRealName(req.getRealName());
 			applyInfo.setIdcard(req.getIdcard());

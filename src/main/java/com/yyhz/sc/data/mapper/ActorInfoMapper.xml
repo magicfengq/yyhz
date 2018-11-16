@@ -290,7 +290,7 @@
 	</select>
 	
 	<select id="selectActorInfoForPage"  resultMap="colomnResult">
-		select a.id,a.name,a.mobile,a.sex,a.createTime,a.status,a.registerType,a.level,a.areaCode
+		select a.id,a.name,a.mobile,a.sex,a.createTime,a.status,a.registerType,a.level,a.areaCode,a.authenticateLevel,a.idcard,a.realName
 		from actor_info a
 		<where>
 				id not in ("show","admin","announce") 

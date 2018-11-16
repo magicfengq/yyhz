@@ -417,7 +417,7 @@ public class AppRegistController extends BaseController{
 		ret.put("shoesSize",StringUtils.trimToEmpty(actorInfo.getShoesSize()));
 		ret.put("size",StringUtils.trimToEmpty(actorInfo.getSize()));
 		ret.put("authenticateLevel",actorInfo.getAuthenticateLevel());
-		ret.put("level", actorInfo.getLevel() == null ? 0 : actorInfo.getLevel());
+		//ret.put("level", actorInfo.getLevel() == null ? 0 : actorInfo.getLevel());
 		if(actorInfo.getHeadImgUrl() != null) {
 			ret.put("headImgUrl",Configurations.buildDownloadUrl(actorInfo.getHeadImgUrl()));			
 		}else {

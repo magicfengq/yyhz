@@ -52,9 +52,9 @@
 				<span class="downloadButton">免费下载</span>
 			</div>
 		</div>
-		<div class="wrapper-padding-bottom-60 top10">
+		<div class="wrapper-padding-bottom-60">
 			
-			<div class="top-panel">
+			<div class="top-panel" style="margin-top:10px;">
 				<div class="show-title flex">
 					<div class="img-container" style="width: 42px;height: 42px; margin-left: 10px;">
 						<img src="${showInfo['showDetail']['headImageUrl']}" width="100%"/>

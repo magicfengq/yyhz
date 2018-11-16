@@ -53,8 +53,23 @@
 	</span>
 </div>
 <div class="fitem">
+	<label>账号:</label>
+	
+	<input id="mobileLabel" name="sex" style="width: 200px" class="easyui-textbox" readonly="readonly" value="${actorInfo.mobile }"/>
+</div>
+<div class="fitem">
 	<label>艺名/公司简称:</label>
 	<input id="nameLabel" name="name" style="width: 200px" class="easyui-textbox" readonly="readonly" value="${actorInfo.name }"/>
+</div>
+<div class="fitem">
+	<label>真实姓名:</label>
+	
+	<input id="realNameLabel" name="sex" style="width: 200px" class="easyui-textbox" readonly="readonly" value="${actorInfo.realName }"/>
+</div>
+<div class="fitem">
+	<label>身份证:</label>
+	
+	<input id="idcardLabel" name="sex" style="width: 200px" class="easyui-textbox" readonly="readonly" value="${actorInfo.idcard }"/>
 </div>
 <div class="fitem">
 	<label>性别:</label>
