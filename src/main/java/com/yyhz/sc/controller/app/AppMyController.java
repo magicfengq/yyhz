@@ -1177,7 +1177,8 @@ public class AppMyController extends BaseController {
 		ret.put("realName",actorInfo.getRealName());
 		ret.put("idcard",actorInfo.getIdcard());
 		ret.put("mobile",actorInfo.getMobile());
-		ret.put("level",actorInfo.getLevel());
+		//ret.put("level",actorInfo.getLevel());
+		ret.put("level",actorInfo.getAuthenticateLevel());
 		if(StringUtils.isEmpty(actorInfo.getMobile())){			
 			ret.put("type","0");
 		}else{
@@ -1237,7 +1238,8 @@ public class AppMyController extends BaseController {
 		param.setRealName(req.getRealName());
 		param.setIdcard(req.getIdcard());
 		param.setMobile(req.getMobile());
-		param.setLevel(1);//实名认证
+		//param.setLevel(1);//实名认证
+		param.setAuthenticateLevel(1);//实名认证
 		int result = actorInfoService.update(param);
 		
 		if(result > 0) {
@@ -1256,7 +1258,7 @@ public class AppMyController extends BaseController {
 	 */
 	@RequestMapping(value = "companyAuthentication")
 	public void companyAuthentication(HttpServletRequest request, HttpServletResponse response, ActorInfo req,
-			@RequestParam(required = false) MultipartFile imageFile) {
+			@RequestParam(required = false) MultipartFile imageFile,String imageFileAgo) {
 			
 		if(StringUtils.isBlank(req.getId())) {
 			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "用户id为空", null);	
@@ -1274,7 +1276,7 @@ public class AppMyController extends BaseController {
 			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "电话号为空", null);	
 			return;
 		}
-		if(imageFile == null) {
+		if(imageFile == null&&StringUtils.isBlank(imageFileAgo)) {
 			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "营业执照图片为空", null);	
 			return;
 		}
@@ -1287,9 +1289,11 @@ public class AppMyController extends BaseController {
 		}
 		//上传执照图片
 		String uuid = "";
-		SystemPictureInfo pInfo = this.uploadFile2("authentication", imageFile);
-		if(pInfo != null) {
-			uuid=pInfo.getUuid();
+		if(imageFile != null) {
+			SystemPictureInfo pInfo = this.uploadFile2("authentication", imageFile);
+			if(pInfo != null) {
+				uuid=pInfo.getUuid();
+			}
 		}
 		//查询是否已经申请过
 		AuthenticateApply param = new AuthenticateApply();
@@ -1301,7 +1305,7 @@ public class AppMyController extends BaseController {
 			applyInfo = new AuthenticateApply();
 			applyInfo.setId(UUIDUtil.getUUID());
 			applyInfo.setActorId(req.getId());
-			applyInfo.setPhoto3(uuid);
+			if(StringUtils.isNotBlank(uuid)) applyInfo.setPhoto3(uuid);
 			applyInfo.setUserCurrentLevel(2);
 			applyInfo.setApplyTime(new Date());
 			applyInfo.setRealName(req.getRealName());
@@ -1311,7 +1315,7 @@ public class AppMyController extends BaseController {
 			//插入
 			ret = authenticateApplyService.insert(applyInfo);
 		}else {
-			applyInfo.setPhoto3(uuid);
+			if(StringUtils.isNotBlank(uuid)) applyInfo.setPhoto3(uuid);			
 			applyInfo.setApplyTime(new Date());
 			applyInfo.setRealName(req.getRealName());
 			applyInfo.setIdcard(req.getIdcard());

@@ -52,16 +52,16 @@
 				<span class="downloadButton">免费下载</span>
 			</div>
 		</div>
-		<div class="wrapper-padding-bottom-60">
+		<div class="wrapper-padding-bottom-60 top10">
 			
 			<div class="top-panel">
 				<div class="show-title flex">
-					<div class="img-container" style="width: 42px;height: 42px;">
+					<div class="img-container" style="width: 42px;height: 42px; margin-left: 10px;">
 						<img src="${showInfo['showDetail']['headImageUrl']}" width="100%"/>
 					</div>
 					<div class="title-info flex">
 						<span class="name">${showInfo['showDetail']['name']}</span>
-						<span class="time">${showInfo['showDetail']['publishTime']}</span>
+						<span class="time" style="margin-right: 10px;">${showInfo['showDetail']['publishTime']}</span>
 					</div>
 				</div>
 				

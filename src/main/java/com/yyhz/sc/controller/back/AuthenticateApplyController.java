@@ -229,7 +229,8 @@ public class AuthenticateApplyController extends BaseController {
 		String actorId = info.getActorId();
 		ActorInfo actorInfo = new ActorInfo();
 		actorInfo.setId(actorId);
-		actorInfo.setLevel(2);	
+		//actorInfo.setLevel(2);	
+		actorInfo.setAuthenticateLevel(2);
 		result = actorInfoService.update(actorInfo);
 		
 		//给客户端发送消息

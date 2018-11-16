@@ -173,6 +173,7 @@ public class AppRegistController extends BaseController{
 				condition.setAreaCode(reqObj.getAreaCode());
 				condition.setStatus(0); // 有效状态
 				condition.setRegisterType(0); // 普通注册
+				condition.setAuthenticateLevel(0); // 级别
 				result = actorInfoService.insert(condition);
 				
 				if(result > 0)
@@ -308,6 +309,7 @@ public class AppRegistController extends BaseController{
 				member.setMkey(reqObj.getMkey());
 				member.setStatus(0); // 有效状态
 				member.setRegisterType(reqObj.getRegisterType());
+				member.setAuthenticateLevel(0); // 级别
 				member.setName(reqObj.getName());
 				
 				// 第一次登陆同步头像
@@ -503,6 +505,7 @@ public class AppRegistController extends BaseController{
 				condition.setAreaCode(reqObj.getAreaCode());
 				condition.setStatus(0); // 有效状态
 				condition.setRegisterType(0); // 普通注册
+				condition.setAuthenticateLevel(0); // 级别
 				result = actorInfoService.insert(condition);
 				
 				if(result > 0)

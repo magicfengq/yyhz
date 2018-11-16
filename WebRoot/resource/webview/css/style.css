@@ -36,7 +36,7 @@
     color: #FFFFFF;
     display: inline-block;
 }
-/*原版本*/
+/*鍘熺増鏈�*/
 .grade{
     width: 45%;
     position: absolute;
@@ -454,7 +454,7 @@
 .head_p_c_infor p span{
 	padding: 5px;
 }
-/*下拉刷新样式重置*/
+/*涓嬫媺鍒锋柊鏍峰紡閲嶇疆*/
 .mui-table-view-cell{padding: 10px 15px 0 15px;border-bottom: 4px solid #e6e6e6;}
 .mui-table-view-cell:after{background-color: #FFFFFF;}
 .mui-pull-bottom-wrapper{text-align: center;}
@@ -585,14 +585,14 @@
 	padding-top: 8px;
 }
 .main{
-	 /* main绝对定位，进行内部滚动 */
+	 /* main缁濆瀹氫綅锛岃繘琛屽唴閮ㄦ粴鍔� */
     position: absolute;
     top: 0;
     bottom: 0;
     width: 100%;
-    /* 使之可以滚动 */
+    /* 浣夸箣鍙互婊氬姩 */
     overflow-y: scroll;
-    /* 增加该属性，可以增加弹性 */
+    /* 澧炲姞璇ュ睘鎬э紝鍙互澧炲姞寮规�� */
     -webkit-overflow-scrolling: touch
 }
 .footer{
@@ -638,7 +638,7 @@
 	background: #bd171f;
 }
 /*siteDetails-e*/
-/*通告详情分享页*/
+/*閫氬憡璇︽儏鍒嗕韩椤�*/
 .num-share{
     position: absolute;
     bottom: 47%;
@@ -667,7 +667,7 @@
     line-height: 14px;
     padding: 16px 0;
 }
-/*删除按钮*/
+/*鍒犻櫎鎸夐挳*/
 .label-del{
 	background: #BD181F;
 	color: #fff;
@@ -679,13 +679,13 @@
 	margin-left: 10px;
 	font-size: 15px;
 }
-/*删除按钮*/   
+/*鍒犻櫎鎸夐挳*/   
 h3{
 	margin-top: 0 !important; 
     margin-bottom: 0 !important; 
 }
-/*秀一秀*/
-/*浮动*/
+/*绉�涓�绉�*/
+/*娴姩*/
 .clearfix{*zoom:1;}
 .clearfix:after{visibility:hidden;display:block;font-size:0;content:"";clear:both;height:0;*zoom:1;}
 .fl,.fr{display:inline;}
@@ -706,6 +706,7 @@ h3{
 }
 .top-panel{
 	border-bottom: 1px solid #eaeaea;
+	margin-top:10px
 }
 .title-info{
 	flex: 1;
