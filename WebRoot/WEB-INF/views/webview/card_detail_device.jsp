@@ -31,7 +31,7 @@
 		<div class="layoutDiv">
 			<div class="logoDiv">
 				<img class="logo" src="resource/icon/20170704104736.png"></img>
-				<span class="appname">中华名角</span>
+				<span class="appname">名角</span>
 			</div>
 			<span class="downloadButton">免费下载</span>
 		</div>

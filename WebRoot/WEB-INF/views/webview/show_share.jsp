@@ -47,7 +47,7 @@
 			<div class="layoutDiv">
 				<div class="logoDiv">
 					<img class="logo" src="resource/icon/20170704104736.png"></img>
-					<span class="appname">中华名角</span>
+					<span class="appname">名角</span>
 				</div>
 				<span class="downloadButton">免费下载</span>
 			</div>
@@ -78,7 +78,10 @@
 							</c:forEach>
 						</c:if>
 						<c:if test="${showInfo['showDetail']['mediaType'] eq '1'}">
-							<video class="video video-js vjs-default-skin vjs-big-play-centered" poster="${showInfo['showDetail']['videoPreviewUrl']}" preload="metadata" controls="controls"  width="100%" style="" height="100%" data-setup="{}" style="background:transparent url('resource/webview/img/head_bg.png') 50% 50% no-repeat;" src="${showInfo['showDetail']['videoUrl']}"/>
+							<%-- <video class="video video-js vjs-default-skin vjs-big-play-centered"  poster="${showInfo['showDetail']['videoPreviewUrl']}" preload="metadata" controls="controls"  width="100%" style="" height="100%" data-setup="{}" style="background:transparent url('resource/webview/img/head_bg.png') 50% 50% no-repeat;" src="${showInfo['showDetail']['videoUrl']}"/>
+							--%>
+							<video class="video video-js vjs-default-skin vjs-big-play-centered" poster="${showInfo['showDetail']['videoPreviewUrl']}" x-webkit-airplay="true" playsinline  webkit-playsinline="true"  x5-video-player-type="h5" x5-video-player-fullscreen="true" controls="controls"  width="100%" height="100%" preload="auto" src="${showInfo['showDetail']['videoUrl']}"/>
+							 
 						</c:if>
 						
 						
