@@ -625,4 +625,102 @@ public class AppCardController extends BaseController {
 		
 		this.writeJsonObject(response, AppRetCode.NORMAL, AppRetCode.NORMAL_TEXT, null);
 	}
+	/**
+	 * 
+	 * @Title: getTaCardList
+	 * @Description: 获取Ta的卡片列表
+	 * @return JSON
+	 * @author CrazyT
+	 * 
+	 */
+	@RequestMapping(value = "getTaCardList")
+	public void getTaCardList(HttpServletRequest request, HttpServletResponse response, Integer page, Integer pageSize, String actorId) {
+		
+		if (page == null) {
+			writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少page参数！", null);
+			return;
+		}
+		
+		if (pageSize == null) {
+			writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少pageSize参数！", null);
+			return;
+		}
+		
+		if (StringUtils.isEmpty(actorId)) {
+			writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少actorId参数！", null);
+			return;
+		}
+
+		PageInfo<CardInfo> pageInfo = new PageInfo<CardInfo>();
+		pageInfo.setPage(page);
+		pageInfo.setPageSize(pageSize);
+		
+		CardInfo condition = new CardInfo();
+		condition.setStatus(0); // 状态 0正常；1已删除；
+		condition.setCreater(actorId);
+		condition.setSort("createTime");
+		
+
+		cardInfoService.selectAll(condition, pageInfo, "selectAllSummary");
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<Map<String, Object>> dataList = new ArrayList<Map<String, Object>>();
+		result.put("rows", dataList);
+		result.put("page", pageInfo.getPage());
+		result.put("pageSize", pageInfo.getPageSize());
+		result.put("total", pageInfo.getTotal());
+		
+		if(pageInfo.getRows() != null && !pageInfo.getRows().isEmpty())
+		{
+			for(CardInfo cardInfo : pageInfo.getRows())
+			{
+				Map<String, Object> cardMap = new HashMap<String, Object>();
+				
+				cardMap.put("id", cardInfo.getId());
+				cardMap.put("type", cardInfo.getType());
+				cardMap.put("cardName", cardInfo.getCardName());
+				cardMap.put("sex", cardInfo.getSex());
+				cardMap.put("cardRoleName", cardInfo.getCardRoleName());
+				cardMap.put("detailRole", cardInfo.getDetailRole());
+				cardMap.put("publicType", cardInfo.getPublicTypeNames()); // 发布类型名字
+				cardMap.put("birthDate", DateUtils.getDateFormat(cardInfo.getBirthDate()));
+				cardMap.put("city", cardInfo.getCity());
+				cardMap.put("actCities", cardInfo.getActCities());
+				cardMap.put("price", cardInfo.getPrice());
+				cardMap.put("height", cardInfo.getHeight());
+				cardMap.put("weight", cardInfo.getWeight());
+				cardMap.put("shoesSize", cardInfo.getShoesSize());
+				cardMap.put("size", cardInfo.getSize());
+				cardMap.put("institution", cardInfo.getInstitution());
+				cardMap.put("details", cardInfo.getDetails());
+				cardMap.put("creater", cardInfo.getCreater());
+				cardMap.put("createrName", cardInfo.getCreaterName());
+				cardMap.put("createTime", DateUtils.getDateTimeMinFormat(cardInfo.getCreateTime()));
+				cardMap.put("authenticateLevel", cardInfo.getAuthenticateLevel());
+//				cardMap.put("avgScore", actorCommentService.getAvgScore(cardInfo.getCreater()));
+				if(cardInfo.getAvgScore() == null) {
+					cardMap.put("avgScore", new Integer(0));			
+				}else {
+					cardMap.put("avgScore", cardInfo.getAvgScore());
+				}
+				
+				cardMap.put("createrHeadUrl", StringUtils.isBlank(cardInfo.getCreaterHeadUrl()) ? "" : Configurations.buildDownloadUrl(cardInfo.getCreaterHeadUrl()));
+				
+				String[] urls = StringUtils.split(cardInfo.getCardImgUrls(), ",");
+				List<String> imgUrls = new ArrayList<String>();
+				if(urls != null) {
+					Arrays.sort(urls);
+					for(String url : urls) {
+						imgUrls.add(Configurations.buildDownloadUrl(url));
+					}
+				}
+
+				cardMap.put("cardImgUrls", imgUrls);
+	
+				dataList.add(cardMap);
+			}
+		}
+		
+		this.writeJsonObject(response, AppRetCode.NORMAL, AppRetCode.NORMAL_TEXT, result);
+	}
 }

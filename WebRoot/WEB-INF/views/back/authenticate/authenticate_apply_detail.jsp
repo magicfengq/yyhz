@@ -80,11 +80,13 @@
         <div style="width:70%;"></div>
     </div>
     <div style="text-align: center;margin: 10px;">
-		<a href="javascript:void(0)" class="easyui-linkbutton c6"
-			iconCls="icon-ok" onclick="showPassDialog()" style="width:90px">通过</a> <a
-			href="javascript:void(0)" class="easyui-linkbutton"
-			iconCls="icon-cancel"
-			onclick="showRefuseDialog()" style="width:90px">拒绝</a>
+		<c:if test="${info.checkStatus!=1}">
+			<a href="javascript:void(0)" class="easyui-linkbutton c6"
+				iconCls="icon-ok" onclick="showPassDialog()" style="width:90px">通过</a> <a
+				href="javascript:void(0)" class="easyui-linkbutton"
+				iconCls="icon-cancel"
+				onclick="showRefuseDialog()" style="width:90px">拒绝</a>
+		</c:if>
 	</div>
 	<div id="passDlg" class="easyui-dialog"
 		data-options="iconCls:'icon-save',resizable:true,modal:true"

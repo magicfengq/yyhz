@@ -71,9 +71,13 @@
 	}
 	
 	function formatOptions(value, row){
-		return '<a href="javascript:void(0);" onclick="toView(\'' + row.id + '\');">查看</a>&nbsp;' + 
-		       '<a href="javascript:void(0);" onclick="showPassDialog(\'' + row.id + '\',\'' + row.actorId + '\',' + row.checkStatus + ');">通过</a>&nbsp;' + 
-		       '<a href="javascript:void(0);" onclick="showRefuseDialog(\'' + row.id + '\',\'' + row.actorId + '\',' + row.checkStatus + ');">拒绝</a>&nbsp;';
+		var checkStatus = row.checkStatus;
+		var str='<a href="javascript:void(0);" onclick="toView(\'' + row.id + '\');">查看</a>&nbsp;';
+	    if(checkStatus == 0){
+	    	str=str+'<a href="javascript:void(0);" onclick="showPassDialog(\'' + row.id + '\',\'' + row.actorId + '\',' + row.checkStatus + ');">通过</a>&nbsp;' + 
+		       '<a href="javascript:void(0);" onclick="showRefuseDialog(\'' + row.id + '\',\'' + row.actorId + '\',' + row.checkStatus + ');">拒绝</a>&nbsp;'
+	    }
+		return str;
 	}				
 	
 	function toView(id){

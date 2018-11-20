@@ -1283,4 +1283,186 @@ public class AppShowInfoController extends BaseController {
 		//resultMap.put("data", pageInfo);
 		return resultMap;
 	}
+	/**
+	 * Ta的秀列表
+	 * @param request
+	 * @param response
+	 * @param actorId
+	 * @param roleType
+	 * @param filterType
+	 * @param mediaType
+	 * @param page
+	 * @param rows
+	 * @return
+	 */
+	@RequestMapping(value = "api/getTaShowList")
+	@ResponseBody
+	public Map<String,Object> getTaShowList(HttpServletRequest request, HttpServletResponse response,String actorId,
+			Integer page,Integer pageSize) {
+		
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		
+		PageInfo<ShowInfo> pageInfo = new PageInfo<ShowInfo>();
+		pageInfo.setPage(page);
+		pageInfo.setPageSize(pageSize);
+		ShowInfo info = new ShowInfo();
+		info.setStatus("0");
+		info.setSort("createTime");
+		info.setOrder("desc");
+		info.setCreater(actorId);
+		
+		showInfoService.selectAll(info, pageInfo);
+		List<ShowInfo> list = pageInfo.getRows();
+		if(list == null || list.isEmpty()){
+			return buildEmptyData(pageInfo.getTotal(), pageInfo.getPage(), pageInfo.getPageSize());
+		}
+		
+		List<String> createrList = new ArrayList<String>();
+		List<String> showIdList = new ArrayList<String>();
+		for(ShowInfo showInfo : list){
+			createrList.add(showInfo.getCreater());
+			showIdList.add(showInfo.getId());
+		}
+		
+		//关联用户
+		List<ActorInfo> actorList = actorInfoService.selectByIds(createrList);
+		if(actorList == null || actorList.isEmpty()){
+			return buildEmptyData(pageInfo.getTotal(), pageInfo.getPage(), pageInfo.getPageSize());
+		}
+		Map<String,ActorInfo> actorMap = new HashMap<String,ActorInfo>();
+		for(ActorInfo actorInfo : actorList){
+			actorMap.put(actorInfo.getId(), actorInfo);
+		}
+		
+		//关联评论
+		Map<String,Object> commentParams = new HashMap<String,Object>();
+		commentParams.put("showIdList", showIdList);
+		commentParams.put("status", 0);
+		List<ShowComment> showsCommentNum = showCommentService.selectShowCommentNum(commentParams);
+		Map<String,Long> showCommentNumMap = new HashMap<String,Long>();
+		if(showsCommentNum != null && !showsCommentNum.isEmpty()){
+			for(ShowComment showCommentNum : showsCommentNum){
+				showCommentNumMap.put(showCommentNum.getShowId(), showCommentNum.getCommentNum());
+			}
+		}
+		
+		//关联点赞
+		Map<String,Object> praiseParams = new HashMap<String,Object>();
+		praiseParams.put("showIdList", showIdList);
+		List<ShowPraise> praiseCommentNum = showPraiseService.selectShowPraiseNum(commentParams);
+		Map<String,Long> praiseCommentNumMap = new HashMap<String,Long>();
+		if(praiseCommentNum != null && !praiseCommentNum.isEmpty()){
+			for(ShowPraise showPraise : praiseCommentNum){
+				praiseCommentNumMap.put(showPraise.getShowId(), showPraise.getPraiseNum());
+			}
+		}
+		
+		//关联图片
+		Map<String,Object> picParams = new HashMap<String,Object>();
+		picParams.put("showIdList", showIdList);
+		List<ShowInfoPictures> showPicList = showInfoPicturesService.selectAll(picParams);
+		Map<String,List<SystemPictureInfo>> picMap = new HashMap<String,List<SystemPictureInfo>>();
+		if(showPicList != null && !showPicList.isEmpty()){
+			for(ShowInfoPictures showInfoPictures : showPicList){
+				String showId = showInfoPictures.getShowId();
+				SystemPictureInfo systemPictureInfo = showInfoPictures.getSystemPictureInfo();
+				if(systemPictureInfo == null){
+					continue;
+				}
+				if(picMap.get(showId) == null){
+					List<SystemPictureInfo> picList = new ArrayList<SystemPictureInfo>();
+					picList.add(systemPictureInfo);
+					picMap.put(showId, picList);
+				}else{
+					List<SystemPictureInfo> picList = picMap.get(showId);
+					picList.add(systemPictureInfo);
+				}
+			}
+		}
+		
+		List<Map<String,Object>> dataList = new ArrayList<Map<String,Object>>();
+		for(ShowInfo showInfo : list){
+			Map<String,Object> dataMap = new HashMap<String,Object>();
+			ActorInfo actorInfo = actorMap.get(showInfo.getCreater());
+			dataMap.put("id", showInfo.getId());
+			dataMap.put("publicType", showInfo.getPublicType());
+			dataMap.put("mediaType", showInfo.getType());
+			SystemPictureInfo pictureInfo = actorInfo.getSystemPictureInfo();
+			if(pictureInfo != null){
+				String urlPath = pictureInfo.getUrlPath();
+				String headImageUrl = StringUtils.isBlank(urlPath) ? "" : Configurations.buildDownloadUrl(urlPath);
+				dataMap.put("headImageUrl", headImageUrl);
+			}else{
+				dataMap.put("headImageUrl", "");
+			}
+			dataMap.put("name", actorInfo.getName() == null ? "" : actorInfo.getName());
+			dataMap.put("authenticateLevel", String.valueOf(actorInfo.getAuthenticateLevel()));
+			dataMap.put("showDetail", showInfo.getContent());
+			dataMap.put("location", showInfo.getCity());
+			dataMap.put("creater", showInfo.getCreater());
+			//时间转换
+			dataMap.put("publishTime", RelativeDateFormat.format(showInfo.getCreateTime()));
+			dataMap.put("shareNumber", showInfo.getShareNum());
+			
+			//评论数
+			Long commentNumber = showCommentNumMap.get(showInfo.getId());
+			dataMap.put("commentNumber",commentNumber == null ? 0L : commentNumber);
+			
+			//点赞数
+			Long praiseNumber = praiseCommentNumMap.get(showInfo.getId());
+			dataMap.put("praiseNumber", praiseNumber == null ? 0L : praiseNumber);
+			
+			//图片信息
+			List<SystemPictureInfo> picList = picMap.get(showInfo.getId());
+			if(picList == null || picList.isEmpty()){
+				dataMap.put("imageList", new ArrayList<Map<String,Object>>());
+			}else{
+				List<Map<String,Object>> imageList = new ArrayList<Map<String,Object>>();
+				List<String>imgUrls = new ArrayList<String>();
+				for(SystemPictureInfo systemPictureInfo : picList){
+					imgUrls.add(systemPictureInfo.getUrlPath());
+				}
+				
+				Collections.sort(imgUrls);
+				for(String url : imgUrls) {
+					Map<String,Object> imageMap = new HashMap<String,Object>();
+					imageMap.put("imageUrl", Configurations.buildDownloadUrl(url));
+					imageList.add(imageMap);
+				}
+				
+				dataMap.put("imageList", imageList);
+			}
+			
+			SystemPictureInfo systemVideoinfo = showInfo.getSystemVideoInfo();
+			if(systemVideoinfo != null){
+				String videoPathUrl = systemVideoinfo.getUrlPath();
+				String videoUrl = StringUtils.isBlank(videoPathUrl) ? "" : Configurations.buildDownloadUrl(videoPathUrl);
+				dataMap.put("videoUrl", videoUrl);
+			}else{
+				dataMap.put("videoUrl", "");
+			}
+			
+			SystemPictureInfo systemVideoPreviewInfo = showInfo.getSystemVideoPreviewInfo();
+			if(systemVideoPreviewInfo != null){
+				String videoPreviewPathUrl = systemVideoPreviewInfo.getUrlPath();
+				String videoPreviewUrl = StringUtils.isBlank(videoPreviewPathUrl) ? "" : Configurations.buildDownloadUrl(videoPreviewPathUrl);
+				dataMap.put("videoPreviewUrl", videoPreviewUrl);
+			}else{
+				dataMap.put("videoPreviewUrl", "");
+			}
+			
+			dataList.add(dataMap);
+		}
+		
+		Map<String,Object> rowsMap = new HashMap<String,Object>();
+		rowsMap.put("rows", dataList);
+		rowsMap.put("total", pageInfo.getTotal());
+		rowsMap.put("page", page);
+		rowsMap.put("pageSize", pageSize);
+		
+		resultMap.put("msg", "操作成功!");
+		resultMap.put("result", 1);
+		resultMap.put("data", rowsMap);
+		return resultMap;
+	}
 }
