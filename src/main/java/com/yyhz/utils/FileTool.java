@@ -117,7 +117,8 @@ public class FileTool {
 			String fname = fileName.substring(0, fileName.indexOf("."));
 			System.out.println(fname);
 			System.out.println(fileName);
-			String realName = DateUtils.toString(new Date(), "yyyyMMddHHmmssSSS") + fileName.substring(fileName.lastIndexOf("."));
+			
+			String realName = DateUtils.toString(new Date(), "HHmmss")+UUIDUtil.getUUID() + fileName.substring(fileName.lastIndexOf("."));
 			InputStream in = file.getInputStream();// 把文件读入
 
 			promptMkdir(FilePath);

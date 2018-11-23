@@ -619,7 +619,7 @@ public class AppAnnounceController extends BaseController {
 		ret.put("showTime", DateUtils.getDateFormat(announceInfo.getShowTime()));
 		ret.put("creater", announceInfo.getCreater());
 		ret.put("createTime", DateUtils.getDateTimeMinFormat(announceInfo.getCreateTime()));
-		ret.put("entranceTime", announceInfo.getEntranceTime());
+		ret.put("entranceTime", DateUtils.getDateFormat(announceInfo.getEntranceTime()));
 		ret.put("address", announceInfo.getAddress());
 		ret.put("detail", announceInfo.getDetail());
 		ret.put("enrollStatus", announceInfo.getEnrollStatus());
