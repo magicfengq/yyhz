@@ -29,12 +29,12 @@ public class AppAccountInfoController extends BaseController{
 	private ActorInfoService actorInfoService;
 	
 	@RequestMapping(value = "api/uploadUserHeader")
-	public void uploadUserHeader(HttpServletRequest request,HttpServletResponse response,String id, @RequestParam MultipartFile imageFile){
+	public void uploadUserHeader(HttpServletRequest request,HttpServletResponse response,String id,String imgBase64Str){
 		if(StringUtils.isBlank(id)){
 			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "参数id为空", null);
 			return;
 		}
-		if(imageFile == null){
+		if(StringUtils.isBlank(imgBase64Str)){
 			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "上传文件为空", null);
 			return;
 		}
@@ -45,7 +45,7 @@ public class AppAccountInfoController extends BaseController{
 			return;
 		}
 		
-		SystemPictureInfo pInfo = this.uploadFile2("head", imageFile, null);
+		SystemPictureInfo pInfo = this.uploadBase64Img("head", imgBase64Str);
 		if(pInfo != null) {
 			Map<String, Object> result = new HashMap<String, Object>();
 

@@ -443,4 +443,28 @@ public class BaseController {
 		Method fieldSetMet = entity.getClass().getMethod(fieldSetName,field.getType());
 		fieldSetMet.invoke(entity, value);
     }
+    protected SystemPictureInfo uploadBase64Img(String modelName,String base64ImgStr) {
+		
+    	String configRepo = Configurations.getFileRepository();
+		String pathTmp = modelName + "/";
+		String path = pathTmp + DateUtils.toString(new Date(), "yyyyMMdd") + "/";
+		String realPath = configRepo + "/" + path;
+		FileInfo fileInfo = FileTool.saveBase64File(base64ImgStr, realPath);
+		String urlPath = path + fileInfo.getRealName();
+		SystemPictureInfo systemPicInfo = new SystemPictureInfo();
+		systemPicInfo.setId(UUIDUtil.getUUID());
+		systemPicInfo.setUuid(UUIDUtil.getUUID());
+		systemPicInfo.setUrlPath(urlPath);
+		systemPicInfo.setFsize((int)fileInfo.getFsize());
+		systemPicInfo.setCdate(new Date());
+		systemPicInfo.setSuffix(fileInfo.getSuffix());
+		systemPicInfo.setName(fileInfo.getFileName());
+		int count = systemPictureInfoService.insert(systemPicInfo);
+		if(count > 0) {
+			return systemPicInfo;
+		}else {
+			return null;
+		}
+
+	}
 }

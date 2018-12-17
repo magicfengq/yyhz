@@ -42,6 +42,6 @@ public class QCloudVodUtils {
 	}
 	
 	public static void main(String[] args) {
-		QCloudVodUtils.UploadVideo("D:/aaa.MP4");
+		QCloudVodUtils.UploadVideo("D:/aaa.mp4");
 	}
 }
