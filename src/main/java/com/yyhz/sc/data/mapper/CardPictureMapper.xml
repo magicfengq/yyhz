@@ -100,6 +100,7 @@
 					and a.imgUuid=#{imgUuid} 
 				</if>
 		</where>
+		order by spi.cdate asc
 	</select>
 	
 	<!-- 根据条件信息 -->

@@ -8,13 +8,15 @@
 		<id property="id" column="id" />
 		<result property="showId" column="showId" />
 		<result property="imgUuid" column="imgUuid" />
+		<result property="createDate" column="createDate" />
 	</resultMap>
 	<!-- 动态sql -->
 	<sql id="colomnResult">
 		<![CDATA[
 	     id,
 	     showId,
-	     imgUuid
+	     imgUuid,
+	     createDate
 	 ]]>
 	</sql>
 	<insert id="insert">
@@ -23,11 +25,13 @@
 			     <if test="id!=null">id,</if>
 			     <if test="showId!=null">showId,</if>
 			     <if test="imgUuid!=null">imgUuid,</if>
+			     <if test="createDate!=null">createDate,</if>
 		</trim>
 	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
 			     <if test="id!=null">#{id},</if>
 			     <if test="showId!=null">#{showId},</if>
 			     <if test="imgUuid!=null">#{imgUuid},</if>
+			     <if test="createDate!=null">#{createDate},</if>
 		</trim>
 	</insert>
 
@@ -92,6 +96,9 @@
 		</where>
 		<if test="sort != null">
 				order by ${sort} ${order}
+		</if>
+		<if test="sort == null">
+				order by createDate asc
 		</if>
 	</select>
 	<!-- 根据条件查询数量 -->

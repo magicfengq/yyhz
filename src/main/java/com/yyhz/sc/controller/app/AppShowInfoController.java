@@ -133,6 +133,7 @@ public class AppShowInfoController extends BaseController {
 				showInfoPicture.setId(UUIDUtil.getUUID());
 				showInfoPicture.setShowId(showInfo.getId());
 				showInfoPicture.setImgUuid(imgUuid);
+				showInfoPicture.setCreateDate(new Date());
 				retCount = showInfoPicturesService.insert(showInfoPicture);
 			}
 		}

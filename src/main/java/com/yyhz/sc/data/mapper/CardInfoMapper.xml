@@ -172,7 +172,7 @@
 		from
 		(select 
 			sc.*,
-			group_concat(spi.urlPath) as cardImgUrls
+			group_concat(spi.urlPath ORDER BY spi.cdate asc) as cardImgUrls
 			from 
 			(select
 				c.id,

@@ -1,6 +1,7 @@
 package com.yyhz.sc.data.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import com.yyhz.sc.base.entity.BaseEntity;
@@ -16,7 +17,7 @@ public class ShowInfoPictures extends BaseEntity implements Serializable {
 	private java.lang.String id; // 
 	private java.lang.String showId; // 
 	private java.lang.String imgUuid; // 
-	
+	private Date createDate;
 	private List<String> showIdList;
 	private List<SystemPictureInfo> picList;
 	private SystemPictureInfo systemPictureInfo;
@@ -110,5 +111,13 @@ public class ShowInfoPictures extends BaseEntity implements Serializable {
 		sb.append('}');
         return sb.toString();
     }
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
     
 }
