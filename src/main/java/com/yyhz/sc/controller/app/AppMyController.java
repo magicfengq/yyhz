@@ -781,7 +781,7 @@ public class AppMyController extends BaseController {
 			logger.debug("---------------------- send message resp -----------------------------------");
 			//logger.debug(resp.toString());
 			
-			String[] targetIds = {announceInfo.getCreater()};
+			String[] targetIds = {enroll.getActorId()};
 
 			JSONObject json = JSONObject.fromObject(ext);
 			RongCloudMethodUtil.privateMessage("announce",message,  targetIds, json.toString());

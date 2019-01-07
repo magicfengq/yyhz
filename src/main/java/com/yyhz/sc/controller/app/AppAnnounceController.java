@@ -92,6 +92,8 @@ public class AppAnnounceController extends BaseController {
 			condition.setType(type);
 		}
 		condition.setStatus(0); // 0正常；1已删除
+		condition.setSort("power");
+		condition.setOrder("desc");
 		List<PublicType> publicTypes = publicTypeService.selectAll(condition);
 		
 		this.writeJsonObject(response, AppRetCode.NORMAL, AppRetCode.NORMAL_TEXT, publicTypes);
@@ -109,8 +111,9 @@ public class AppAnnounceController extends BaseController {
 	public void getRoleInfo(HttpServletRequest request, HttpServletResponse response) {
 		
 		RoleInfo condition = new RoleInfo();
-		condition.setSort("createTime");
-		condition.setOrder("asc");
+		//condition.setSort("createTime");
+		condition.setSort("power");
+		condition.setOrder("desc");
 		condition.setStatus(0);// 0正常；1已删除
 		List<RoleInfo> roleInfos = roleInfoService.selectAll(condition);
 		

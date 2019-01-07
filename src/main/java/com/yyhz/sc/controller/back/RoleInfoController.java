@@ -46,10 +46,12 @@ public class RoleInfoController extends BaseController {
 		pageInfo.setPage(page);
 		pageInfo.setPageSize(rows);
 		info.setStatus(0);
-		if("id".equals(info.getSort()) || StringUtils.isBlank(info.getSort())){
+		/*if("id".equals(info.getSort()) || StringUtils.isBlank(info.getSort())){
 			info.setSort("createTime");
 			info.setOrder("asc");
-		}
+		}*/
+		info.setSort("power");
+		info.setOrder("desc");
 		roleInfoService.selectAll(info, pageInfo);
 		return pageInfo;
 	}
@@ -63,6 +65,7 @@ public class RoleInfoController extends BaseController {
 		if (info.getId() == null || info.getId().equals("")) {
 			info.setId(UUIDUtil.getUUID());
 			info.setCreateTime(new Date());
+			info.setPower(0);
 			result = roleInfoService.insert(info);
 			msg = "保存失败！";
 		} else {

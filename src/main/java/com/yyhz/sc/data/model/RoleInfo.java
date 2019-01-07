@@ -17,6 +17,7 @@ public class RoleInfo extends BaseEntity implements Serializable {
 	private java.lang.String name; // 角色名称
 	private java.lang.Integer status; // 状态：0正常；1已删除
 	private Date createTime;
+	private java.lang.Integer power;
 	
 	
 	/**
@@ -91,5 +92,13 @@ public class RoleInfo extends BaseEntity implements Serializable {
 		sb.append('}');
         return sb.toString();
     }
+
+	public java.lang.Integer getPower() {
+		return power;
+	}
+
+	public void setPower(java.lang.Integer power) {
+		this.power = power;
+	}
     
 }

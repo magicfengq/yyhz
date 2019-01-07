@@ -15,6 +15,7 @@ public class PublicType extends BaseEntity implements Serializable {
 	private java.lang.Integer type; // 角色类型 1艺人；2租借；3策划/创意；4婚礼/派对
 	private java.lang.String name; // 类型名称
 	private java.lang.Integer status; // 0正常；1已删除
+	private java.lang.Integer power;
 	/**
      * 获取主键属性
      *
@@ -99,5 +100,13 @@ public class PublicType extends BaseEntity implements Serializable {
 		sb.append('}');
         return sb.toString();
     }
+
+	public java.lang.Integer getPower() {
+		return power;
+	}
+
+	public void setPower(java.lang.Integer power) {
+		this.power = power;
+	}
     
 }

@@ -124,6 +124,7 @@ div#rMenu {
 				<tr>
 					<th data-options="field:'name',align:'center',sortable:true" style="width: 10%;">类型名称</th>
 					<th data-options="field:'createTime',align:'center',sortable:true" style="width: 20%;">创建时间</th>
+					<th data-options="field:'power',align:'center',sortable:true" style="width: 20%;">权重</th>
 				</tr>
 			</thead>
 		</table>
@@ -137,6 +138,10 @@ div#rMenu {
 					<label><font color="red">*</font>类型名称:</label>
 					<input id="nameLabel" name="name" style="width: 200px" class="easyui-textbox" data-options="required:true,validType:'length[1,100]'"/>
 					<input type="hidden" id="idLabel" name="id" />
+				</div>
+				<div class="fitem">
+					<label><font color="red">*</font>权重:</label>
+					<input id="powerLabel" name="power" style="width: 200px" class="easyui-textbox" data-options="required:true,validType:'length[1,100]'"/>
 				</div>
 			</form>
 		</div>

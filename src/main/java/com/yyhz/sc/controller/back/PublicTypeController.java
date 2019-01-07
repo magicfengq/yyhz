@@ -45,8 +45,10 @@ public class PublicTypeController extends BaseController {
 		pageInfo.setPage(page);
 		pageInfo.setPageSize(rows);
 		info.setStatus(0);
-		info.setSort(info.getSort());
-		info.setOrder(info.getOrder());
+		/*info.setSort(info.getSort());
+		info.setOrder(info.getOrder());*/
+		info.setSort("power");
+		info.setOrder("desc");
 		publicTypeService.selectAll(info, pageInfo);
 		return pageInfo;
 	}
@@ -68,6 +70,7 @@ public class PublicTypeController extends BaseController {
 		String msg = "";
 		if (info.getId() == null || info.getId().equals("")) {
 			info.setId(UUIDUtil.getUUID());
+			info.setPower(0);
 			result = publicTypeService.insert(info);
 			msg = "保存失败！";
 		} else {

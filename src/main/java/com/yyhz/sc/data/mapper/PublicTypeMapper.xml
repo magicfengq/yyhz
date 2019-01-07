@@ -9,6 +9,7 @@
 		<result property="type" column="type" />
 		<result property="name" column="name" />
 		<result property="status" column="status" />
+		<result property="power" column="power" />
 	</resultMap>
 	<!-- 动态sql -->
 	<sql id="colomnResult">
@@ -16,7 +17,8 @@
 	     id,
 	     type,
 	     name,
-	     status
+	     status,
+	     power
 	 ]]>
 	</sql>
 	<insert id="insert">
@@ -26,12 +28,14 @@
 			     <if test="type!=null">type,</if>
 			     <if test="name!=null">name,</if>
 			     <if test="status!=null">status,</if>
+			     <if test="power!=null">power,</if>
 		</trim>
 	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
 			     <if test="id!=null">#{id},</if>
 			     <if test="type!=null">#{type},</if>
 			     <if test="name!=null">#{name},</if>
 			     <if test="status!=null">#{status},</if>
+			     <if test="power!=null">#{power},</if>
 		</trim>
 	</insert>
 
@@ -42,6 +46,7 @@
 			     <if test="type!=null">type=#{type},</if>
 			     <if test="name!=null">name=#{name},</if>
 			     <if test="status!=null">status=#{status},</if>
+			     <if test="power!=null">power=#{power},</if>
 		</set>
 		where 
 	   		 id=#{id} 
