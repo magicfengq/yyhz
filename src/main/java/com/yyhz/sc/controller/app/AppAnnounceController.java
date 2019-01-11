@@ -883,5 +883,529 @@ public class AppAnnounceController extends BaseController {
 		
 		this.writeJsonObject(response, AppRetCode.NORMAL, AppRetCode.NORMAL_TEXT, null);
 	}
-	
+	/**
+	 * 
+	 * @Title: addJzAnnouncement
+	 * @Description: 添加(兼职)通告
+	 * @return JSON
+	 * @author CrazyT
+	 * 
+	 */	
+	@RequestMapping(value = "addJzAnnouncement")
+	public void addJzAnnouncement(HttpServletRequest request, HttpServletResponse response, 
+			AnnounceInfo reqInfo,String publicTypeIds, @RequestParam(required = false) MultipartFile[] imageFiles) {
+		if(reqInfo == null) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少通告相关参数", null);
+			return;
+		}
+		
+		if(StringUtils.isBlank(reqInfo.getTitle())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少title参数", null);
+			return;
+		}
+		
+		if(StringUtils.isBlank(reqInfo.getName())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少name参数", null);
+			return;
+		}
+
+		if(StringUtils.isBlank(reqInfo.getShowTimeStr())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少showTimeStr参数", null);
+			return;
+		}
+
+		if(StringUtils.isBlank(reqInfo.getCity())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少city参数", null);
+			return;
+		}
+		
+		if(StringUtils.isBlank(reqInfo.getCreater())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少creater参数", null);
+			return;
+		}
+		
+		if(StringUtils.isNotBlank(reqInfo.getShowTimeStr())) {
+			reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+		}
+
+		if(StringUtils.isNotBlank(reqInfo.getEntranceTimeStr())) {
+			reqInfo.setEntranceTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getEntranceTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+		}
+		
+		reqInfo.setType(3); // 1艺人；2租借；3策划/创意；4婚礼/派对
+		
+		if(actorInfoService.selectById(reqInfo.getCreater()) == null) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "创建者不存在，请检查creater参数", null);
+			return;		
+		}
+		
+		List<String> picUuidList = new ArrayList<String>();
+		if(imageFiles != null && imageFiles.length > 0){
+			for(MultipartFile multipartFile : imageFiles){
+				if(multipartFile == null){
+					continue;
+				}
+				SystemPictureInfo pictureInfo = this.uploadFile2("hostAnnouncement", multipartFile);
+				picUuidList.add(pictureInfo.getUuid());
+			}
+		}
+
+		int ret = announceInfoService.addAnnouncement(reqInfo, StringUtils.split(publicTypeIds,','), picUuidList.toArray(new String[0]));
+
+		if(ret > 0){
+			this.writeJsonObject(response, AppRetCode.NORMAL, AppRetCode.NORMAL_TEXT, reqInfo);
+		}else {
+			this.writeJsonObject(response, AppRetCode.ERROR, "添加通告失败！", null);
+		}
+	}
+	/**
+	 * 
+	 * @Title: addZzAnnouncement
+	 * @Description: 添加(专职)通告
+	 * @return JSON
+	 * @author CrazyT
+	 * 
+	 */	
+	@RequestMapping(value = "addZzAnnouncement")
+	public void addZzAnnouncement(HttpServletRequest request, HttpServletResponse response, 
+			AnnounceInfo reqInfo,String publicTypeIds, @RequestParam(required = false) MultipartFile[] imageFiles) {
+		if(reqInfo == null) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少通告相关参数", null);
+			return;
+		}
+		
+		if(StringUtils.isBlank(reqInfo.getTitle())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少title参数", null);
+			return;
+		}
+		
+		if(StringUtils.isBlank(reqInfo.getName())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少name参数", null);
+			return;
+		}
+
+		if(StringUtils.isBlank(reqInfo.getShowTimeStr())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少showTimeStr参数", null);
+			return;
+		}
+
+		if(StringUtils.isBlank(reqInfo.getCity())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少city参数", null);
+			return;
+		}
+		
+		if(StringUtils.isBlank(reqInfo.getCreater())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少creater参数", null);
+			return;
+		}
+		
+		if(StringUtils.isNotBlank(reqInfo.getShowTimeStr())) {
+			reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+		}
+
+		if(StringUtils.isNotBlank(reqInfo.getEntranceTimeStr())) {
+			reqInfo.setEntranceTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getEntranceTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+		}
+		
+		reqInfo.setType(4); // 1艺人；2租借；3策划/创意；4婚礼/派对
+		
+		if(actorInfoService.selectById(reqInfo.getCreater()) == null) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "创建者不存在，请检查creater参数", null);
+			return;		
+		}
+		
+		List<String> picUuidList = new ArrayList<String>();
+		if(imageFiles != null && imageFiles.length > 0){
+			for(MultipartFile multipartFile : imageFiles){
+				if(multipartFile == null){
+					continue;
+				}
+				SystemPictureInfo pictureInfo = this.uploadFile2("hostAnnouncement", multipartFile);
+				picUuidList.add(pictureInfo.getUuid());
+			}
+		}
+
+		int ret = announceInfoService.addAnnouncement(reqInfo, StringUtils.split(publicTypeIds,','), picUuidList.toArray(new String[0]));
+
+		if(ret > 0){
+			this.writeJsonObject(response, AppRetCode.NORMAL, AppRetCode.NORMAL_TEXT, reqInfo);
+		}else {
+			this.writeJsonObject(response, AppRetCode.ERROR, "添加通告失败！", null);
+		}
+	}
+	/**
+	 * 
+	 * @Title: addAhAnnouncement
+	 * @Description: 添加(爱好)通告
+	 * @return JSON
+	 * @author CrazyT
+	 * 
+	 */	
+	@RequestMapping(value = "addAhAnnouncement")
+	public void addAhAnnouncement(HttpServletRequest request, HttpServletResponse response, 
+			AnnounceInfo reqInfo,String publicTypeIds, @RequestParam(required = false) MultipartFile[] imageFiles) {
+		if(reqInfo == null) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少通告相关参数", null);
+			return;
+		}
+		
+		if(StringUtils.isBlank(reqInfo.getTitle())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少title参数", null);
+			return;
+		}
+		
+		if(StringUtils.isBlank(reqInfo.getName())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少name参数", null);
+			return;
+		}
+
+		if(StringUtils.isBlank(reqInfo.getShowTimeStr())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少showTimeStr参数", null);
+			return;
+		}
+
+		if(StringUtils.isBlank(reqInfo.getCity())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少city参数", null);
+			return;
+		}
+		
+		if(StringUtils.isBlank(reqInfo.getCreater())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少creater参数", null);
+			return;
+		}
+		
+		if(StringUtils.isNotBlank(reqInfo.getShowTimeStr())) {
+			reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+		}
+
+		if(StringUtils.isNotBlank(reqInfo.getEntranceTimeStr())) {
+			reqInfo.setEntranceTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getEntranceTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+		}
+		
+		reqInfo.setType(6); // 1艺人；2租借；3策划/创意；4婚礼/派对
+		
+		if(actorInfoService.selectById(reqInfo.getCreater()) == null) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "创建者不存在，请检查creater参数", null);
+			return;		
+		}
+		
+		List<String> picUuidList = new ArrayList<String>();
+		if(imageFiles != null && imageFiles.length > 0){
+			for(MultipartFile multipartFile : imageFiles){
+				if(multipartFile == null){
+					continue;
+				}
+				SystemPictureInfo pictureInfo = this.uploadFile2("hostAnnouncement", multipartFile);
+				picUuidList.add(pictureInfo.getUuid());
+			}
+		}
+
+		int ret = announceInfoService.addAnnouncement(reqInfo, StringUtils.split(publicTypeIds,','), picUuidList.toArray(new String[0]));
+
+		if(ret > 0){
+			this.writeJsonObject(response, AppRetCode.NORMAL, AppRetCode.NORMAL_TEXT, reqInfo);
+		}else {
+			this.writeJsonObject(response, AppRetCode.ERROR, "添加通告失败！", null);
+		}
+	}
+	/**
+	 * 
+	 * @Title: addZpAnnouncement
+	 * @Description: 添加(作品)通告
+	 * @return JSON
+	 * @author CrazyT
+	 * 
+	 */	
+	@RequestMapping(value = "addZpAnnouncement")
+	public void addZpAnnouncement(HttpServletRequest request, HttpServletResponse response, 
+			AnnounceInfo reqInfo,String publicTypeIds, @RequestParam(required = false) MultipartFile[] imageFiles) {
+		if(reqInfo == null) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少通告相关参数", null);
+			return;
+		}
+		
+		if(StringUtils.isBlank(reqInfo.getTitle())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少title参数", null);
+			return;
+		}
+		
+		if(StringUtils.isBlank(reqInfo.getName())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少name参数", null);
+			return;
+		}
+
+		if(StringUtils.isBlank(reqInfo.getShowTimeStr())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少showTimeStr参数", null);
+			return;
+		}
+
+		if(StringUtils.isBlank(reqInfo.getCity())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少city参数", null);
+			return;
+		}
+		
+		if(StringUtils.isBlank(reqInfo.getCreater())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少creater参数", null);
+			return;
+		}
+		
+		if(StringUtils.isNotBlank(reqInfo.getShowTimeStr())) {
+			reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+		}
+
+		if(StringUtils.isNotBlank(reqInfo.getEntranceTimeStr())) {
+			reqInfo.setEntranceTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getEntranceTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+		}
+		
+		reqInfo.setType(7); // 1艺人；2租借；3策划/创意；4婚礼/派对
+		
+		if(actorInfoService.selectById(reqInfo.getCreater()) == null) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "创建者不存在，请检查creater参数", null);
+			return;		
+		}
+		
+		List<String> picUuidList = new ArrayList<String>();
+		if(imageFiles != null && imageFiles.length > 0){
+			for(MultipartFile multipartFile : imageFiles){
+				if(multipartFile == null){
+					continue;
+				}
+				SystemPictureInfo pictureInfo = this.uploadFile2("hostAnnouncement", multipartFile);
+				picUuidList.add(pictureInfo.getUuid());
+			}
+		}
+
+		int ret = announceInfoService.addAnnouncement(reqInfo, StringUtils.split(publicTypeIds,','), picUuidList.toArray(new String[0]));
+
+		if(ret > 0){
+			this.writeJsonObject(response, AppRetCode.NORMAL, AppRetCode.NORMAL_TEXT, reqInfo);
+		}else {
+			this.writeJsonObject(response, AppRetCode.ERROR, "添加通告失败！", null);
+		}
+	}
+	/**
+	 * 
+	 * @Title: addGyAnnouncement
+	 * @Description: 添加(公益)通告
+	 * @return JSON
+	 * @author CrazyT
+	 * 
+	 */	
+	@RequestMapping(value = "addGyAnnouncement")
+	public void addGyAnnouncement(HttpServletRequest request, HttpServletResponse response, 
+			AnnounceInfo reqInfo,String publicTypeIds, @RequestParam(required = false) MultipartFile[] imageFiles) {
+		if(reqInfo == null) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少通告相关参数", null);
+			return;
+		}
+		
+		if(StringUtils.isBlank(reqInfo.getTitle())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少title参数", null);
+			return;
+		}
+		
+		if(StringUtils.isBlank(reqInfo.getName())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少name参数", null);
+			return;
+		}
+
+		if(StringUtils.isBlank(reqInfo.getShowTimeStr())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少showTimeStr参数", null);
+			return;
+		}
+
+		if(StringUtils.isBlank(reqInfo.getCity())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少city参数", null);
+			return;
+		}
+		
+		if(StringUtils.isBlank(reqInfo.getCreater())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少creater参数", null);
+			return;
+		}
+		
+		if(StringUtils.isNotBlank(reqInfo.getShowTimeStr())) {
+			reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+		}
+
+		if(StringUtils.isNotBlank(reqInfo.getEntranceTimeStr())) {
+			reqInfo.setEntranceTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getEntranceTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+		}
+		
+		reqInfo.setType(8); // 1艺人；2租借；3策划/创意；4婚礼/派对
+		
+		if(actorInfoService.selectById(reqInfo.getCreater()) == null) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "创建者不存在，请检查creater参数", null);
+			return;		
+		}
+		
+		List<String> picUuidList = new ArrayList<String>();
+		if(imageFiles != null && imageFiles.length > 0){
+			for(MultipartFile multipartFile : imageFiles){
+				if(multipartFile == null){
+					continue;
+				}
+				SystemPictureInfo pictureInfo = this.uploadFile2("hostAnnouncement", multipartFile);
+				picUuidList.add(pictureInfo.getUuid());
+			}
+		}
+
+		int ret = announceInfoService.addAnnouncement(reqInfo, StringUtils.split(publicTypeIds,','), picUuidList.toArray(new String[0]));
+
+		if(ret > 0){
+			this.writeJsonObject(response, AppRetCode.NORMAL, AppRetCode.NORMAL_TEXT, reqInfo);
+		}else {
+			this.writeJsonObject(response, AppRetCode.ERROR, "添加通告失败！", null);
+		}
+	}
+	/**
+	 * 
+	 * @Title: addShAnnouncement
+	 * @Description: 添加(生活)通告
+	 * @return JSON
+	 * @author CrazyT
+	 * 
+	 */	
+	@RequestMapping(value = "addShAnnouncement")
+	public void addShAnnouncement(HttpServletRequest request, HttpServletResponse response, 
+			AnnounceInfo reqInfo,String publicTypeIds, @RequestParam(required = false) MultipartFile[] imageFiles) {
+		if(reqInfo == null) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少通告相关参数", null);
+			return;
+		}
+		
+		if(StringUtils.isBlank(reqInfo.getTitle())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少title参数", null);
+			return;
+		}
+		
+		if(StringUtils.isBlank(reqInfo.getName())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少name参数", null);
+			return;
+		}
+
+		if(StringUtils.isBlank(reqInfo.getShowTimeStr())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少showTimeStr参数", null);
+			return;
+		}
+
+		if(StringUtils.isBlank(reqInfo.getCity())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少city参数", null);
+			return;
+		}
+		
+		if(StringUtils.isBlank(reqInfo.getCreater())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少creater参数", null);
+			return;
+		}
+		
+		if(StringUtils.isNotBlank(reqInfo.getShowTimeStr())) {
+			reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+		}
+
+		if(StringUtils.isNotBlank(reqInfo.getEntranceTimeStr())) {
+			reqInfo.setEntranceTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getEntranceTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+		}
+		
+		reqInfo.setType(9); // 1艺人；2租借；3策划/创意；4婚礼/派对
+		
+		if(actorInfoService.selectById(reqInfo.getCreater()) == null) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "创建者不存在，请检查creater参数", null);
+			return;		
+		}
+		
+		List<String> picUuidList = new ArrayList<String>();
+		if(imageFiles != null && imageFiles.length > 0){
+			for(MultipartFile multipartFile : imageFiles){
+				if(multipartFile == null){
+					continue;
+				}
+				SystemPictureInfo pictureInfo = this.uploadFile2("hostAnnouncement", multipartFile);
+				picUuidList.add(pictureInfo.getUuid());
+			}
+		}
+
+		int ret = announceInfoService.addAnnouncement(reqInfo, StringUtils.split(publicTypeIds,','), picUuidList.toArray(new String[0]));
+
+		if(ret > 0){
+			this.writeJsonObject(response, AppRetCode.NORMAL, AppRetCode.NORMAL_TEXT, reqInfo);
+		}else {
+			this.writeJsonObject(response, AppRetCode.ERROR, "添加通告失败！", null);
+		}
+	}
+	/**
+	 * 
+	 * @Title: addJyAnnouncement
+	 * @Description: 添加(交友)通告
+	 * @return JSON
+	 * @author CrazyT
+	 * 
+	 */	
+	@RequestMapping(value = "addJyAnnouncement")
+	public void addJyAnnouncement(HttpServletRequest request, HttpServletResponse response, 
+			AnnounceInfo reqInfo,String publicTypeIds, @RequestParam(required = false) MultipartFile[] imageFiles) {
+		if(reqInfo == null) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少通告相关参数", null);
+			return;
+		}
+		
+		if(StringUtils.isBlank(reqInfo.getTitle())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少title参数", null);
+			return;
+		}
+		
+		if(StringUtils.isBlank(reqInfo.getName())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少name参数", null);
+			return;
+		}
+
+		if(StringUtils.isBlank(reqInfo.getShowTimeStr())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少showTimeStr参数", null);
+			return;
+		}
+
+		if(StringUtils.isBlank(reqInfo.getCity())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少city参数", null);
+			return;
+		}
+		
+		if(StringUtils.isBlank(reqInfo.getCreater())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少creater参数", null);
+			return;
+		}
+		
+		if(StringUtils.isNotBlank(reqInfo.getShowTimeStr())) {
+			reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+		}
+
+		if(StringUtils.isNotBlank(reqInfo.getEntranceTimeStr())) {
+			reqInfo.setEntranceTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getEntranceTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+		}
+		
+		reqInfo.setType(10); // 1艺人；2租借；3策划/创意；4婚礼/派对
+		
+		if(actorInfoService.selectById(reqInfo.getCreater()) == null) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "创建者不存在，请检查creater参数", null);
+			return;		
+		}
+		
+		List<String> picUuidList = new ArrayList<String>();
+		if(imageFiles != null && imageFiles.length > 0){
+			for(MultipartFile multipartFile : imageFiles){
+				if(multipartFile == null){
+					continue;
+				}
+				SystemPictureInfo pictureInfo = this.uploadFile2("hostAnnouncement", multipartFile);
+				picUuidList.add(pictureInfo.getUuid());
+			}
+		}
+
+		int ret = announceInfoService.addAnnouncement(reqInfo, StringUtils.split(publicTypeIds,','), picUuidList.toArray(new String[0]));
+
+		if(ret > 0){
+			this.writeJsonObject(response, AppRetCode.NORMAL, AppRetCode.NORMAL_TEXT, reqInfo);
+		}else {
+			this.writeJsonObject(response, AppRetCode.ERROR, "添加通告失败！", null);
+		}
+	}
 }

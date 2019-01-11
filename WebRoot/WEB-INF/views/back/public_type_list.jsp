@@ -31,20 +31,28 @@
 		  });
 	  });
 	});
-	
+	//1艺人；2租借；3兼职；4专职；5秀一秀；6爱好；7作品；8公益；9生活；10交友
 	function formatType(value,row){
 		if(row.type == 1){
 			return '艺人';
 		}else if(row.type == 2){
 			return '租借';
 		}else if(row.type == 3){
-			return '策划/创意';
+			return '兼职';
 		}else if(row.type == 4){
-			return '婚礼/派对';
+			return '专职';
 		}else if(row.type == 5){
 			return '秀一秀';
 		}else if(row.type == 6){
-			return '场地';
+			return '爱好';
+		}else if(row.type == 7){
+			return '作品';
+		}else if(row.type == 8){
+			return '公益';
+		}else if(row.type == 9){
+			return '生活';
+		}else if(row.type == 10){
+			return '交友';
 		}
 		return '';
 	}
@@ -236,7 +244,7 @@ div#rMenu {
 			</table>
 		</div>
 			
-		<!-- <div title="策划/创意" style="padding: 10px;width:100%;height:100%;">
+		<div title="兼职" style="padding: 10px;width:100%;height:100%;">
 			<table id="dg3" class="easyui-datagrid" style="width:100%;height:100%"
 				data-options="url:'system/publicTypeAjaxPage.do?type=3', iconCls:'icon-save', 
 				rownumbers:true, pagination:true, singleSelect:true,idField:'id',onLoadSuccess:renderUI">
@@ -245,13 +253,14 @@ div#rMenu {
 						<th data-options="field:'id',hidden:true"></th>
 						<th data-options="field:'type',align:'center',sortable:true,formatter:formatType" style="width: 20%;">发布类型</th>
 						<th data-options="field:'name',align:'center',sortable:true" style="width: 20%;">发布类型名称</th>
+						<th data-options="field:'power',align:'center',sortable:true" style="width: 20%;">权重</th>
 						<th data-options="field:'options',align:'center',sortable:true,formatter:formatOptions" style="width: 30%;">操作</th>
 					</tr>
 				</thead>
 			</table>
 		</div>
 			
-		<div title="婚礼/派对" style="padding: 10px;width:100%;height:100%;">
+		<div title="专职" style="padding: 10px;width:100%;height:100%;">
 			<table id="dg4" class="easyui-datagrid" style="width:100%;height:100%"
 				data-options="url:'system/publicTypeAjaxPage.do?type=4', iconCls:'icon-save', 
 				rownumbers:true, pagination:true, singleSelect:true,idField:'id',onLoadSuccess:renderUI">
@@ -260,11 +269,12 @@ div#rMenu {
 						<th data-options="field:'id',hidden:true"></th>
 						<th data-options="field:'type',align:'center',sortable:true,formatter:formatType" style="width: 20%;">发布类型</th>
 						<th data-options="field:'name',align:'center',sortable:true" style="width: 20%;">发布类型名称</th>
+						<th data-options="field:'power',align:'center',sortable:true" style="width: 20%;">权重</th>
 						<th data-options="field:'options',align:'center',sortable:true,formatter:formatOptions" style="width: 30%;">操作</th>
 					</tr>
 				</thead>
 			</table>
-		</div> -->
+		</div>
 		<div title="秀一秀" style="padding: 10px;width:100%;height:100%;">
 			<table id="dg5" class="easyui-datagrid" style="width:100%;height:100%"
 				data-options="url:'system/publicTypeAjaxPage.do?type=5', iconCls:'icon-save', 
@@ -280,7 +290,8 @@ div#rMenu {
 				</thead>
 			</table>
 		</div>
-		<!-- <div title="场地" style="padding: 10px;width:100%;height:100%;">
+		
+		<div title="爱好" style="padding: 10px;width:100%;height:100%;">
 			<table id="dg6" class="easyui-datagrid" style="width:100%;height:100%"
 				data-options="url:'system/publicTypeAjaxPage.do?type=6', iconCls:'icon-save', 
 				rownumbers:true, pagination:true, singleSelect:true,idField:'id',onLoadSuccess:renderUI">
@@ -289,11 +300,76 @@ div#rMenu {
 						<th data-options="field:'id',hidden:true"></th>
 						<th data-options="field:'type',align:'center',sortable:true,formatter:formatType" style="width: 20%;">发布类型</th>
 						<th data-options="field:'name',align:'center',sortable:true" style="width: 20%;">发布类型名称</th>
+						<th data-options="field:'power',align:'center',sortable:true" style="width: 20%;">权重</th>
 						<th data-options="field:'options',align:'center',sortable:true,formatter:formatOptions" style="width: 30%;">操作</th>
 					</tr>
 				</thead>
 			</table>
-		</div> -->
+		</div>
+		
+		<div title="作品" style="padding: 10px;width:100%;height:100%;">
+			<table id="dg7" class="easyui-datagrid" style="width:100%;height:100%"
+				data-options="url:'system/publicTypeAjaxPage.do?type=7', iconCls:'icon-save', 
+				rownumbers:true, pagination:true, singleSelect:true,idField:'id',onLoadSuccess:renderUI">
+				<thead>
+					<tr>
+						<th data-options="field:'id',hidden:true"></th>
+						<th data-options="field:'type',align:'center',sortable:true,formatter:formatType" style="width: 20%;">发布类型</th>
+						<th data-options="field:'name',align:'center',sortable:true" style="width: 20%;">发布类型名称</th>
+						<th data-options="field:'power',align:'center',sortable:true" style="width: 20%;">权重</th>
+						<th data-options="field:'options',align:'center',sortable:true,formatter:formatOptions" style="width: 30%;">操作</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		
+		<div title="公益" style="padding: 10px;width:100%;height:100%;">
+			<table id="dg8" class="easyui-datagrid" style="width:100%;height:100%"
+				data-options="url:'system/publicTypeAjaxPage.do?type=8', iconCls:'icon-save', 
+				rownumbers:true, pagination:true, singleSelect:true,idField:'id',onLoadSuccess:renderUI">
+				<thead>
+					<tr>
+						<th data-options="field:'id',hidden:true"></th>
+						<th data-options="field:'type',align:'center',sortable:true,formatter:formatType" style="width: 20%;">发布类型</th>
+						<th data-options="field:'name',align:'center',sortable:true" style="width: 20%;">发布类型名称</th>
+						<th data-options="field:'power',align:'center',sortable:true" style="width: 20%;">权重</th>
+						<th data-options="field:'options',align:'center',sortable:true,formatter:formatOptions" style="width: 30%;">操作</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		
+		<div title="生活" style="padding: 10px;width:100%;height:100%;">
+			<table id="dg9" class="easyui-datagrid" style="width:100%;height:100%"
+				data-options="url:'system/publicTypeAjaxPage.do?type=9', iconCls:'icon-save', 
+				rownumbers:true, pagination:true, singleSelect:true,idField:'id',onLoadSuccess:renderUI">
+				<thead>
+					<tr>
+						<th data-options="field:'id',hidden:true"></th>
+						<th data-options="field:'type',align:'center',sortable:true,formatter:formatType" style="width: 20%;">发布类型</th>
+						<th data-options="field:'name',align:'center',sortable:true" style="width: 20%;">发布类型名称</th>
+						<th data-options="field:'power',align:'center',sortable:true" style="width: 20%;">权重</th>
+						<th data-options="field:'options',align:'center',sortable:true,formatter:formatOptions" style="width: 30%;">操作</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		
+		<div title="交友" style="padding: 10px;width:100%;height:100%;">
+			<table id="dg10" class="easyui-datagrid" style="width:100%;height:100%"
+				data-options="url:'system/publicTypeAjaxPage.do?type=10', iconCls:'icon-save', 
+				rownumbers:true, pagination:true, singleSelect:true,idField:'id',onLoadSuccess:renderUI">
+				<thead>
+					<tr>
+						<th data-options="field:'id',hidden:true"></th>
+						<th data-options="field:'type',align:'center',sortable:true,formatter:formatType" style="width: 20%;">发布类型</th>
+						<th data-options="field:'name',align:'center',sortable:true" style="width: 20%;">发布类型名称</th>
+						<th data-options="field:'power',align:'center',sortable:true" style="width: 20%;">权重</th>
+						<th data-options="field:'options',align:'center',sortable:true,formatter:formatOptions" style="width: 30%;">操作</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
 	</div>
 		<div id="dlg" class="easyui-dialog"
 		data-options="iconCls:'icon-save',resizable:true,modal:true"
@@ -308,10 +384,14 @@ div#rMenu {
 					>
 					<option value="1" selected="selected">艺人</option>
 					<option value="2" selected="selected">租借</option>
-					<option value="3" selected="selected">策划/创意</option>
-					<option value="4" selected="selected">婚礼/派对</option>
+					<option value="3" selected="selected">兼职</option>
+					<option value="4" selected="selected">专职</option>
 					<option value="5" selected="selected">秀一秀</option>
-					<option value="6" selected="selected">场地</option>
+					<option value="6" selected="selected">爱好</option>
+					<option value="7" selected="selected">作品</option>
+					<option value="8" selected="selected">公益</option>
+					<option value="9" selected="selected">生活</option>
+					<option value="10" selected="selected">交友</option>
 				</select>
 			</div>
 			<div class="fitem">

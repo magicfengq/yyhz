@@ -64,6 +64,48 @@ public class CardInfoController extends BaseController {
 		return "back/card/hlpd_card_list";
 	}
 	
+	@RequestMapping(value = "/jzCardList")
+	public String jzCardList(HttpServletRequest request,
+			HttpServletResponse response) {
+		return "back/card/jz_card_list";
+	}
+
+	@RequestMapping(value = "/zzCardList")
+	public String zzCardList(HttpServletRequest request,
+			HttpServletResponse response) {
+		return "back/card/zz_card_list";
+	}
+
+	@RequestMapping(value = "/ahCardList")
+	public String ahCardList(HttpServletRequest request,
+			HttpServletResponse response) {
+		return "back/card/ah_card_list";
+	}
+
+	@RequestMapping(value = "/zpCardList")
+	public String zpCardList(HttpServletRequest request,
+			HttpServletResponse response) {
+		return "back/card/zp_card_list";
+	}
+
+	@RequestMapping(value = "/gyCardList")
+	public String gyCardList(HttpServletRequest request,
+			HttpServletResponse response) {
+		return "back/card/gy_card_list";
+	}
+
+	@RequestMapping(value = "/shCardList")
+	public String shCardList(HttpServletRequest request,
+			HttpServletResponse response) {
+		return "back/card/sh_card_list";
+	}
+
+	@RequestMapping(value = "/jyCardList")
+	public String jyCardList(HttpServletRequest request,
+			HttpServletResponse response) {
+		return "back/card/jy_card_list";
+	}
+	
 	@RequestMapping(value = "/cardListDetail")
 	public String cardListDetail(HttpServletRequest request,HttpServletResponse response,String id,String type) {
 		request.setAttribute("id", id);
@@ -83,9 +125,21 @@ public class CardInfoController extends BaseController {
 		}else if("2".equals(type)){
 			return "back/card/sbfz_card_detail";
 		}else if("3".equals(type)){
-			return "back/card/chcy_card_detail";
+			//return "back/card/chcy_card_detail";
+			return "back/card/jz_card_detail";
 		}else if("4".equals(type)){
-			return "back/card/hlpd_card_detail";
+			//return "back/card/hlpd_card_detail";
+			return "back/card/zz_card_detail";
+		}else if("6".equals(type)){
+			return "back/card/ah_card_detail";
+		}else if("7".equals(type)){
+			return "back/card/zp_card_detail";
+		}else if("8".equals(type)){
+			return "back/card/gy_card_detail";
+		}else if("9".equals(type)){
+			return "back/card/sh_card_detail";
+		}else if("10".equals(type)){
+			return "back/card/jy_card_detail";
 		}
 		return null;
 	}

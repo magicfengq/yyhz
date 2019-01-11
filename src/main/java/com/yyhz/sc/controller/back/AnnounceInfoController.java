@@ -73,6 +73,50 @@ public class AnnounceInfoController extends BaseController {
 			HttpServletResponse response) {
 		return "/back/announce/hlpd_announce_list";
 	}
+	
+	@RequestMapping(value = "/jzAnnounceList")
+	public String jzAnnounceList(HttpServletRequest request,
+			HttpServletResponse response) {
+		return "/back/announce/jz_announce_list";
+	}
+
+	@RequestMapping(value = "/zzAnnounceList")
+	public String zzAnnounceList(HttpServletRequest request,
+			HttpServletResponse response) {
+		return "/back/announce/zz_announce_list";
+	}
+
+	@RequestMapping(value = "/ahAnnounceList")
+	public String ahAnnounceList(HttpServletRequest request,
+			HttpServletResponse response) {
+		return "/back/announce/ah_announce_list";
+	}
+
+	@RequestMapping(value = "/zpAnnounceList")
+	public String zpAnnounceList(HttpServletRequest request,
+			HttpServletResponse response) {
+		return "/back/announce/zp_announce_list";
+	}
+
+	@RequestMapping(value = "/gyAnnounceList")
+	public String gyAnnounceList(HttpServletRequest request,
+			HttpServletResponse response) {
+		return "/back/announce/gy_announce_list";
+	}
+
+	@RequestMapping(value = "/shAnnounceList")
+	public String shAnnounceList(HttpServletRequest request,
+			HttpServletResponse response) {
+		return "/back/announce/sh_announce_list";
+	}
+
+	@RequestMapping(value = "/jyAnnounceList")
+	public String jyAnnounceList(HttpServletRequest request,
+			HttpServletResponse response) {
+		return "/back/announce/jy_announce_list";
+	}
+	
+	
 	@RequestMapping(value = "/announceDetail")
 	public String announceDetail(HttpServletRequest request,
 			HttpServletResponse response,String type,String id) {
@@ -115,9 +159,21 @@ public class AnnounceInfoController extends BaseController {
 		}else if("2".equals(type)){
 			return "back/announce/sbfz_announce_detail";
 		}else if("3".equals(type)){
-			return "back/announce/chcy_announce_detail";
+			//return "back/announce/chcy_announce_detail";
+			return "back/announce/jz_announce_detail";
 		}else if("4".equals(type)){
-			return "back/announce/hlpd_announce_detail";
+			//return "back/announce/hlpd_announce_detail";
+			return "back/announce/zz_announce_detail";
+		}else if("6".equals(type)){
+			return "back/announce/ah_announce_detail";
+		}else if("7".equals(type)){
+			return "back/announce/zp_announce_detail";
+		}else if("8".equals(type)){
+			return "back/announce/gy_announce_detail";
+		}else if("9".equals(type)){
+			return "back/announce/sh_announce_detail";
+		}else if("10".equals(type)){
+			return "back/announce/jy_announce_detail";
 		}
 		return null;
 	}
