@@ -250,6 +250,9 @@
   						'${actorId}'
  					</foreach>
 				</if>
+				<if test=" actorId != null">
+					and not EXISTS (select (1) from black_list_info where show_info.creater = blackActorId and actorId = #{actorId})
+				</if>
 		</where>
 		<if test="sort != null">
 				order by ${sort} ${order}
@@ -307,6 +310,9 @@
 					<foreach item="actorId" index="index" collection="actorIdList" open="(" separator="," close=")">
   						#{actorId}
  					</foreach>
+				</if>
+				<if test=" actorId != null">
+					and not EXISTS (select (1) from black_list_info where show_info.creater = blackActorId and actorId = #{actorId})
 				</if>
 		</where>
 	</select>
@@ -371,11 +377,20 @@
 		FROM (SELECT @rowNo1 := @rowNo1 + 1 AS RowNo,a.id 
 				FROM `show_info` a,( SELECT @rowNo1 := 0 ) b 
 				WHERE a.type = 1 
+				<if test="creater!=null">and a.creater=#{creater}</if>
+				<if test=" actorId != null">
+					and not EXISTS (select (1) from black_list_info where a.creater = blackActorId and actorid = #{actorId})
+				</if>
 				ORDER BY a.createTime ${orderstr} ) t 
 		WHERE t.RowNo > (select k.RowNo 
 		        		from (SELECT  @rowNo:=@rowNo+1 as RowNo ,m.id
 		        				FROM `show_info`m , (select @rowNo:=0) n 
-		        				where m.type = 1 order by m.createTime ${orderstr}) k 
+		        				where m.type = 1 
+		        				<if test="creater!=null">and m.creater=#{creater}</if>
+		        				<if test=" actorId != null">
+									and not EXISTS (select (1) from black_list_info where m.creater = blackActorId and actorId = #{actorId})
+								</if>
+		        				order by m.createTime ${orderstr}) k 
 		        		where k.id = #{showId})
 		limit ${rowCount}
 	

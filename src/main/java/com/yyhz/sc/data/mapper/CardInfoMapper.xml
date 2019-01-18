@@ -27,6 +27,7 @@
 		<result property="creater" column="creater" />
 		<result property="createTime" column="createTime" />
 		<result property="status" column="status" />
+		<result property="hobby" column="hobby" />
 	</resultMap>
 	<resultMap id="cardInfo" type="com.yyhz.sc.data.model.CardInfo" extends="colomnResult">
 		<result property="cardRoleName" column="cardRoleName" />
@@ -60,7 +61,8 @@
 	     mutiImgUuid,
 	     creater,
 	     createTime,
-	     status
+	     status,
+	     hobby
 	 ]]>
 	</sql>
 	<insert id="insert">
@@ -88,6 +90,7 @@
 			     <if test="creater!=null">creater,</if>
 			     <if test="createTime!=null">createTime,</if>
 			     <if test="status!=null">status,</if>
+			     <if test="hobby!=null">hobby,</if>
 		</trim>
 	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
 			     <if test="id!=null">#{id},</if>
@@ -112,6 +115,7 @@
 			     <if test="creater!=null">#{creater},</if>
 			     <if test="createTime!=null">#{createTime},</if>
 			     <if test="status!=null">#{status},</if>
+			     <if test="hobby!=null">#{hobby},</if>
 		</trim>
 	</insert>
 
@@ -140,6 +144,7 @@
 			     <if test="creater!=null">creater=#{creater},</if>
 			     <if test="createTime!=null">createTime=#{createTime},</if>
 			     <if test="status!=null">status=#{status},</if>
+			     <if test="hobby!=null">hobby=#{hobby},</if>
 		</set>
 		where 
 	   		 id=#{id} 
@@ -194,6 +199,7 @@
 				c.creater,
 				c.createTime,
 				c.status,
+				c.hobby,
 				r.name as cardRoleName,
 				ai.authenticateLevel as authenticateLevel,
 				ai.name as createrName,
@@ -230,7 +236,10 @@
 			</if>
 			<if test=" authenticateLevel != null">
 				and ai.authenticateLevel=#{authenticateLevel}
-			</if>			
+			</if>	
+			<if test=" actorId != null">
+				and not EXISTS (select (1) from black_list_info where c.creater = blackActorId and actorId = #{actorId})
+			</if>		
 		</where>
 	 	group by c.id) sc 
 	 	left join card_picture cp on sc.id=cp.cardId
@@ -286,6 +295,7 @@
 				c.creater,
 				c.createTime,
 				c.status,
+				c.hobby,
 				r.name as cardRoleName,
 				group_concat(pt.name) as publicType
 			 	from card_info c
@@ -307,6 +317,9 @@
 					and c.detailRole like concat('%', #{detailRole}, '%') 
 				</when>
 			</choose>
+			<if test=" actorId != null">
+				and not EXISTS (select (1) from black_list_info where c.creater = blackActorId and actorId = #{actorId})
+			</if>
 		</where>
 	 	group by c.id) sc 
 		 	
@@ -416,6 +429,7 @@
 	     a.creater,
 	     a.createTime,
 	     a.status,
+	     a.hobby,
 	     b.name createrName
 			from card_info a
 			left join actor_info b on b.id=a.creater
@@ -594,6 +608,7 @@
 				c.creater,
 				c.createTime,
 				c.status,
+				c.hobby,
 				r.name as cardRoleName,
 				group_concat(spi.urlPath) as cardImgUrls
 			 	from card_info c
@@ -651,6 +666,7 @@
 			     <if test="creater!=null">creater=#{creater},</if>
 			     <if test="createTime!=null">createTime=#{createTime},</if>
 			     <if test="status!=null">status=#{status},</if>
+			     <if test="hobby!=null">hobby=#{hobby},</if>
 		</set>
 		where id in
 		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">

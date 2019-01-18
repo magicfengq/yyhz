@@ -35,6 +35,8 @@ public class CardInfo extends BaseEntity implements Serializable {
 	private java.util.Date createTime; // 创建时间
 	private java.lang.Integer status; // 状态 0正常；1已删除；
 	private java.lang.String createrName;//创建人名称
+	private java.lang.String hobby;//具体爱好
+	private java.lang.String actorId;//当前谁再看
 	
 	// 新增属性用于返回给前端
 	private String createrHeadUrl; // 创建人头像
@@ -555,5 +557,21 @@ public class CardInfo extends BaseEntity implements Serializable {
 		sb.append('}');
         return sb.toString();
     }
+
+	public java.lang.String getHobby() {
+		return hobby;
+	}
+
+	public void setHobby(java.lang.String hobby) {
+		this.hobby = hobby;
+	}
+
+	public java.lang.String getActorId() {
+		return actorId;
+	}
+
+	public void setActorId(java.lang.String actorId) {
+		this.actorId = actorId;
+	}
     
 }

@@ -176,7 +176,7 @@ public class AppAnnounceController extends BaseController {
 		if(req.getEnrollStatus() != null) {
 			condition.setEnrollStatus(req.getEnrollStatus());
 		}
-
+		condition.setActorId(actorId);//当前谁在看，用于黑名单
 		condition.setSort("createTime");// 默认按照创建时间逆序
 		
 		if(sortKey != null) {

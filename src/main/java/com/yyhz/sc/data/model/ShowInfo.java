@@ -26,7 +26,7 @@ public class ShowInfo extends BaseEntity implements Serializable {
 	private java.lang.String imgUuid; // 
 	private java.lang.String videoUuid; // 
 	private java.lang.String videoPreviewUuid;
-	
+	private String actorId;
 	private String status;
 	private String mobile;
 	private String userName;
@@ -353,5 +353,13 @@ public class ShowInfo extends BaseEntity implements Serializable {
 		sb.append('}');
         return sb.toString();
     }
+
+	public String getActorId() {
+		return actorId;
+	}
+
+	public void setActorId(String actorId) {
+		this.actorId = actorId;
+	}
     
 }

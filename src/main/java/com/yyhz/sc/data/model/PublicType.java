@@ -16,6 +16,7 @@ public class PublicType extends BaseEntity implements Serializable {
 	private java.lang.String name; // 类型名称
 	private java.lang.Integer status; // 0正常；1已删除
 	private java.lang.Integer power;
+	private java.lang.Integer childType;
 	/**
      * 获取主键属性
      *
@@ -107,6 +108,14 @@ public class PublicType extends BaseEntity implements Serializable {
 
 	public void setPower(java.lang.Integer power) {
 		this.power = power;
+	}
+
+	public java.lang.Integer getChildType() {
+		return childType;
+	}
+
+	public void setChildType(java.lang.Integer childType) {
+		this.childType = childType;
 	}
     
 }

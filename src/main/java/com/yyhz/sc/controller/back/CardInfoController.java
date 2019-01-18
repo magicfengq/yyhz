@@ -152,6 +152,7 @@ public class CardInfoController extends BaseController {
 		PageInfo<CardInfo> pageInfo = new PageInfo<CardInfo>();
 		pageInfo.setPage(page);
 		pageInfo.setPageSize(rows);
+		info.setStatus(0);
 		service.selectAll(info, pageInfo);
 		return pageInfo;
 	}

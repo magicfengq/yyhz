@@ -149,6 +149,9 @@
   						#{showId}
  					</foreach>
 				</if>
+				<if test=" actorId != null">
+					and not EXISTS (select (1) from black_list_info where show_comment.creater = blackActorId and actorId = #{actorId})
+				</if>
 		</where>
 		<if test="sort != null">
 				order by ${sort} ${order}
@@ -221,6 +224,9 @@
 				</if>
 				<if test=" showId != null and showId != '' ">
 					and showId=#{showId}
+				</if>
+				<if test=" actorId != null">
+					and not EXISTS (select (1) from black_list_info where show_comment.creater = blackActorId and actorId = #{actorId})
 				</if>
 		</where>
 		group by showId

@@ -24,6 +24,8 @@
 		<result property="createTime" column="createTime" />
 		<result property="enrollNum" column="enrollNum" />
 		<result property="note" column="note" />
+		<result property="clothesColor" column="clothesColor" />
+		
 	</resultMap>
 
 	<resultMap id="announceInfo" type="com.yyhz.sc.data.model.AnnounceInfo" extends="colomnResult">
@@ -59,7 +61,8 @@
 	     creater,
 	     note,
 	     createTime,
-	     enrollNum
+	     enrollNum,
+	     clothesColor
 	 ]]>
 	</sql>
 	<insert id="insert">
@@ -84,6 +87,8 @@
 			     <if test="createTime!=null">createTime,</if>
 			     <if test="enrollNum!=null">enrollNum,</if>
 			     <if test="note!=null">note,</if>
+			     <if test="clothesColor!=null">clothesColor,</if>
+			     
 		</trim>
 	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
 			     <if test="id!=null">#{id},</if>
@@ -105,6 +110,7 @@
 			     <if test="createTime!=null">#{createTime},</if>
 			     <if test="enrollNum!=null">#{enrollNum},</if>
 			     <if test="note!=null">#{note},</if>
+			     <if test="clothesColor!=null">#{clothesColor},</if>
 		</trim>
 	</insert>
 
@@ -242,6 +248,7 @@
 					a.createTime,
 					a.enrollNum,
 					a.note,
+					a.clothesColor,
 					ai.name as createrName,
 					ai.authenticateLevel as authenticateLevel,
 					group_concat(pt.id) as publicType,
@@ -279,6 +286,9 @@
 				<if test=" authenticateLevel != null">
 					and ai.authenticateLevel=#{authenticateLevel}
 				</if>
+				<if test=" actorId != null">
+					and not EXISTS (select (1) from black_list_info where a.creater = blackActorId and actorid = #{actorId})
+				</if>	
 			</where>
 			group by a.id) t
 			left join actor_comment ac on t.creater = ac.actorId
@@ -322,6 +332,7 @@
 					a.creater,
 					a.createTime,
 					a.note,
+					a.clothesColor,
 					ae.checkStatus as enrollActorCheckState,
 					ai.name as createrName,
 					ai.authenticateLevel as authenticateLevel,
@@ -368,6 +379,7 @@
 				a.createTime,
 				a.enrollNum,
 				a.note,
+					a.clothesColor,
 				ai.name as createrName,
 				ai.authenticateLevel as authenticateLevel,
 				spi.urlPath as headImgUrl,

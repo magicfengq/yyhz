@@ -297,7 +297,7 @@ public class AppCardController extends BaseController {
 	 */
 	@RequestMapping(value = "getCardList")
 	public void getCardList(HttpServletRequest request, HttpServletResponse response, 
-			CardInfo req ,Integer page, Integer pageSize, Integer sortKey) {
+			CardInfo req ,Integer page, Integer pageSize, Integer sortKey,String actorId) {
 		
 		if (page == null) {
 			writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少page参数！", null);
@@ -334,6 +334,7 @@ public class AppCardController extends BaseController {
 		if(StringUtils.isNotBlank(req.getPublicType())) {
 			condition.setPublicType(req.getPublicType());
 		}
+		condition.setActorId(actorId);//当前谁在看，用于黑名单
 		if(sortKey != null) {
 			if(sortKey == 1) {
 				condition.setSort("createTime");
@@ -418,7 +419,7 @@ public class AppCardController extends BaseController {
 	 * 
 	 */
 	public void searchCard(HttpServletRequest request, HttpServletResponse response, 
-			String keyword ,Integer page, Integer pageSize) {
+			String keyword ,Integer page, Integer pageSize,String actorId) {
 		
 		if (StringUtils.isBlank(keyword)) {
 			writeJsonObject(response, AppRetCode.PARAM_ERROR, "参数keyWord错误！", null);
@@ -456,7 +457,7 @@ public class AppCardController extends BaseController {
 		if(StringUtils.contains("婚礼/派对", keyword)) {
 			condition.setType(4);
 		}
-
+		condition.setActorId(actorId);//当前谁在看，用于黑名单
 		condition.setDetailRole(keyword);
 		
 		condition.setStatus(0); // 状态 0正常；1已删除；

@@ -32,7 +32,8 @@ public class AnnounceInfo extends BaseEntity implements Serializable {
 	private java.lang.String creater; // 创建人
 	private java.util.Date createTime; // 创建时间
 	private java.lang.Integer enrollNum; // 报名人数
-	
+	private java.lang.String clothesColor; // 衣服颜色
+	private java.lang.String actorId;
 	private String showTimeStr; // 活动时间字符串
 	private String entranceTimeStr; // 艺人的进场时间字符串
 	private String keyword; // 搜索时候使用的关键字
@@ -497,5 +498,21 @@ public class AnnounceInfo extends BaseEntity implements Serializable {
 		sb.append('}');
         return sb.toString();
     }
+
+	public java.lang.String getClothesColor() {
+		return clothesColor;
+	}
+
+	public void setClothesColor(java.lang.String clothesColor) {
+		this.clothesColor = clothesColor;
+	}
+
+	public java.lang.String getActorId() {
+		return actorId;
+	}
+
+	public void setActorId(java.lang.String actorId) {
+		this.actorId = actorId;
+	}
     
 }

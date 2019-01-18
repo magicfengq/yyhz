@@ -192,7 +192,7 @@ public class AppShowInfoController extends BaseController {
 			}
 			info.setActorIdList(actorIdList);
 		}
-		
+		info.setActorId(actorId);
 		//过滤角色
 		if(StringUtils.isNotBlank(roleType)){
 			
@@ -254,6 +254,7 @@ public class AppShowInfoController extends BaseController {
 		Map<String,Object> commentParams = new HashMap<String,Object>();
 		commentParams.put("showIdList", showIdList);
 		commentParams.put("status", 0);
+		commentParams.put("actorId", actorId);
 		List<ShowComment> showsCommentNum = showCommentService.selectShowCommentNum(commentParams);
 		Map<String,Long> showCommentNumMap = new HashMap<String,Long>();
 		if(showsCommentNum != null && !showsCommentNum.isEmpty()){
@@ -481,6 +482,7 @@ public class AppShowInfoController extends BaseController {
 		//关联评论
 		Map<String,Object> commentParams = new HashMap<String,Object>();
 		commentParams.put("showId", showInfo.getId());
+		commentParams.put("actorId", actorId);
 		List<ShowComment> showsCommentNum = showCommentService.selectShowCommentNum(commentParams);
 		if(showsCommentNum != null && !showsCommentNum.isEmpty()){
 			ShowComment showComment = showsCommentNum.get(0);
@@ -532,6 +534,7 @@ public class AppShowInfoController extends BaseController {
 		info.setStatus(0);
 		info.setSort("createTime");
 		info.setOrder("desc");
+		info.setActorId(actorId);
 		showCommentService.selectAll(info, pageInfo);
 		List<ShowComment> list = pageInfo.getRows();
 		if(list == null || list.isEmpty()){
@@ -915,7 +918,7 @@ public class AppShowInfoController extends BaseController {
 	 */
 	@RequestMapping(value = "api/getShowDetailNew")
 	@ResponseBody
-	public Map<String,Object> getShowDetailNew(HttpServletRequest request, HttpServletResponse response,String showId,String actorId,String orderstr,String rowCount) {
+	public Map<String,Object> getShowDetailNew(HttpServletRequest request, HttpServletResponse response,String showId,String actorId,String orderstr,String rowCount,String creater) {
 		
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		List<Map<String, Object>> dataMapList = new ArrayList<Map<String,Object>>();
@@ -923,6 +926,8 @@ public class AppShowInfoController extends BaseController {
 				
 		Map<String,Object> param = new HashMap<String,Object>();
 		param.put("showId", showId);
+		param.put("actorId", actorId);
+		param.put("creater", creater);
 		param.put("orderstr", orderstr);
 		param.put("rowCount", rowCount);
 		List<ShowInfo> list = showInfoService.selectTurnList(param);
@@ -994,6 +999,7 @@ public class AppShowInfoController extends BaseController {
 			//关联评论
 			Map<String,Object> commentParams = new HashMap<String,Object>();
 			commentParams.put("showId", showInfo.getId());
+			commentParams.put("actorId", actorId);
 			List<ShowComment> showsCommentNum = showCommentService.selectShowCommentNum(commentParams);
 			if(showsCommentNum != null && !showsCommentNum.isEmpty()){
 				ShowComment showComment = showsCommentNum.get(0);
@@ -1049,7 +1055,7 @@ public class AppShowInfoController extends BaseController {
 	 */
 	@RequestMapping(value = "api/getShowDetailBoth")
 	@ResponseBody
-	public Map<String,Object> getShowDetailBoth(HttpServletRequest request, HttpServletResponse response,String showId,String actorId,String ascCount,String descCount) {
+	public Map<String,Object> getShowDetailBoth(HttpServletRequest request, HttpServletResponse response,String showId,String actorId,String ascCount,String descCount,String creater) {
 		
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		List<Map<String, Object>> dataMapList = new ArrayList<Map<String,Object>>();
@@ -1057,12 +1063,16 @@ public class AppShowInfoController extends BaseController {
 		
 			Map<String,Object> param = new HashMap<String,Object>();
 			param.put("showId", showId);
+			param.put("actorId", actorId);
+			param.put("creater", creater);
 			param.put("orderstr", "asc");
 			param.put("rowCount", ascCount);
 			List<ShowInfo> list = showInfoService.selectTurnList(param);
 			int upCount= list.size();
 			list.add(showInfoService.selectById(showId));
 			param.put("showId", showId);
+			param.put("actorId", actorId);
+			param.put("creater", creater);
 			param.put("orderstr", "desc");
 			param.put("rowCount", descCount);
 			List<ShowInfo> list2 = showInfoService.selectTurnList(param);
@@ -1145,6 +1155,7 @@ public class AppShowInfoController extends BaseController {
 				//关联评论
 				Map<String,Object> commentParams = new HashMap<String,Object>();
 				commentParams.put("showId", showInfo.getId());
+				commentParams.put("actorId", actorId);
 				List<ShowComment> showsCommentNum = showCommentService.selectShowCommentNum(commentParams);
 				if(showsCommentNum != null && !showsCommentNum.isEmpty()){
 					ShowComment showComment = showsCommentNum.get(0);
@@ -1312,6 +1323,7 @@ public class AppShowInfoController extends BaseController {
 		info.setOrder("desc");
 		info.setCreater(actorId);
 		
+		
 		showInfoService.selectAll(info, pageInfo);
 		List<ShowInfo> list = pageInfo.getRows();
 		if(list == null || list.isEmpty()){
@@ -1339,6 +1351,7 @@ public class AppShowInfoController extends BaseController {
 		Map<String,Object> commentParams = new HashMap<String,Object>();
 		commentParams.put("showIdList", showIdList);
 		commentParams.put("status", 0);
+		commentParams.put("actorId", actorId);
 		List<ShowComment> showsCommentNum = showCommentService.selectShowCommentNum(commentParams);
 		Map<String,Long> showCommentNumMap = new HashMap<String,Long>();
 		if(showsCommentNum != null && !showsCommentNum.isEmpty()){
