@@ -306,7 +306,8 @@ public class AppAnnounceController extends BaseController {
 		}
 		
 		if(StringUtils.isNotBlank(reqInfo.getShowTimeStr())) {
-			reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+			//reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+			reqInfo.setShowTime(reqInfo.getShowTimeStr());
 		}
 
 		if(StringUtils.isNotBlank(reqInfo.getEntranceTimeStr())) {
@@ -382,7 +383,8 @@ public class AppAnnounceController extends BaseController {
 		}
 		
 		if(StringUtils.isNotBlank(reqInfo.getShowTimeStr())) {
-			reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+			//reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+			reqInfo.setShowTime(reqInfo.getShowTimeStr());
 		}
 		
 		if(StringUtils.isNotBlank(reqInfo.getEntranceTimeStr())) {
@@ -459,7 +461,8 @@ public class AppAnnounceController extends BaseController {
 		}
 		
 		if(StringUtils.isNotBlank(reqInfo.getShowTimeStr())) {
-			reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+			//reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+			reqInfo.setShowTime(reqInfo.getShowTimeStr());
 		}
 		
 		if(StringUtils.isNotBlank(reqInfo.getEntranceTimeStr())) {
@@ -541,7 +544,8 @@ public class AppAnnounceController extends BaseController {
 		}
 		
 		if(StringUtils.isNotBlank(reqInfo.getShowTimeStr())) {
-			reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+			//reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+			reqInfo.setShowTime(reqInfo.getShowTimeStr());
 		}
 		
 		if(StringUtils.isNotBlank(reqInfo.getEntranceTimeStr())) {
@@ -925,7 +929,8 @@ public class AppAnnounceController extends BaseController {
 		}
 		
 		if(StringUtils.isNotBlank(reqInfo.getShowTimeStr())) {
-			reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+			//reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+			reqInfo.setShowTime(reqInfo.getShowTimeStr());
 		}
 
 		if(StringUtils.isNotBlank(reqInfo.getEntranceTimeStr())) {
@@ -1000,7 +1005,8 @@ public class AppAnnounceController extends BaseController {
 		}
 		
 		if(StringUtils.isNotBlank(reqInfo.getShowTimeStr())) {
-			reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+			//reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+			reqInfo.setShowTime(reqInfo.getShowTimeStr());
 		}
 
 		if(StringUtils.isNotBlank(reqInfo.getEntranceTimeStr())) {
@@ -1075,7 +1081,9 @@ public class AppAnnounceController extends BaseController {
 		}
 		
 		if(StringUtils.isNotBlank(reqInfo.getShowTimeStr())) {
-			reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+			//reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+			reqInfo.setShowTime(reqInfo.getShowTimeStr());
+			//reqInfo.setShowTime(reqInfo.getShowTimeStr());
 		}
 
 		if(StringUtils.isNotBlank(reqInfo.getEntranceTimeStr())) {
@@ -1150,7 +1158,8 @@ public class AppAnnounceController extends BaseController {
 		}
 		
 		if(StringUtils.isNotBlank(reqInfo.getShowTimeStr())) {
-			reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+			//reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+			reqInfo.setShowTime(reqInfo.getShowTimeStr());
 		}
 
 		if(StringUtils.isNotBlank(reqInfo.getEntranceTimeStr())) {
@@ -1225,7 +1234,8 @@ public class AppAnnounceController extends BaseController {
 		}
 		
 		if(StringUtils.isNotBlank(reqInfo.getShowTimeStr())) {
-			reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+			//reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+			reqInfo.setShowTime(reqInfo.getShowTimeStr());
 		}
 
 		if(StringUtils.isNotBlank(reqInfo.getEntranceTimeStr())) {
@@ -1300,7 +1310,8 @@ public class AppAnnounceController extends BaseController {
 		}
 		
 		if(StringUtils.isNotBlank(reqInfo.getShowTimeStr())) {
-			reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+			//reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+			reqInfo.setShowTime(reqInfo.getShowTimeStr());
 		}
 
 		if(StringUtils.isNotBlank(reqInfo.getEntranceTimeStr())) {
@@ -1375,7 +1386,8 @@ public class AppAnnounceController extends BaseController {
 		}
 		
 		if(StringUtils.isNotBlank(reqInfo.getShowTimeStr())) {
-			reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+			//reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+			reqInfo.setShowTime(reqInfo.getShowTimeStr());
 		}
 
 		if(StringUtils.isNotBlank(reqInfo.getEntranceTimeStr())) {

@@ -29,6 +29,8 @@ import com.yyhz.sc.data.model.ActorRole;
 import com.yyhz.sc.data.model.AnnouceEnroll;
 import com.yyhz.sc.data.model.AnnounceInfo;
 import com.yyhz.sc.data.model.AuthenticateApply;
+import com.yyhz.sc.data.model.BlackListInfo;
+import com.yyhz.sc.data.model.ContentReportInfo;
 import com.yyhz.sc.data.model.Feedback;
 import com.yyhz.sc.data.model.SystemPictureInfo;
 import com.yyhz.sc.services.ActorCollectService;
@@ -38,10 +40,11 @@ import com.yyhz.sc.services.ActorRoleService;
 import com.yyhz.sc.services.AnnouceEnrollService;
 import com.yyhz.sc.services.AnnounceInfoService;
 import com.yyhz.sc.services.AuthenticateApplyService;
+import com.yyhz.sc.services.BlackListInfoService;
+import com.yyhz.sc.services.ContentReportInfoService;
 import com.yyhz.sc.services.FeedbackService;
 import com.yyhz.utils.DateFormatUtil;
 import com.yyhz.utils.DateUtils;
-import com.yyhz.utils.EasemobUtil;
 import com.yyhz.utils.RongCloudMethodUtil;
 import com.yyhz.utils.UUIDUtil;
 import com.yyhz.utils.stream.config.Configurations;
@@ -71,7 +74,10 @@ public class AppMyController extends BaseController {
 	private AuthenticateApplyService authenticateApplyService;
 	@Resource
 	private ActorCollectService actorCollectService;
-
+	@Resource
+	private BlackListInfoService blackListInfoService;
+	@Resource
+	private ContentReportInfoService contentReportInfoService;
 	/**
 	 * changePushState
 	 * @Title: getMyInfo
@@ -1331,6 +1337,206 @@ public class AppMyController extends BaseController {
 			this.writeJsonObject(response, AppRetCode.NORMAL, AppRetCode.NORMAL_TEXT, null);	
 		}else {
 			this.writeJsonObject(response, AppRetCode.ERROR, "服务器错误。", null);	
+		}
+	}
+	/**
+	 * 
+	 * @Title: getMyBlackList
+	 * @Description: 获取黑名单
+	 * @return JSON
+	 * @author CrazyT
+	 * 
+	 */
+	@RequestMapping(value = "getMyBlackList")
+	public void getMyBlackList(HttpServletRequest request, HttpServletResponse response, Integer page, Integer pageSize, String actorId) {
+		
+		if(StringUtils.isBlank(actorId)) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "用户id为空", null);	
+			return;
+		}
+		
+		if (page == null) {
+			writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少page参数！", null);
+			return;
+		}
+		
+		if (pageSize == null) {
+			writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少pageSize参数！", null);
+			return;
+		}
+
+		// 检索用户信息
+		ActorInfo actorInfo = actorInfoService.selectById(actorId);
+		if(actorInfo == null || actorInfo.getStatus() == 1) { // 状态 0正常；1已删除
+			this.writeJsonObject(response, AppRetCode.ACCOUNT_NOT_EXIST, AppRetCode.ACCOUNT_NOT_EXIST_TEXT, null);	
+			return;
+		}
+
+		PageInfo<BlackListInfo> pageInfo = new PageInfo<BlackListInfo>();
+		pageInfo.setPage(page);
+		pageInfo.setPageSize(pageSize);
+
+		
+		BlackListInfo condition = new BlackListInfo();
+		condition.setActorId(actorId);
+		blackListInfoService.selectAll(condition, pageInfo);
+		Map<String, Object> ret = new HashMap<String, Object>();
+		List<Map<String, Object>> blackActorList = new ArrayList<Map<String, Object>>();
+		for(BlackListInfo item : pageInfo.getRows()) {
+			ActorInfo blackActorInfo = actorInfoService.selectById(item.getBlackActorId());
+			Map<String, Object> itemMap = new HashMap<String, Object>();
+			itemMap.put("id", blackActorInfo.getId());
+			itemMap.put("name", blackActorInfo.getName());
+			
+			if(StringUtils.isNotEmpty(blackActorInfo.getHeadImgUrl())) {
+				itemMap.put("headImgUrl", Configurations.buildDownloadUrl(blackActorInfo.getHeadImgUrl()));
+			}
+			
+			blackActorList.add(itemMap);
+		}
+		
+		ret.put("rows", blackActorList);
+		ret.put("page", pageInfo.getPage());
+		ret.put("pageSize", pageInfo.getPageSize());
+		ret.put("total", pageInfo.getTotal());
+
+		
+		this.writeJsonObject(response, AppRetCode.NORMAL, AppRetCode.NORMAL_TEXT, ret);	
+	}
+	/**
+	 * 
+	 * @Title: addBlackList
+	 * @Description: 加入黑名单
+	 * @return JSON
+	 * @author CrazyT
+	 * 
+	 */
+	@RequestMapping(value = "addBlackList")
+	public void addBlackList(HttpServletRequest request, HttpServletResponse response,String actorId,String blackActorId) {
+		
+		if(StringUtils.isBlank(actorId)) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "用户id为空", null);	
+			return;
+		}
+		
+		if (StringUtils.isBlank(blackActorId)) {
+			writeJsonObject(response, AppRetCode.PARAM_ERROR, "拉黑用户id为空！", null);
+			return;
+		}
+		
+		
+		// 检索用户信息
+		ActorInfo actorInfo = actorInfoService.selectById(actorId);
+		if(actorInfo == null || actorInfo.getStatus() == 1) { // 状态 0正常；1已删除
+			this.writeJsonObject(response, AppRetCode.ACCOUNT_NOT_EXIST, AppRetCode.ACCOUNT_NOT_EXIST_TEXT, null);	
+			return;
+		}
+		// 检索用户信息
+		actorInfo = actorInfoService.selectById(blackActorId);
+		if(actorInfo == null || actorInfo.getStatus() == 1) { // 状态 0正常；1已删除
+			this.writeJsonObject(response, AppRetCode.ACCOUNT_NOT_EXIST, AppRetCode.ACCOUNT_NOT_EXIST_TEXT, null);	
+			return;
+		}
+		BlackListInfo info = new BlackListInfo();
+		info.setActorId(actorId);
+		info.setBlackActorId(blackActorId);
+		int count =blackListInfoService.selectCount(info);
+		if(count>0){
+			this.writeJsonObject(response, AppRetCode.NORMAL, AppRetCode.NORMAL_TEXT, null);	
+		}else{
+			
+			//BlackListInfo info = new BlackListInfo();
+			info.setId(UUIDUtil.getUUID());
+			//info.setActorId(actorId);
+			//info.setBlackActorId(blackActorId);
+			info.setCreateTime(DateUtils.getDateTimeFormat(new Date()));
+			int ret =blackListInfoService.insert(info);
+			
+			if(ret>0){
+				this.writeJsonObject(response, AppRetCode.NORMAL, AppRetCode.NORMAL_TEXT, null);	
+			}else {
+				this.writeJsonObject(response, AppRetCode.ERROR, "服务器错误！", null);				
+			}
+		}
+	}
+	/**
+	 * 
+	 * @Title: removeBlackList
+	 * @Description: 移除黑名单
+	 * @return JSON
+	 * @author CrazyT
+	 * 
+	 */
+	@RequestMapping(value = "removeBlackList")
+	public void removeBlackList(HttpServletRequest request, HttpServletResponse response,String actorId,String blackActorId) {
+		
+		if(StringUtils.isBlank(actorId)) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "actorId为空", null);	
+			return;
+		}
+		if(StringUtils.isBlank(blackActorId)) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "blackActorId为空", null);	
+			return;
+		}
+		BlackListInfo info = new BlackListInfo();
+		info.setActorId(actorId);
+		info.setBlackActorId(blackActorId);
+		int ret = blackListInfoService.delete(info);
+		
+		if(ret>0){
+			this.writeJsonObject(response, AppRetCode.NORMAL, AppRetCode.NORMAL_TEXT, null);	
+		}else {
+			this.writeJsonObject(response, AppRetCode.ERROR, "服务器错误！", null);				
+		}
+	}
+	/**
+	 * 
+	 * @Title: report
+	 * @Description: 添加举报
+	 * @return JSON
+	 * @author CrazyT
+	 * 
+	 */
+	@RequestMapping(value = "report")
+	public void report(HttpServletRequest request, HttpServletResponse response,String actorId,String reportId,String type,String reason) {
+		
+		if(StringUtils.isBlank(actorId)) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "用户id为空", null);	
+			return;
+		}
+		
+		if (StringUtils.isBlank(reportId)) {
+			writeJsonObject(response, AppRetCode.PARAM_ERROR, "举报内容id为空！", null);
+			return;
+		}
+		
+		
+		// 检索用户信息
+		ActorInfo actorInfo = actorInfoService.selectById(actorId);
+		if(actorInfo == null || actorInfo.getStatus() == 1) { // 状态 0正常；1已删除
+			this.writeJsonObject(response, AppRetCode.ACCOUNT_NOT_EXIST, AppRetCode.ACCOUNT_NOT_EXIST_TEXT, null);	
+			return;
+		}
+		ContentReportInfo info = new ContentReportInfo();
+		info.setReportId(reportId);
+		info.setType(type);
+		info.setCreater(actorId);
+		int count =contentReportInfoService.selectCount(info);
+		if(count>0){
+			this.writeJsonObject(response, AppRetCode.NORMAL, AppRetCode.NORMAL_TEXT, null);	
+		}else{
+			
+			info.setId(UUIDUtil.getUUID());
+			info.setCreateTime(DateUtils.getDateTimeFormat(new Date()));
+			info.setStatus("0");
+		
+			int ret =contentReportInfoService.insert(info);
+			
+			if(ret>0){
+				this.writeJsonObject(response, AppRetCode.NORMAL, AppRetCode.NORMAL_TEXT, null);	
+			}else {
+				this.writeJsonObject(response, AppRetCode.ERROR, "服务器错误！", null);				
+			}
 		}
 	}
 }

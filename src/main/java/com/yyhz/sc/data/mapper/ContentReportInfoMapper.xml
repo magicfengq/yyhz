@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.yyhz.sc.data.dao.ContentReportInfoDao">
+
+	<resultMap id="commonResult" type="com.yyhz.sc.data.model.ContentReportInfo">
+		<result property="id" column="id" />
+		<result property="type" column="type" />
+		<result property="reportId" column="reportId" />
+		<result property="createTime" column="createTime" />
+		<result property="status" column="status" />
+		<result property="creater" column="creater" />
+		<result property="reason" column="reason" />
+	</resultMap>
+	<resultMap id="commonResultMap" type="java.util.HashMap">
+		<id property="id" column="id" />
+		<result property="type" column="type" />
+		<result property="reportId" column="reportId" />
+		<result property="createTime" column="createTime" />
+		<result property="status" column="status" />
+		<result property="creater" column="creater" />
+		<result property="reason" column="reason" />
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     type,
+	     reportId,
+	     createTime,
+	     status,
+	     creater,
+	     reason
+	 ]]>
+	</sql>
+	<sql id="commonWhere">
+		<where>
+			<if test=" id != null and id != ''">
+				and id=#{id} 
+			</if>
+			<if test=" type != null and type != ''">
+				and type=#{type} 
+			</if>
+			<if test=" reportId != null and reportId != ''">
+				and reportId=#{reportId} 
+			</if>
+			<if test=" createTime != null and createTime != ''">
+				and createTime=#{createTime} 
+			</if>
+			<if test=" status != null and status != ''">
+				and status=#{status} 
+			</if>
+			<if test=" creater != null and creater != ''">
+				and creater=#{creater} 
+			</if>
+			<if test=" reason != null and reason != ''">
+				and reason=#{reason} 
+			</if>
+		</where>
+	</sql>
+	
+	<insert id="insert">
+	   insert into content_report_info  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id!=null">id,</if>
+			<if test="type!=null">type,</if>
+			<if test="reportId!=null">reportId,</if>
+			<if test="createTime!=null">createTime,</if>
+			<if test="status!=null">status,</if>
+			<if test="creater!=null">creater,</if>
+			<if test="reason!=null">reason,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="id!=null">#{id},</if>
+			<if test="type!=null">#{type},</if>
+			<if test="reportId!=null">#{reportId},</if>
+			<if test="createTime!=null">#{createTime},</if>
+			<if test="status!=null">#{status},</if>
+			<if test="creater!=null">#{creater},</if>
+			<if test="reason!=null">#{reason},</if>
+		</trim>
+	</insert>
+
+	<update id="update">
+	   update content_report_info 
+	   <set>
+			<if test="type!=null">type=#{type},</if>
+			<if test="reportId!=null">reportId=#{reportId},</if>
+			<if test="createTime!=null">createTime=#{createTime},</if>
+			<if test="status!=null">status=#{status},</if>
+			<if test="creater!=null">creater=#{creater},</if>
+			<if test="reason!=null">reason=#{reason},</if>
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from content_report_info 
+	   <include refid="commonWhere" /> 
+	</delete>
+
+	<select id="selectEntity" resultMap="commonResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from content_report_info
+	  <include refid="commonWhere" /> 
+	   limit 1
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="commonResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from content_report_info
+		]]>
+		<include refid="commonWhere" /> 
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+		select count(id) from content_report_info
+		<include refid="commonWhere" /> 
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="commonResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from content_report_info where 
+			   	 id=#{id} 
+		]]>
+		 limit 1
+		
+	</select>
+	
+	<select id="selectEntityMap" resultMap="commonResultMap">
+	   select 
+	<include refid="colomnResult" /> 
+	   from content_report_info
+	  <include refid="commonWhere" /> 
+	   limit 1
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAllMap"  resultMap="commonResultMap">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from content_report_info
+		]]>
+		<include refid="commonWhere" /> 
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	
+	<!-- 根据主键查询信息 -->
+	<select id="selectByIdMap"  resultMap="commonResultMap">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from content_report_info where 
+			   	 id=#{id} 
+		]]>
+		 limit 1
+	</select>
+</mapper> 

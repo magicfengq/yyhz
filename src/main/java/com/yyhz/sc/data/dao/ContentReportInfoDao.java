@@ -1,0 +1,11 @@
+package com.yyhz.sc.data.dao;
+
+import com.yyhz.sc.base.BaseDao;
+import com.yyhz.sc.data.model.ContentReportInfo;
+/**
+ * 数据访问接口
+ *
+ */
+public interface ContentReportInfoDao extends BaseDao<ContentReportInfo>{
+	public String sqlNameSpace=ContentReportInfoDao.class.getName();
+}

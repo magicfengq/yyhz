@@ -18,7 +18,7 @@ public class AnnounceInfo extends BaseEntity implements Serializable {
 	private java.lang.String publicType; // 通告类型/发布类型
 	private java.lang.String title; // 通告标题
 	private java.lang.String name; // 艺人类型；需要装备；策划项目；定制内容；
-	private java.util.Date showTime; // 活动时间；使用时间；项目时间；定制时间；
+	private java.lang.String showTime; // 活动时间；使用时间；项目时间；定制时间；
 	private java.util.Date entranceTime; // 艺人的进场时间
 	private java.lang.String city; // 活动城市；使用城市；所在城市
 	private java.lang.String address; // 活动详址
@@ -243,7 +243,7 @@ public class AnnounceInfo extends BaseEntity implements Serializable {
      *
      * @return showTime
      */
-	public java.util.Date getShowTime() {
+	public java.lang.String getShowTime() {
 		return showTime;
 	}
 	
@@ -252,7 +252,7 @@ public class AnnounceInfo extends BaseEntity implements Serializable {
 	 *
 	 * @param showTime
 	 */
-	public void setShowTime(java.util.Date showTime) {
+	public void setShowTime(java.lang.String showTime) {
 		this.showTime = showTime;
 	}
 	

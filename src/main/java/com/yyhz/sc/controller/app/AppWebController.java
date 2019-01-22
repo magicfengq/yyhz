@@ -891,7 +891,8 @@ public class AppWebController extends BaseController {
 		ret.put("price",  announceInfo.getPrice());
 		ret.put("publicType", StringUtils.trimToEmpty(announceInfo.getPublicTypeNames()));					
 		ret.put("city",  StringUtils.trimToEmpty(announceInfo.getCity()));
-		ret.put("showTime", StringUtils.trimToEmpty(DateUtils.getDateFormat(announceInfo.getShowTime())));
+		//ret.put("showTime", StringUtils.trimToEmpty(DateUtils.getDateFormat(announceInfo.getShowTime())));
+		ret.put("showTime", announceInfo.getShowTime());
 		ret.put("creater",  StringUtils.trimToEmpty(announceInfo.getCreater()));
 		ret.put("createTime", StringUtils.trimToEmpty(DateUtils.getDateTimeMinFormat(announceInfo.getCreateTime())));
 		ret.put("entranceTime", StringUtils.trimToEmpty(DateUtils.getDateTimeMinFormat(announceInfo.getEntranceTime())));
