@@ -30,6 +30,17 @@
 			$("#tt").tabs('select',title);
 		}
 	}
+	function delTabPanel(title){
+		$('#tt').tabs('close',title);
+	}
+	function refreshTab(title){
+		if ($('#tt').tabs('exists', title)){
+			var tab = $('#tt').tabs('getTab', title);
+			var url =$(tab.panel('options').content).attr('src');
+			$('#tt').tabs('update', {tab : tab ,options : { href : url} });
+			
+		}
+	}
 </script>
 <script type="text/javascript" src="js/system/easy.js"></script>
 <script type="text/javascript" src="js/system/sys.js"></script>

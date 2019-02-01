@@ -91,7 +91,7 @@ div#rMenu {
 					<th data-options="field:'readCount',align:'center',sortable:false" style="width: 10%;">浏览量</th>
 					<th data-options="field:'type',align:'center',sortable:false,formatter:cardTypeFormater" style="width: 10%;">通告类型</th>
 					<th data-options="field:'createrName',align:'center',sortable:true" style="width: 15%;">发布账号</th>
-					<th data-options="field:'createTime',align:'center',sortable:true,formatter:timeFormater" style="width: 15%;">发布时间</th>
+					<th data-options="field:'createTime',align:'center',sortable:true" style="width: 15%;">发布时间</th>
 					<th data-options="field:'options',align:'center',sortable:true,formatter:formatOptions" style="width: 15%;">操作</th>
 				</tr>
 			</thead>

@@ -42,7 +42,7 @@
 		}else if(userCurrentLevel == 1){
 			return '实名认证';
 		}else if(userCurrentLevel == 2){
-			return '资历认证';
+			return '企业认证';
 		}
 		return '';
 	}
@@ -237,9 +237,9 @@ div#rMenu {
 					<th data-options="field:'mobile',align:'center',sortable:true,formatter:formatMobile" style="width: 15%;">账号</th>
 					<th data-options="field:'realName',align:'center',sortable:true" style="width: 10%;">姓名</th>
 					<th data-options="field:'idcard',align:'center',sortable:true" style="width: 10%;">身份证号</th>
-					<!-- <th data-options="field:'userCurrentLevel',align:'center',sortable:true,formatter:formatLevel" style="width: 15%;">申请等级</th> -->
+					<th data-options="field:'userCurrentLevel',align:'center',sortable:true,formatter:formatLevel" style="width: 15%;">申请等级</th>
 					<th data-options="field:'type',align:'center',sortable:true,formatter:formatRoleName" style="width: 10%;">角色</th>					
-					<th data-options="field:'createTime',align:'center',sortable:true,formatter:formatCreateTime" style="width: 15%;">注册时间</th>
+					<th data-options="field:'createTime',align:'center',sortable:true,formatter:formatCreateTime" style="width: 15%;">提交时间</th>
 					<th data-options="field:'checkStatus',align:'center',sortable:true,formatter:formatCheckStatus" style="width: 10%;">状态</th>
 					<th data-options="field:'options',align:'center',sortable:true,formatter:formatOptions" style="width: 15%;">操作</th>
 				</tr>

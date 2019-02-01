@@ -231,7 +231,7 @@ public class AppAnnounceController extends BaseController {
 				annMap.put("title", annInfo.getTitle());
 				annMap.put("publicType", annInfo.getPublicTypeNames());					
 				annMap.put("city", annInfo.getCity());
-				annMap.put("showTime", DateUtils.getDateFormat(annInfo.getShowTime()));
+				annMap.put("showTime", annInfo.getShowTime());
 				annMap.put("createTime", DateUtils.getDateTimeMinFormat(annInfo.getCreateTime()));
 				annMap.put("name", annInfo.getName());
 				annMap.put("address", annInfo.getAddress());
@@ -623,7 +623,7 @@ public class AppAnnounceController extends BaseController {
 		ret.put("price", announceInfo.getPrice());
 		ret.put("publicType", announceInfo.getPublicTypeNames());					
 		ret.put("city", announceInfo.getCity());
-		ret.put("showTime", DateUtils.getDateFormat(announceInfo.getShowTime()));
+		ret.put("showTime", announceInfo.getShowTime());
 		ret.put("creater", announceInfo.getCreater());
 		ret.put("createTime", DateUtils.getDateTimeMinFormat(announceInfo.getCreateTime()));
 		ret.put("entranceTime", DateUtils.getDateFormat(announceInfo.getEntranceTime()));
@@ -817,7 +817,7 @@ public class AppAnnounceController extends BaseController {
 				//Object resp = EasemobUtil.sendAnnounceMessage(announceInfo.getCreater(), message, ext);
 				String[] targetIds = {announceInfo.getCreater()};
 				JSONObject json = JSONObject.fromObject(ext);
-				RongCloudMethodUtil.privateMessage("annouceNotify",message,  targetIds, json.toString());
+				RongCloudMethodUtil.privateMessage("annouce",message,  targetIds, json.toString());
 				logger.debug("---------------------- send message resp -----------------------------------");
 				//logger.debug(resp.toString());
 				return;				
@@ -851,7 +851,7 @@ public class AppAnnounceController extends BaseController {
 				//logger.debug(resp.toString());
 				String[] targetIds = {announceInfo.getCreater()};
 				JSONObject json = JSONObject.fromObject(ext);
-				RongCloudMethodUtil.privateMessage("annouceNotify",message,  targetIds, json.toString());
+				RongCloudMethodUtil.privateMessage("annouce",message,  targetIds, json.toString());
 				return;				
 			}else {
 				this.writeJsonObject(response, AppRetCode.ERROR, "插入数据库失败！", null);

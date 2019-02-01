@@ -79,7 +79,8 @@ div#rMenu {
 			<thead>
 				<tr>
 					<th data-options="field:'type',align:'center',sortable:true,formatter:typeFormater" style="width: 15%;">类型</th>
-					<th data-options="field:'reason',align:'center',sortable:true" style="width: 55%;">举报原因</th>
+					<th data-options="field:'reason',align:'center',sortable:true" style="width: 35%;">举报原因</th>
+					<th data-options="field:'status',align:'center',sortable:true,formatter:statusFormater" style="width: 10%;">状态</th>
 					<th data-options="field:'createTime',align:'center',sortable:false" style="width: 15%;">创建时间</th>
 					<th data-options="field:'options',align:'center',sortable:true,formatter:formatOptions" style="width: 15%;">操作</th>
 				</tr>
@@ -148,12 +149,24 @@ div#rMenu {
 	    if (value == undefined) {
 	        return "";
 	    }
-	    if (value == "0") {
-	        return "卡片";
-	    }else if(value == "1"){
+	    if (value == "1") {
 	    		return "通告";
+	    }else if(value == "2"){
+	        return "卡片";
 	    }else{
 	    		return "秀一秀";
+	    }
+	}
+	function statusFormater(value, row) {
+	    if (value == undefined) {
+	        return "";
+	    }
+	    if (value == "0") {
+	        return "未处理";
+	    }else if(value == "1"){
+	    		return "同意";
+	    }else{
+	    		return "不同意";
 	    }
 	}
 	//转换日期对象为日期字符串
@@ -189,7 +202,7 @@ div#rMenu {
 	function formatOptions(value, row,rowIndex) {
 		return '<a href="javascript:void(0);" onclick="edit(\''
 				+ row.id
-				+ '\',\''+rowIndex+'\');">查看</a>';
+				+ '\');">查看</a>';
 	}
 	function searchData() {
 		$('#dg').datagrid('load', {
@@ -197,12 +210,10 @@ div#rMenu {
 			username : $('#usernameInput').val()
 		});
 	}
-	function edit(id,rowIndex){
-		//window.parent.addTabPanel('反馈意见','back/feedbackDetail.do?id=' +id);
-		$('#dg').datagrid('selectRow',rowIndex);
-		var row = $('#dg').datagrid('getSelected');
-		$('#dlg').dialog('open').dialog('setTitle', '查看');
-		$('#fm').form('load', row);
+	function edit(id){
+		//window.parent.addTabPanel('举报详情','back/reportDetail.do?id=' +id);
+		//window.parent.addTabPanel('举报详情','back/reportDetail.do?id=' +id);
+		location.href = basePath +'back/reportDetail.do?id=' +id;
 	}
 	function del(id) {
 		$.messager.confirm('提示', '你确定要删除吗?', function(r) {

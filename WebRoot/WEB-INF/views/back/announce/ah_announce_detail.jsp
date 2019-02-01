@@ -123,7 +123,9 @@
 			</div>
 			<div class="fitem">
 				<label>活动时间:</label>
-				<input id="showTimeLabel" name="showTime" style="width: 200px" class="easyui-datebox" readonly="readonly" value="<fmt:formatDate value="${info.showTime}" pattern="yyyy-MM-dd"/>"/>
+				<input id="showTimeLabel" name="showTime" style="width: 200px" class="easyui-datebox" readonly="readonly" value="${info.showTime}"/>
+			
+				<%-- <input id="showTimeLabel" name="showTime" style="width: 200px" class="easyui-datebox" readonly="readonly" value="<fmt:formatDate value="${info.showTime}" pattern="yyyy-MM-dd"/>"/> --%>
 			</div>
 			<div class="fitem">
 				<label>进场时间:</label>

@@ -82,6 +82,9 @@ public class Private {
 	    if (message.getPushData() != null) {
 	    	sb.append("&pushData=").append(URLEncoder.encode(message.getPushData().toString(), UTF8));
 	    }
+	    if (message.getExtra() != null) {
+	    	sb.append("&extra=").append(URLEncoder.encode(message.getExtra().toString(), UTF8));
+	    }
 	    
 	    if (message.getCount() != null) {
 	    	sb.append("&count=").append(URLEncoder.encode(message.getCount().toString(), UTF8));

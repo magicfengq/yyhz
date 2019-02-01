@@ -33,6 +33,7 @@ public class PrivateMessage extends MessageModel {
 
     public Integer contentAvailable;
 
+    public String extra;
     public PrivateMessage() {
     }
 
@@ -46,7 +47,11 @@ public class PrivateMessage extends MessageModel {
         this.isIncludeSender = isIncludeSender;
         this.contentAvailable = contentAvailable;
     }
-
+    @Override
+    public PrivateMessage setExtra(String extra) {
+        super.setExtra(extra);
+        return this;
+    }
     @Override
     public PrivateMessage setSenderId(String senderId) {
         super.setSenderId(senderId);

@@ -34,7 +34,7 @@ public class MessageModel {
      */
     private String pushData;
 
-
+    public String extra;
     public MessageModel() {
     }
 
@@ -57,6 +57,14 @@ public class MessageModel {
         return this;
     }
 
+    public String getExtra() {
+        return this.extra;
+    }
+
+    public MessageModel setExtra(String extra) {
+        this.extra = extra;
+        return this;
+    }
     public String getObjectName() {
         return this.objectName;
     }

@@ -983,6 +983,7 @@ public class AppMyController extends BaseController {
 				}
 				annMap.put("city", annInfo.getCity());
 				annMap.put("showTime", DateUtils.getDateFormat(annInfo.getShowTime()));
+				annMap.put("showTime", annInfo.getShowTime());
 				annMap.put("createTime", DateUtils.getDateTimeMinFormat(annInfo.getCreateTime()));
 				annMap.put("name", annInfo.getName());
 				annMap.put("address", annInfo.getAddress());
@@ -1194,18 +1195,41 @@ public class AppMyController extends BaseController {
 		AuthenticateApply condition = new AuthenticateApply();
 		condition.setActorId(id);
 		List<AuthenticateApply> authList = authenticateApplyService.selectAll(condition, "selectAllWithUrl");
-		int checkStatus = 3;
 		if(authList != null && authList.size() > 0) {
 			AuthenticateApply auth = authList.get(0);
-			
+			if(StringUtils.isNotBlank(auth.getPhoto1())){
+				ret.put("photo1",Configurations.buildDownloadUrl(auth.getPhoto1()));			
+			}
+			if(StringUtils.isNotBlank(auth.getPhoto2())){
+				ret.put("photo2",Configurations.buildDownloadUrl(auth.getPhoto2()));			
+			}
 			if(StringUtils.isNotBlank(auth.getPhoto3())){
 				ret.put("photo3",Configurations.buildDownloadUrl(auth.getPhoto3()));			
 			}
-			checkStatus = auth.getCheckStatus();	
+			int resultCheckStatus = 0;
+			int level = auth.getUserCurrentLevel();
+			int checkStatus = auth.getCheckStatus();	
+			//实名未提交 0 实名待审核1 实名通过2 实名不通过3 企业待审核4 企业通过5 企业不通过6  
+			if(level == 1&&checkStatus==0){
+				resultCheckStatus = 1;
+			}else if(level == 1&&checkStatus==1){
+				resultCheckStatus = 2;
+			}else if(level == 1&&checkStatus==2){
+				resultCheckStatus = 3;
+			}else if(level == 2&&checkStatus==0){
+				resultCheckStatus = 4;
+			}else if(level == 2&&checkStatus==1){
+				resultCheckStatus = 5;
+			}else if(level == 2&&checkStatus==2){
+				resultCheckStatus = 6;
+			}
+			ret.put("checkStatus",resultCheckStatus);	
+			
+		}else{
+			ret.put("checkStatus",0);	
 		}
-		ret.put("checkStatus",checkStatus);	
-
 		this.writeJsonObject(response, AppRetCode.NORMAL, AppRetCode.NORMAL_TEXT, ret);	
+		
 	}
 	/**
 	 * 
@@ -1323,7 +1347,110 @@ public class AppMyController extends BaseController {
 		}else {
 			if(imageFile!=null){
 				applyInfo.setPhoto3(uuid);
-			} 			
+			} 	
+			applyInfo.setUserCurrentLevel(2);
+			applyInfo.setApplyTime(new Date());
+			applyInfo.setRealName(req.getRealName());
+			applyInfo.setIdcard(req.getIdcard());
+			applyInfo.setMobile(req.getMobile());
+			applyInfo.setCheckStatus(0);
+			//更新
+			ret = authenticateApplyService.update(applyInfo);
+		}
+
+		if(ret > 0) {
+			this.writeJsonObject(response, AppRetCode.NORMAL, AppRetCode.NORMAL_TEXT, null);	
+		}else {
+			this.writeJsonObject(response, AppRetCode.ERROR, "服务器错误。", null);	
+		}
+	}
+	/**
+	 * 
+	 * @Title: idCardAuthentication
+	 * @Description: 身份认证
+	 * @return JSON
+	 * @author CrazyT
+	 * 
+	 */
+	@RequestMapping(value = "idCardAuthentication")
+	public void idCardAuthentication(HttpServletRequest request, HttpServletResponse response, ActorInfo req,
+			@RequestParam(required = false) MultipartFile imageFile1,@RequestParam(required = false) MultipartFile imageFile2,String imageFileAgo1,String imageFileAgo2) {
+			
+		if(StringUtils.isBlank(req.getId())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "用户id为空", null);	
+			return;
+		}
+		if(StringUtils.isBlank(req.getRealName())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "真实姓名为空", null);	
+			return;
+		}
+		if(StringUtils.isBlank(req.getIdcard())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "身份证为空", null);	
+			return;
+		}
+		if(StringUtils.isBlank(req.getMobile())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "电话号为空", null);	
+			return;
+		}
+		if(imageFile1 == null&&StringUtils.isBlank(imageFileAgo1)) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "身份证正面为空", null);	
+			return;
+		}
+		if(imageFile2 == null&&StringUtils.isBlank(imageFileAgo2)) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "身份证背面为空", null);	
+			return;
+		}
+		
+		// 检索用户信息
+		ActorInfo actorInfo = actorInfoService.selectById(req.getId());
+		if(actorInfo == null || actorInfo.getStatus() == 1) { // 状态 0正常；1已删除
+			this.writeJsonObject(response, AppRetCode.ACCOUNT_NOT_EXIST, AppRetCode.ACCOUNT_NOT_EXIST_TEXT, null);	
+			return;
+		}
+		//上传身份证正面图片
+		String uuid1 = "";
+		if(imageFile1!=null){			
+			SystemPictureInfo pInfo = this.uploadFile2("authentication", imageFile1);
+			if(pInfo != null) {
+				uuid1=pInfo.getUuid();
+			}
+		}
+		//上传身份证背面图片
+		String uuid2 = "";
+		if(imageFile2!=null){			
+			SystemPictureInfo pInfo = this.uploadFile2("authentication", imageFile2);
+			if(pInfo != null) {
+				uuid2=pInfo.getUuid();
+			}
+		}
+		//查询是否已经申请过
+		AuthenticateApply param = new AuthenticateApply();
+		param.setActorId(req.getId());
+		
+		AuthenticateApply applyInfo = authenticateApplyService.selectEntity(param);
+		int ret = 0;
+		if(applyInfo == null) {
+			applyInfo = new AuthenticateApply();
+			applyInfo.setId(UUIDUtil.getUUID());
+			applyInfo.setActorId(req.getId());
+			applyInfo.setPhoto1(uuid1);
+			applyInfo.setPhoto2(uuid2);
+			applyInfo.setUserCurrentLevel(1);
+			applyInfo.setApplyTime(new Date());
+			applyInfo.setRealName(req.getRealName());
+			applyInfo.setIdcard(req.getIdcard());
+			applyInfo.setMobile(req.getMobile());
+			applyInfo.setCheckStatus(0);
+			//插入
+			ret = authenticateApplyService.insert(applyInfo);
+		}else {
+			if(imageFile1!=null){
+				applyInfo.setPhoto1(uuid1);
+			} 	
+			if(imageFile2!=null){
+				applyInfo.setPhoto2(uuid2);
+			} 
+			applyInfo.setUserCurrentLevel(1);
 			applyInfo.setApplyTime(new Date());
 			applyInfo.setRealName(req.getRealName());
 			applyInfo.setIdcard(req.getIdcard());
@@ -1529,7 +1656,7 @@ public class AppMyController extends BaseController {
 			info.setId(UUIDUtil.getUUID());
 			info.setCreateTime(DateUtils.getDateTimeFormat(new Date()));
 			info.setStatus("0");
-		
+			info.setReason(reason);
 			int ret =contentReportInfoService.insert(info);
 			
 			if(ret>0){
