@@ -903,7 +903,7 @@ public class AppAnnounceController extends BaseController {
 			return;
 		}
 		
-		if(StringUtils.isBlank(reqInfo.getTitle())) {
+		/*if(StringUtils.isBlank(reqInfo.getTitle())) {
 			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少title参数", null);
 			return;
 		}
@@ -926,7 +926,7 @@ public class AppAnnounceController extends BaseController {
 		if(StringUtils.isBlank(reqInfo.getCreater())) {
 			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少creater参数", null);
 			return;
-		}
+		}*/
 		
 		if(StringUtils.isNotBlank(reqInfo.getShowTimeStr())) {
 			//reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
@@ -978,7 +978,7 @@ public class AppAnnounceController extends BaseController {
 			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少通告相关参数", null);
 			return;
 		}
-		
+		/*
 		if(StringUtils.isBlank(reqInfo.getTitle())) {
 			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少title参数", null);
 			return;
@@ -1002,7 +1002,7 @@ public class AppAnnounceController extends BaseController {
 		if(StringUtils.isBlank(reqInfo.getCreater())) {
 			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少creater参数", null);
 			return;
-		}
+		}*/
 		
 		if(StringUtils.isNotBlank(reqInfo.getShowTimeStr())) {
 			//reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
@@ -1054,7 +1054,7 @@ public class AppAnnounceController extends BaseController {
 			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少通告相关参数", null);
 			return;
 		}
-		
+		/*
 		if(StringUtils.isBlank(reqInfo.getTitle())) {
 			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少title参数", null);
 			return;
@@ -1078,7 +1078,7 @@ public class AppAnnounceController extends BaseController {
 		if(StringUtils.isBlank(reqInfo.getCreater())) {
 			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少creater参数", null);
 			return;
-		}
+		}*/
 		
 		if(StringUtils.isNotBlank(reqInfo.getShowTimeStr())) {
 			//reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
@@ -1131,7 +1131,7 @@ public class AppAnnounceController extends BaseController {
 			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少通告相关参数", null);
 			return;
 		}
-		
+		/*
 		if(StringUtils.isBlank(reqInfo.getTitle())) {
 			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少title参数", null);
 			return;
@@ -1155,7 +1155,7 @@ public class AppAnnounceController extends BaseController {
 		if(StringUtils.isBlank(reqInfo.getCreater())) {
 			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少creater参数", null);
 			return;
-		}
+		}*/
 		
 		if(StringUtils.isNotBlank(reqInfo.getShowTimeStr())) {
 			//reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
@@ -1208,7 +1208,7 @@ public class AppAnnounceController extends BaseController {
 			return;
 		}
 		
-		if(StringUtils.isBlank(reqInfo.getTitle())) {
+		/*if(StringUtils.isBlank(reqInfo.getTitle())) {
 			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少title参数", null);
 			return;
 		}
@@ -1231,7 +1231,7 @@ public class AppAnnounceController extends BaseController {
 		if(StringUtils.isBlank(reqInfo.getCreater())) {
 			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少creater参数", null);
 			return;
-		}
+		}*/
 		
 		if(StringUtils.isNotBlank(reqInfo.getShowTimeStr())) {
 			//reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
@@ -1284,7 +1284,7 @@ public class AppAnnounceController extends BaseController {
 			return;
 		}
 		
-		if(StringUtils.isBlank(reqInfo.getTitle())) {
+		/*if(StringUtils.isBlank(reqInfo.getTitle())) {
 			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少title参数", null);
 			return;
 		}
@@ -1307,7 +1307,7 @@ public class AppAnnounceController extends BaseController {
 		if(StringUtils.isBlank(reqInfo.getCreater())) {
 			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少creater参数", null);
 			return;
-		}
+		}*/
 		
 		if(StringUtils.isNotBlank(reqInfo.getShowTimeStr())) {
 			//reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
@@ -1360,7 +1360,7 @@ public class AppAnnounceController extends BaseController {
 			return;
 		}
 		
-		if(StringUtils.isBlank(reqInfo.getTitle())) {
+		/*if(StringUtils.isBlank(reqInfo.getTitle())) {
 			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少title参数", null);
 			return;
 		}
@@ -1383,7 +1383,7 @@ public class AppAnnounceController extends BaseController {
 		if(StringUtils.isBlank(reqInfo.getCreater())) {
 			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少creater参数", null);
 			return;
-		}
+		}*/
 		
 		if(StringUtils.isNotBlank(reqInfo.getShowTimeStr())) {
 			//reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));

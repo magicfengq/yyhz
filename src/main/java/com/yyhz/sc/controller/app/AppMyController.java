@@ -790,7 +790,7 @@ public class AppMyController extends BaseController {
 			String[] targetIds = {enroll.getActorId()};
 
 			JSONObject json = JSONObject.fromObject(ext);
-			RongCloudMethodUtil.privateMessage("announce",message,  targetIds, json.toString());
+			RongCloudMethodUtil.privateMessage("annouce",message,  targetIds, json.toString());
 
 		}else {
 			this.writeJsonObject(response, AppRetCode.ERROR, "服务器错误！", null);
@@ -911,7 +911,7 @@ public class AppMyController extends BaseController {
 			String[] targetIds = {req.getActorId()};
 
 			JSONObject json = JSONObject.fromObject(ext);
-			RongCloudMethodUtil.privateMessage("announce",message,  targetIds, json.toString());
+			RongCloudMethodUtil.privateMessage("annouce",message,  targetIds, json.toString());
 
 		}else {
 			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "插入评价失败", null);			

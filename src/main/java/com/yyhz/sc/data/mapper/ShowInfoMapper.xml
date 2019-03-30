@@ -376,7 +376,7 @@
         SELECT t.id 
 		FROM (SELECT @rowNo1 := @rowNo1 + 1 AS RowNo,a.id 
 				FROM `show_info` a,( SELECT @rowNo1 := 0 ) b 
-				WHERE a.type = 1 
+				WHERE a.type = 1 and a.status = 0
 				<if test="creater!=null">and a.creater=#{creater}</if>
 				<if test=" actorId != null">
 					and not EXISTS (select (1) from black_list_info where a.creater = blackActorId and actorid = #{actorId})
@@ -385,7 +385,7 @@
 		WHERE t.RowNo > (select k.RowNo 
 		        		from (SELECT  @rowNo:=@rowNo+1 as RowNo ,m.id
 		        				FROM `show_info`m , (select @rowNo:=0) n 
-		        				where m.type = 1 
+		        				where m.type = 1 and m.status = 0
 		        				<if test="creater!=null">and m.creater=#{creater}</if>
 		        				<if test=" actorId != null">
 									and not EXISTS (select (1) from black_list_info where m.creater = blackActorId and actorId = #{actorId})
