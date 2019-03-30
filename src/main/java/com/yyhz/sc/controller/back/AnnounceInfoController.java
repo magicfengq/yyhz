@@ -115,6 +115,11 @@ public class AnnounceInfoController extends BaseController {
 			HttpServletResponse response) {
 		return "/back/announce/jy_announce_list";
 	}
+	@RequestMapping(value = "/sfAnnounceList")
+	public String sfAnnounceList(HttpServletRequest request,
+			HttpServletResponse response) {
+		return "/back/announce/sf_announce_list";
+	}
 	
 	
 	@RequestMapping(value = "/announceDetail")
@@ -174,6 +179,8 @@ public class AnnounceInfoController extends BaseController {
 			return "back/announce/sh_announce_detail";
 		}else if("10".equals(type)){
 			return "back/announce/jy_announce_detail";
+		}else if("11".equals(type)){
+			return "back/announce/sf_announce_detail";
 		}
 		return null;
 	}

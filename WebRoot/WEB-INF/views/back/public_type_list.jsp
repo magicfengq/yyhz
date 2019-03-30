@@ -31,7 +31,7 @@
 		  });
 	  });
 	});
-	//1艺人；2租借；3兼职；4专职；5秀一秀；6爱好；7作品；8公益；9生活；10交友
+	//1艺人；2租借；3兼职；4专职；5秀一秀；6爱好；7作品；8公益；9生活；10交友；11身份
 	function formatType(value,row){
 		if(row.type == 1){
 			return '艺人';
@@ -53,6 +53,8 @@
 			return '生活';
 		}else if(row.type == 10){
 			return '交友';
+		}else if(row.type == 11){
+			return '身份';
 		}
 		return '';
 	}
@@ -370,6 +372,21 @@ div#rMenu {
 				</thead>
 			</table>
 		</div>
+		<div title="身份" style="padding: 10px;width:100%;height:100%;">
+			<table id="dg11" class="easyui-datagrid" style="width:100%;height:100%"
+				data-options="url:'system/publicTypeAjaxPage.do?type=11', iconCls:'icon-save', 
+				rownumbers:true, pagination:true, singleSelect:true,idField:'id',onLoadSuccess:renderUI">
+				<thead>
+					<tr>
+						<th data-options="field:'id',hidden:true"></th>
+						<th data-options="field:'type',align:'center',sortable:true,formatter:formatType" style="width: 20%;">发布类型</th>
+						<th data-options="field:'name',align:'center',sortable:true" style="width: 20%;">发布类型名称</th>
+						<th data-options="field:'power',align:'center',sortable:true" style="width: 20%;">权重</th>
+						<th data-options="field:'options',align:'center',sortable:true,formatter:formatOptions" style="width: 30%;">操作</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
 	</div>
 		<div id="dlg" class="easyui-dialog"
 		data-options="iconCls:'icon-save',resizable:true,modal:true"
@@ -392,6 +409,7 @@ div#rMenu {
 					<option value="8" selected="selected">公益</option>
 					<option value="9" selected="selected">生活</option>
 					<option value="10" selected="selected">交友</option>
+					<option value="11" selected="selected">身份</option>
 				</select>
 			</div>
 			<div class="fitem">

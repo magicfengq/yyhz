@@ -106,6 +106,12 @@ public class CardInfoController extends BaseController {
 		return "back/card/jy_card_list";
 	}
 	
+	@RequestMapping(value = "/sfCardList")
+	public String sfCardList(HttpServletRequest request,
+			HttpServletResponse response) {
+		return "back/card/sf_card_list";
+	}
+	
 	@RequestMapping(value = "/cardListDetail")
 	public String cardListDetail(HttpServletRequest request,HttpServletResponse response,String id,String type) {
 		request.setAttribute("id", id);
@@ -140,6 +146,8 @@ public class CardInfoController extends BaseController {
 			return "back/card/sh_card_detail";
 		}else if("10".equals(type)){
 			return "back/card/jy_card_detail";
+		}else if("11".equals(type)){
+			return "back/card/sf_card_detail";
 		}
 		return null;
 	}

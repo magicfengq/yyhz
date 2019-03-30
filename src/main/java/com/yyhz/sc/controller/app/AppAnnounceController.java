@@ -1420,4 +1420,80 @@ public class AppAnnounceController extends BaseController {
 			this.writeJsonObject(response, AppRetCode.ERROR, "添加通告失败！", null);
 		}
 	}
+	/**
+	 * 
+	 * @Title: addJyAnnouncement
+	 * @Description: 添加(身份)通告
+	 * @return JSON
+	 * @author CrazyT
+	 * 
+	 */	
+	@RequestMapping(value = "addSfAnnouncement")
+	public void addSfAnnouncement(HttpServletRequest request, HttpServletResponse response, 
+			AnnounceInfo reqInfo,String publicTypeIds, @RequestParam(required = false) MultipartFile[] imageFiles) {
+		if(reqInfo == null) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少通告相关参数", null);
+			return;
+		}
+		
+		/*if(StringUtils.isBlank(reqInfo.getTitle())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少title参数", null);
+			return;
+		}
+		
+		if(StringUtils.isBlank(reqInfo.getName())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少name参数", null);
+			return;
+		}
+
+		if(StringUtils.isBlank(reqInfo.getShowTimeStr())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少showTimeStr参数", null);
+			return;
+		}
+
+		if(StringUtils.isBlank(reqInfo.getCity())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少city参数", null);
+			return;
+		}
+		
+		if(StringUtils.isBlank(reqInfo.getCreater())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少creater参数", null);
+			return;
+		}*/
+		
+		if(StringUtils.isNotBlank(reqInfo.getShowTimeStr())) {
+			//reqInfo.setShowTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getShowTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+			reqInfo.setShowTime(reqInfo.getShowTimeStr());
+		}
+
+		if(StringUtils.isNotBlank(reqInfo.getEntranceTimeStr())) {
+			reqInfo.setEntranceTime(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getEntranceTimeStr()), DateUtils.DATETIME_DEFAULT_FORMAT));
+		}
+		
+		reqInfo.setType(11); // 1艺人；2租借；3策划/创意；4婚礼/派对
+		
+		if(actorInfoService.selectById(reqInfo.getCreater()) == null) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "创建者不存在，请检查creater参数", null);
+			return;		
+		}
+		
+		List<String> picUuidList = new ArrayList<String>();
+		if(imageFiles != null && imageFiles.length > 0){
+			for(MultipartFile multipartFile : imageFiles){
+				if(multipartFile == null){
+					continue;
+				}
+				SystemPictureInfo pictureInfo = this.uploadFile2("hostAnnouncement", multipartFile);
+				picUuidList.add(pictureInfo.getUuid());
+			}
+		}
+
+		int ret = announceInfoService.addAnnouncement(reqInfo, StringUtils.split(publicTypeIds,','), picUuidList.toArray(new String[0]));
+
+		if(ret > 0){
+			this.writeJsonObject(response, AppRetCode.NORMAL, AppRetCode.NORMAL_TEXT, reqInfo);
+		}else {
+			this.writeJsonObject(response, AppRetCode.ERROR, "添加通告失败！", null);
+		}
+	}
 }

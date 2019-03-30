@@ -1165,4 +1165,67 @@ public class AppCardController extends BaseController {
 			this.writeJsonObject(response, AppRetCode.ERROR, "添加卡片失败！", null);
 		}	
 	}
+	/**
+	 * 
+	 * @Title: addJyCard
+	 * @Description: 添加交友卡片
+	 * @return JSON
+	 * @author CrazyT
+	 * 
+	 */
+	@RequestMapping(value = "addSfCard")
+	public void addSfCard(HttpServletRequest request, HttpServletResponse response, CardInfo reqInfo,
+			@RequestParam(required = false) MultipartFile[] imageFiles, String publicTypeIds) {
+		
+		
+		if(reqInfo == null) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少卡片相关参数", null);
+			return;
+		}
+		
+		if(StringUtils.isBlank(reqInfo.getCardName())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少name参数", null);
+			return;
+		}
+		
+		if(reqInfo.getSex() == null) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少sex参数", null);
+			return;
+		}
+		
+		if(StringUtils.isBlank(reqInfo.getCreater())) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "缺少creater参数", null);
+			return;
+		}	
+		
+		if(StringUtils.isNoneBlank(reqInfo.getBirthDateStr())){
+			reqInfo.setBirthDate(DateUtils.formatDate(DateFormatUtil.FormatDate(reqInfo.getBirthDateStr()), DateUtils.DATE_DEFAULT_FORMAT));
+		}
+		
+		reqInfo.setType(11); // 1艺人；2租借；3策划/创意；4婚礼/派对
+		
+		if(actorInfoService.selectById(reqInfo.getCreater()) == null) {
+			this.writeJsonObject(response, AppRetCode.PARAM_ERROR, "创建者不存在，请检查creater参数", null);
+			return;		
+		}
+		
+		List<String> picUuidList = new ArrayList<String>();
+		if(imageFiles != null && imageFiles.length > 0){
+			for(MultipartFile multipartFile : imageFiles){
+				if(multipartFile == null){
+					continue;
+				}
+				SystemPictureInfo pictureInfo = this.uploadFile2("hostAnnouncement", multipartFile);
+				picUuidList.add(pictureInfo.getUuid());
+			}
+		}
+
+		int ret = cardInfoService.addCard(reqInfo, picUuidList.toArray(new String[0]), StringUtils.split(publicTypeIds,','));
+
+		if(ret > 0){
+			this.writeJsonObject(response, AppRetCode.NORMAL, AppRetCode.NORMAL_TEXT, reqInfo);
+		}else {
+			this.writeJsonObject(response, AppRetCode.ERROR, "添加卡片失败！", null);
+		}	
+	}
 }

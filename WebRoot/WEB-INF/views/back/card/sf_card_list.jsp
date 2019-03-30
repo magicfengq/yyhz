@@ -12,7 +12,7 @@
 <head>
 <base href="<%=basePath%>">
 
-<title>交友卡片列表</title>
+<title>身份卡片列表</title>
 
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
@@ -80,7 +80,7 @@ div#rMenu {
 <body>
 	<div style="width:100%;height:100%">
 		<table id="dg" class="easyui-datagrid" style="width:100%;height:100%"
-			data-options="url:'back/cardInfoAjaxPage.do?type=10', iconCls:'icon-save', 
+			data-options="url:'back/cardInfoAjaxPage.do?type=11', iconCls:'icon-save', 
 			rownumbers:true, pagination:true, singleSelect:true, 
 			toolbar:'#toolbar'">
 			<thead>
@@ -142,7 +142,7 @@ div#rMenu {
 		}
 	}
 	function cardTypeFormater(value, row) {
-		return "交友";
+		return "身份";
 	}
 	function timeFormater(value, row) {
 		if (value == undefined) {
@@ -191,7 +191,7 @@ div#rMenu {
 		});
 	}
 	function edit(id){
-		window.parent.addTabPanel('交友','back/cardListDetail.do?type=10&id=' +id);
+		window.parent.addTabPanel('身份','back/cardListDetail.do?type=11&id=' +id);
 	}
 	function del(id) {
 		$.messager.confirm('提示', '你确定要删除吗?', function(r) {

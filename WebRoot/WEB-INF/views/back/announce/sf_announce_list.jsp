@@ -12,7 +12,7 @@
 <head>
 <base href="<%=basePath%>">
 
-<title>交友卡片列表</title>
+<title>身份通告列表</title>
 
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
@@ -53,6 +53,7 @@ div#rMenu {
 	font-weight: bold;
 	padding: 5px 0;
 	margin-bottom: 10px;
+	border-bottom: 1px solid #ccc;
 }
 
 .fitem {
@@ -80,18 +81,17 @@ div#rMenu {
 <body>
 	<div style="width:100%;height:100%">
 		<table id="dg" class="easyui-datagrid" style="width:100%;height:100%"
-			data-options="url:'back/cardInfoAjaxPage.do?type=10', iconCls:'icon-save', 
+			data-options="url:'back/announceInfoAjaxPage.do?type=11', iconCls:'icon-save', 
 			rownumbers:true, pagination:true, singleSelect:true, 
 			toolbar:'#toolbar'">
 			<thead>
 				<tr>
-					<th data-options="field:'cardName',align:'center',sortable:true" style="width: 15%;">艺名</th>
-					<th data-options="field:'detailRole',align:'center',sortable:false" style="width: 10%;">角色</th>
-					<th data-options="field:'sex',align:'center',sortable:true,formatter:sexFormatter" style="width: 10%;">性别</th>
-					<th data-options="field:'city',align:'center',sortable:true" style="width: 10%;">所在地</th>
-					<th data-options="field:'type',align:'center',sortable:false,formatter:cardTypeFormater" style="width: 10%;">卡片类型</th>
+					<th data-options="field:'title',align:'center',sortable:true" style="width: 15%;">通告主题</th>
+					<th data-options="field:'readCount',align:'center',sortable:false" style="width: 10%;">浏览量</th>
+					<th data-options="field:'city',align:'center',sortable:true" style="width: 10%;">活动城市</th>
+					<th data-options="field:'type',align:'center',sortable:false,formatter:cardTypeFormater" style="width: 10%;">活动类型</th>
 					<th data-options="field:'createrName',align:'center',sortable:true" style="width: 15%;">发布账号</th>
-					<th data-options="field:'createTime',align:'center',sortable:true,formatter:timeFormater" style="width: 15%;">发布时间</th>
+					<th data-options="field:'createTime',align:'center',sortable:true" style="width: 15%;">发布时间</th>
 					<th data-options="field:'options',align:'center',sortable:true,formatter:formatOptions" style="width: 15%;">操作</th>
 				</tr>
 			</thead>
@@ -100,21 +100,11 @@ div#rMenu {
 			<div>
 				<table style="width: 100%;">
 					<tr>
-						<td class="ftitle">艺名:</td><td>
-							<input id="cardNameInput" class="easyui-textbox" style="width:200px"/>
+						<td class="ftitle">通告主题:</td><td>
+							<input id="titleInput" class="easyui-textbox" style="width:200px"/>
 						</td>
-						<td class="ftitle">性别:</td><td>
-							<select id="sexInput" class="easyui-combobox" style="width:120px;" data-options="panelHeight:'auto',editable:false,required:false">
-								<option value="" selected="selected">全部</option>
-								<option value="1">男</option>
-								<option value="2">女</option>
-							</select>
-						</td>
-						<td class="ftitle">具体性格:</td><td>
-							<input id="detailRoleInput" class="easyui-textbox" style="width:200px"/>
-						</td>
-						<td class="ftitle">城市:</td><td>
-							<input id="cityInput" class="easyui-textbox" style="width:200px">
+						<td class="ftitle">发布人:</td><td>
+							<input id="createrNameInput" class="easyui-textbox" style="width:200px">
 						</td>
 						<td><a href="javaScript:;" onclick="searchData()" class="easyui-linkbutton" iconCls="icon-search">搜索</a></td>
 					</tr>
@@ -131,18 +121,8 @@ div#rMenu {
 				+ '&nbsp;<a href="javascript:void(0);" onclick="del(\''
 				+ row.id + '\');">删除</a>';
 	}
-	function sexFormatter(value, row) {
-		if (value == undefined) {
-			return "";
-		}
-		if (value == '1') {
-			return '男';
-		} else if (value == '2') {
-			return '女';
-		}
-	}
 	function cardTypeFormater(value, row) {
-		return "交友";
+		return "身份";
 	}
 	function timeFormater(value, row) {
 		if (value == undefined) {
@@ -184,19 +164,17 @@ div#rMenu {
 	};
 	function searchData() {
 		$('#dg').datagrid('load', {
-			cardName : $('#cardNameInput').val(),
-			sex : $('#sexInput').val(),
-			detailRole : $('#detailRoleInput').val(),
-			city : $('#cityInput').val()
+			title : $('#titleInput').val(),
+			createrName : $('#createrNameInput').val()
 		});
 	}
 	function edit(id){
-		window.parent.addTabPanel('交友','back/cardListDetail.do?type=10&id=' +id);
+		window.parent.addTabPanel('通告：身份','back/announceDetail.do?type=11&id=' +id);
 	}
 	function del(id) {
 		$.messager.confirm('提示', '你确定要删除吗?', function(r) {
 			if (r) {
-				$.post('back/cardInfoAjaxDelete.do', {
+				$.post('back/announceInfoAjaxDelete.do', {
 					id : id
 				}, function(result) {
 					if (result.success) {
